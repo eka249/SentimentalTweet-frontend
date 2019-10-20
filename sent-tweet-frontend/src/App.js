@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import sentimentAPI from "./api/sentimentAPI";
+import TweetCard from "./api/TweetCard";
 
 class App extends React.Component {
   state = {
@@ -15,6 +16,7 @@ class App extends React.Component {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
         <SearchBar onSubmit={this.onSearchSubmit} />
+        <TweetCard />
       </div>
     );
   }
