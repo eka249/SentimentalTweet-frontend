@@ -1,5 +1,5 @@
 import React from "react";
-import TweetCard from "./TweetCard";
+// import TweetCard from "./TweetCard";
 
 const TweetIndex = props => {
   return props.tweets.map(tweet => {

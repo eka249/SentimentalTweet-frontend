@@ -1,6 +1,6 @@
 import React from "react";
 import Twitter from "twitter";
-import TweetIndex from "./TweetIndex.js";
+// import TweetIndex from "./TweetIndex.js";
 var json = require("./config.json");
 
 class GetTweets extends React.Component {
@@ -8,12 +8,13 @@ class GetTweets extends React.Component {
     super(props);
 
     this.state = {
-      tweets: []
+      tweets: ""
     };
   }
 
   render() {
-    console.log("GetTweetsProps:", this.props.term);
+    console.log(this);
+    // console.log(`${this.props.term}`);
     let client = new Twitter({
       consumer_key: json.consumer_key,
       consumer_secret: json.consumer_secret,
@@ -25,23 +26,22 @@ class GetTweets extends React.Component {
       screen_name: `${this.props.term}`
     };
 
-    let mode = {
-      mode: "no-cors"
-    };
-
-    client.get("statuses/user_timeline", params, mode, function(
-      error,
-      tweets,
-      response
-    ) {
-      if (!error) {
-        this.setState({ tweets });
-        console.log("GetTweetstweets:", tweets);
-        console.log("GetTweetsresponse:", response);
+    client.get(
+      "statuses/user_timeline",
+      params,
+      function(error, tweets, response) {
+        // this.setState({ tweets: response.body });
+        // if (!error) {
+        console.log(response.body);
+        // }
       }
-    });
-    return <TweetIndex tweets={this.state.tweets} />;
-    // return <div>GetTweets</div>;
+      // () => {
+      //   this.setState({ tweets: response.body });
+      // }
+    );
+
+    // return <TweetIndex tweets={this.state.tweets} />;
+    return <div>GetTweets</div>;
   }
 }
 
