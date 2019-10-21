@@ -1,14 +1,7 @@
 import React from "react";
 import SearchBar from "./SearchBar";
-import sentimentAPI from "./api/sentimentAPI";
-import TweetCard from "./api/TweetCard";
-// import TweetIndex from "./api/TweetIndex";
-// import TwitterAPIOldWay from "./api/TwitterAPIOldWay";
 var Twitter = require("twitter");
 var json = require("../src/api/config.json");
-/*jslint node: true */
-// ("use strict");
-// Get dependencies
 
 class App extends React.Component {
   state = {
@@ -37,25 +30,37 @@ class App extends React.Component {
       tweet_mode: "extended"
     };
 
-    client.get("statuses/user_timeline", params, function(
-      error,
-      tweets,
-      response
-    ) {
-      console.log(response.body);
-    });
+    client.get(
+      // "https://api.twitter.com/1.1/users/lookup.json",
+      "statuses/user_timeline",
+      params,
+      function(error, tweets, response) {
+        console.log(response.body);
+        // response.writeHead(200, { "Content-Type": "application/json" });
+        // response.end(JSON.stringify(response.body)); // This line sends the tweets to the client making the http request.
+      }
+    );
   };
 
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <SearchBar searchTwitter={this.searchTwitter} />
-        {/* <GetTweets term={this.state.term} /> */}
-        <TweetCard />
-        {/* <TweetIndex tweets={this.state.tweets} /> */}
+        <NavBar />
+        <SearchHome />
+        <Tweets />
       </div>
     );
   }
 }
+
+// http.createServer(this.searchTwitter).listen(PORT);
+
+// app.listen(PORT, function() {
+//   console.log("Server is running on PORT:", PORT);
+// });
+
+// searchTwitter.listen(3001, function() {
+//   console.log("Example app listening on poor 3001!");
+// });
 
 export default App;
