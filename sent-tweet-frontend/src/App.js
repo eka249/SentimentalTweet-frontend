@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./containers/NavBar";
 import SearchHome from "./containers/SearchHome";
 import Tweets from "./containers/Tweets";
-import SignIn from "./components/SignIn";
+import SignInTestButton from "./components/SignIn";
 
 class App extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class App extends React.Component {
         {/* <NavBar />
         <SearchHome />
         <Tweets /> */}
-        <SignIn />
+        <SignInTestButton />
       </div>
     );
   }
