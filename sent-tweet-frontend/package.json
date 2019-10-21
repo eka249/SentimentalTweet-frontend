@@ -2,13 +2,14 @@
   "name": "sent-tweet-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000/api",
   "dependencies": {
     "axios": "^0.19.0",
     "babel": "^6.23.0",
     "compression": "^1.7.4",
-    "express": "^4.17.1",
     "hbs": "^4.0.6",
     "hiredis": "^0.5.0",
+    "http": "0.0.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "react": "^16.10.2",
@@ -20,10 +21,12 @@
     "twitter": "^1.7.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node api/index",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,8 +44,12 @@
     ]
   },
   "devDependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
     "browserify": "^16.5.0",
     "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
     "gulp": "^4.0.2",
     "gulp-compass": "^2.1.0",
     "gulp-coveralls": "^0.1.4",
@@ -51,6 +58,10 @@
     "gulp-mocha": "^7.0.2",
     "gulp-uglify": "^3.0.2",
     "jshint-stylish": "^2.2.1",
+    "node-env-run": "^3.0.2",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.4.5",
     "reactify": "^1.1.1",
     "request": "^2.88.0",
     "vinyl-buffer": "^1.0.1",
