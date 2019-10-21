@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import sentimentAPI from "./api/sentimentAPI";
-// import TweetCard from "./api/TweetCard";
+import TweetCard from "./api/TweetCard";
 // import TweetIndex from "./api/TweetIndex";
 // import TwitterAPIOldWay from "./api/TwitterAPIOldWay";
 var Twitter = require("twitter");
@@ -33,7 +33,8 @@ class App extends React.Component {
     });
 
     let params = {
-      screen_name: term
+      screen_name: term,
+      tweet_mode: "extended"
     };
 
     client.get("statuses/user_timeline", params, function(
@@ -50,7 +51,7 @@ class App extends React.Component {
       <div className="ui container" style={{ marginTop: "10px" }}>
         <SearchBar searchTwitter={this.searchTwitter} />
         {/* <GetTweets term={this.state.term} /> */}
-        {/* <TweetCard /> */}
+        <TweetCard />
         {/* <TweetIndex tweets={this.state.tweets} /> */}
       </div>
     );
