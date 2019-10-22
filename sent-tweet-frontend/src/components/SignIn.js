@@ -15,7 +15,10 @@ class SignIn extends Component {
       <div>
         <button onClick={this.handleShowModal}>Sign in button</button>
         {this.state.show ? (
-          <ModalContainer handleShowModal={this.handleShowModal} />
+          <ModalContainer
+            handleShowModal={this.handleShowModal}
+            onSignIn={this.props.onSignIn}
+          />
         ) : null}
       </div>
     );

@@ -48,13 +48,35 @@ class ModalContainer extends Component {
   };
 
   handleSignIn = e => {
-    //add auth here
+    console.log("signin pushed successfully");
+    e.preventDefault();
+
+    fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.fields.username,
+        password: this.state.fields.password
+      })
+    })
+      .then(response => response.json())
+      .then(json => {
+        //do something to update App state to deal with the logged_in status
+        if (json.jwt) {
+          localStorage.setItem("token", json.jwt);
+          // debugger
+          this.props.onSignIn(json);
+        }
+      });
   };
   render() {
     return (
       <Modal
-        as={Form}
-        onSubmit={e => this.handleSignUp(e)}
+        // as={Form}
+        // onSubmit={e => this.handleSignUp(e)}
         open={true}
         size="tiny"
         // closeIcon={this.props.handleShowModal}
@@ -89,7 +111,7 @@ class ModalContainer extends Component {
           <Button
             color="green"
             // icon="save"
-            content="Save"
+            content="Sign In"
             onClick={this.handleSignIn}
           />
         </Modal.Actions>
@@ -119,7 +141,8 @@ class ModalContainer extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            type="submit"
+            // type="submit"
+            onClick={e => this.handleSignUp(e)}
             color="green"
             icon="pencil"
             content="Sign Up!"
