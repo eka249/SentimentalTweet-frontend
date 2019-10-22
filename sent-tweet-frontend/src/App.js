@@ -1,6 +1,9 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import NavBar from "./containers/NavBar";
+import CardFlip from "./components/CardFlip";
+import Favorites from "./components/Favorites";
+
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
 
@@ -18,7 +21,7 @@ class App extends React.Component {
         password: "tester1",
         id: 1
       },
-      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
+      favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
       tweets: [], //tweets of selectedAcc
       selectedAcc: [] //twitteraccount
     };
@@ -129,6 +132,8 @@ class App extends React.Component {
         <Tweets /> */}
 
         {/* <ModalContainer /> */}
+        <CardFlip />
+        {/* <Favorites favs={this.state.favorites} /> */}
       </div>
     );
   }

@@ -1,15 +1,15 @@
 import React from "react";
 
-const CardExampleCard = () => (
+const FavoriteCard = props => (
   <div>
     <div className="ui card">
       <div className="image">
         <img src={process.env.PUBLIC_URL + "/logo192.png"} alt=" " />
       </div>
       <div className="content">
-        <div className="header">Asif</div>
+        <div className="header">{props.person.id}</div>
         <div className="meta">
-          <span className="username">@AsifisTHEBESTEST</span>
+          <span className="username">{props.person.id}</span>
         </div>
       </div>
       <div className="extra content">
@@ -25,4 +25,4 @@ const CardExampleCard = () => (
   </div>
 );
 
-export default CardExampleCard;
+export default FavoriteCard;

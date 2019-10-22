@@ -1,8 +1,8 @@
 import React from "react";
 
-const ActualTweetCard = () => {
+const ActualTweetCard = props => {
   return (
-    <div>
+    <div onClick={props.handleClick}>
       <div className="ui card">
         <div className="content">
           <div className="header">Tweet Date</div>
