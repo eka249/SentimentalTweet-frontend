@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import SignIn from '../components/SignIn';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import Favorites from '../components/Favorites';
-import Profile from '../components/Profile';
+import { Link } from "react-router-dom";
 import SignInTestButton from "../components/SignIn";
-
-
 
 class NavBar extends Component {
     signed = () => {
@@ -18,24 +13,16 @@ class NavBar extends Component {
     }
 
     render() {
-        const loggedin = this.props.loggedin
+        const loggedin = this.props.loggedin;
         return (
             <div className='navBar'>
-                <Router>
-                    <div className="ui buttons">
-                        {this.props.loggedin === true ? ( 
-                            this.signed()
-                        ) : (
-                            <SignInTestButton onSignIn={this.props.onSignIn} />
-                        )}
-                    </div>
-                    <Route exact path="/favorites">
-                        {loggedin? <Favorites favs={this.props.favs} deleteFav={this.props.deleteFav}/> : <Redirect to="/" />}
-                    </Route>
-                    <Route exact path="/profile">
-                        {loggedin? <Profile user={this.props.user} updateUser={this.props.updateUser}/> :  <Redirect to="/" />}
-                    </Route>
-                </Router> 
+                <div className="ui buttons">
+                    {loggedin? ( 
+                        this.signed()
+                    ) : (
+                        <SignInTestButton onSignIn={this.props.onSignIn} />
+                    )}
+                </div>
             </div>
         )
     };
