@@ -1,90 +1,137 @@
 import React from "react";
-import FavoriteCards from "../src/components/FavoriteCards";
-import ActualTweetCard from "./components/ActualTweetCard";
-import { Modal } from "semantic-ui-react";
-var Twitter = require("twitter");
-var json = require("../src/api/config.json");
+import "semantic-ui-css/semantic.min.css";
+import NavBar from "./containers/NavBar";
+// import SearchHome from "./containers/SearchHome";
+// import Tweets from "./containers/Tweets";
+
+// import ModalContainer from "./components/ModalContainer";
 
 class App extends React.Component {
-  state = {
-    tweets: []
-    // showModal: false
-    // ,term: ""
+  constructor() {
+    super();
+    this.state = {
+      logged_in: true,
+      // user: null,
+      user: {
+        username: "tester1",
+        name: "tester1",
+        password: "tester1",
+        id: 1
+      },
+      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
+      tweets: [], //tweets of selectedAcc
+      selectedAcc: [] //twitteraccount
+    };
+  }
+
+  loggedInYN = (data, from) => {
+    fetch("http://localhost:3000/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          return { logged_in: true, user: data.user };
+        });
+      });
   };
 
-  // onSearchSubmit = term => {
-  //   this.setState({ term });
-  //   console.log("Term:", term);
-  // };
+  getUser = () => {
+    fetch(`http://localhost:3000/users/${this.state.user.id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          return {
+            logged_in: true,
+            user: data
+          };
+        });
+      });
+  };
 
-  // changeModalState = () => {
-  //   this.setState({ showModal: !this.state.showModal });
-  // };
-
-  searchTwitter = term => {
-    // console.log("hit");
-    // this.setState({ term });
-    // console.log("passed through state", term);
-    let client = new Twitter({
-      consumer_key: json.consumer_key,
-      consumer_secret: json.consumer_secret,
-      access_token_key: json.access_token_key,
-      access_token_secret: json.access_token_secret
+  logOut = () => {
+    localStorage.removeItem("token");
+    this.setState(prevState => {
+      return {
+        logged_in: false,
+        user: null
+      };
     });
+  };
 
-    let params = {
-      screen_name: term,
-      tweet_mode: "extended"
-    };
+  updateUser = e => {
+    // fetch(Url + this.state.user.id , {
+    //     method: 'UPDATE',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json'
+    //     },
+    //     body: JSON.stringify({ name })
+    // })
+    // .then(resp => resp.json())
+    // .then(data => this.handleChange(data.name))
+    // MAKE SURE data.name IS  THE NAME ONLY
+  };
 
-    client.get(
-      // "https://api.twitter.com/1.1/users/lookup.json",
-      "statuses/user_timeline",
-      params,
-      function(error, tweets, response) {
-        console.log(response.body);
-        // response.writeHead(200, { "Content-Type": "application/json" });
-        // response.end(JSON.stringify(response.body)); // This line sends the tweets to the client making the http request.
-      }
-    );
+  deleteFav = e => {
+    //********* RECEIVE ALL FAVS of USER as RETURNED DATA
+    // fetch(Url + e.id {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json'
+    //   }
+    // })
+    // .then(resp => resp.json())
+    // .then(data => {
+    //   this.setData({
+    //     favorites: data
+    //   })
+    // })
+  };
+
+  addFav = e => {
+    // const user_id = this.state.user.id
+    // const twitter_account_id = e.target.id
+    ////////double check on the e.target.id to match twitteracc id.
+    // fetch(Url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json'
+    //     },
+    //     body: JSON.stringify({ user_id, twitter_account_id })
+    // })
+    // .then(resp => resp.json())
+    // .then(data => {
+    //   this.setState({
+    //    favorites: [...this.state.favorites, data]
+    // })})
   };
 
   render() {
+    //use loggedInYN as props flag throughout routes
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        {/* <NavBar /> */}
-        {/* <SearchHome /> */}
-        {/* <Tweets /> */}
-        <FavoriteCards />
-        <ActualTweetCard />
-        <Modal />
-        {/* {this.state.showModal ? (
-          <Modal
-            click={this.state.showModal}
-            changeModalState={this.changeModalState}
-          />
-        ) : null} */}
-        {/* <Modal
-          click={this.state.showModal}
-          changeModalState={this.changeModalState}
-        /> */}
-        {/* <button className="ui button"> */}
-        <button className="ui button" onClick={this.changeModalState}>
-          Show Modal
-        </button>
+        <NavBar
+          loggedin={this.state.logged_in}
+          signout={this.logOut}
+          favs={this.state.favorites}
+          deleteFav={this.deleteFav}
+          user={this.state.user}
+          updateUser={this.updateUser}
+          onSignIn={this.onSignIn}
+        />
+        {/* <SearchHome />
+        <Tweets /> */}
+
+        {/* <ModalContainer /> */}
       </div>
     );
   }
 }
-
-// http.createServer(this.searchTwitter).listen(PORT);
-
-// app.listen(PORT, function() {
-//   console.log("Server is running on PORT:", PORT);
-// });
-
-// searchTwitter.listen(3001, function() {
-//   console.log("Example app listening on poor 3001!");
-// });
 
 export default App;

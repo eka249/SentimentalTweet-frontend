@@ -20,3 +20,8 @@
 .App-link {
   color: #09d3ac;
 }
+
+.navbar a {
+  color: #fff!important;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.5) inset!important;
+}
