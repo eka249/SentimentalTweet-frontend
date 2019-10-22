@@ -13,11 +13,11 @@ class NavBar extends Component {
     }
 
     render() {
-        const loggedin = this.props.loggedin
+        const loggedin = this.props.loggedin;
         return (
             <div className='navBar'>
                 <div className="ui buttons">
-                    {this.props.loggedin === true ? ( 
+                    {loggedin? ( 
                         this.signed()
                     ) : (
                         <SignInTestButton onSignIn={this.props.onSignIn} />

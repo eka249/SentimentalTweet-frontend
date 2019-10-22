@@ -1,8 +1,8 @@
 import React from "react";
 import 'semantic-ui-css/semantic.min.css'
 import NavBar from "./containers/NavBar";
-import Favorites from '../components/Favorites';
-import Profile from '../components/Profile';
+import Favorites from './components/Favorites';
+import Profile from './components/Profile';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
@@ -120,10 +120,10 @@ class App extends React.Component {
         <Router>
           <NavBar loggedin={this.state.logged_in} signout={this.logOut} onSignIn={this.onSignIn}/>
           <Route exact path="/favorites">
-              {loggedin? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />}
+              {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />}
           </Route>
           <Route exact path="/profile">
-              {loggedin? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
+              {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
           </Route>
           {/* <SearchHome />
           <Tweets /> */}
