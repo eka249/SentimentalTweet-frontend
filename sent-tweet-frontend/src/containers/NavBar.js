@@ -34,35 +34,13 @@ class NavBar extends Component {
     const loggedin = this.props.loggedin;
     return (
       <div className="navBar">
-        <Router>
-          <div className="ui buttons">
-            {this.props.loggedin === true ? (
-              this.signed()
-            ) : (
-              <SignInTestButton onSignIn={this.props.onSignIn} />
-            )}
-          </div>
-          <Route exact path="/favorites">
-            {loggedin ? (
-              <Favorites
-                favs={this.props.favs}
-                deleteFav={this.props.deleteFav}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-          <Route exact path="/profile">
-            {loggedin ? (
-              <Profile
-                user={this.props.user}
-                updateUser={this.props.updateUser}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-        </Router>
+        <div className="ui buttons">
+          {loggedin ? (
+            this.signed()
+          ) : (
+            <SignInTestButton onSignIn={this.props.onSignIn} />
+          )}
+        </div>
       </div>
     );
   }

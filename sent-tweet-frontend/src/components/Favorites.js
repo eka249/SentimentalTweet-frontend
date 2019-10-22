@@ -1,21 +1,39 @@
-import React, { Component } from 'react';
+import React from "react";
+import FavoriteCard from "./FavoriteCards";
 
-class Favorites extends Component {
-    renderCard = () => {
-        console.log("renderCard")
-        return this.props.favs.map( person => {
-            // render favCard
-            return <div>Fav Card</div>
-        })
-    }
-    
-    render() {
-        return (
-            <div className='editfav'>
-                {this.renderCard()}
-            </div>
-        )
-    }
-}
+const Favorites = props => {
+  return props.favs.map(person => {
+    // render favCard
+    return <FavoriteCard key={person.id} person={person} />;
+  });
+};
 
 export default Favorites;
+//     return (
+//         <div className='editfav'>
+//             {this.renderCard()}
+//         </div>
+//     )
+// }
+
+// export default Favorites
+
+// class Favorites extends Component {
+//     renderCard = (props) => {
+//         console.log("renderCard")
+//         return this.props.favs.map( person => {
+//             // render favCard
+//             return <FavoriteCard person={person}/>
+//         })
+//     }
+
+//     render() {
+//         return (
+//             <div className='editfav'>
+//                 {this.renderCard()}
+//             </div>
+//         )
+//     }
+// }
+
+// export default Favorites;
