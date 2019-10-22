@@ -1,5 +1,6 @@
 import React from "react";
-import SearchBar from "./SearchBar";
+import FavoriteCards from "../src/components/FavoriteCards";
+import ActualTweetCard from "./components/ActualTweetCard";
 var Twitter = require("twitter");
 var json = require("../src/api/config.json");
 
@@ -45,9 +46,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar />
-        <SearchHome />
-        <Tweets />
+        {/* <NavBar /> */}
+        {/* <SearchHome /> */}
+        {/* <Tweets /> */}
+        <FavoriteCards />
+        <ActualTweetCard />
       </div>
     );
   }
