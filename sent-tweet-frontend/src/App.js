@@ -1,6 +1,9 @@
 import React from "react";
 import 'semantic-ui-css/semantic.min.css'
 import NavBar from "./containers/NavBar";
+import Favorites from '../components/Favorites';
+import Profile from '../components/Profile';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
 
@@ -114,15 +117,18 @@ class App extends React.Component {
     //use loggedInYN as props flag throughout routes
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar loggedin={this.state.logged_in} signout={this.logOut}
-          favs={this.state.favorites} deleteFav={this.deleteFav}
-          user={this.state.user} updateUser={this.updateUser}
-          onSignIn={this.onSignIn}
-        />
-        {/* <SearchHome />
-        <Tweets /> */}
-
-        {/* <ModalContainer /> */}
+        <Router>
+          <NavBar loggedin={this.state.logged_in} signout={this.logOut} onSignIn={this.onSignIn}/>
+          <Route exact path="/favorites">
+              {loggedin? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/profile">
+              {loggedin? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
+          </Route>
+          {/* <SearchHome />
+          <Tweets /> */}
+          {/* <ModalContainer /> */}
+        </Router> 
       </div>
     );
   }
