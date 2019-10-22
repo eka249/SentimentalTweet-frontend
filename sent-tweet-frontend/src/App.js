@@ -3,21 +3,25 @@ import NavBar from "./containers/NavBar";
 import SearchHome from "./containers/SearchHome";
 import Tweets from "./containers/Tweets";
 import SignInTestButton from "./components/SignIn";
-import 'semantic-ui-css/semantic.min.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   state = {
-    loggedin: false,
+    loggedin: true,
     displayName: "", //user's displayName
-    favorites: [], //user's list of fav
+    favorites: [{'one':1}, {'two':2}], //user's list of fav
     tweets: [], //tweets of selectedAcc 
     selectedAcc: [] //twitteraccount
+  };
+
+  signout = () => {
+    console.log("will sign out")
   };
 
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar favorites={this.state.favorites} />
+        <NavBar loggedin={this.state.loggedin} favs={this.state.favorites} />
         {/* <SearchHome />
         <Tweets /> */}
         <SignInTestButton />
