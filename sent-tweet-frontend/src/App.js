@@ -1,18 +1,24 @@
 import React from "react";
 import FavoriteCards from "../src/components/FavoriteCards";
 import ActualTweetCard from "./components/ActualTweetCard";
+import { Modal } from "semantic-ui-react";
 var Twitter = require("twitter");
 var json = require("../src/api/config.json");
 
 class App extends React.Component {
   state = {
     tweets: []
+    // showModal: false
     // ,term: ""
   };
 
   // onSearchSubmit = term => {
   //   this.setState({ term });
   //   console.log("Term:", term);
+  // };
+
+  // changeModalState = () => {
+  //   this.setState({ showModal: !this.state.showModal });
   // };
 
   searchTwitter = term => {
@@ -51,6 +57,21 @@ class App extends React.Component {
         {/* <Tweets /> */}
         <FavoriteCards />
         <ActualTweetCard />
+        <Modal />
+        {/* {this.state.showModal ? (
+          <Modal
+            click={this.state.showModal}
+            changeModalState={this.changeModalState}
+          />
+        ) : null} */}
+        {/* <Modal
+          click={this.state.showModal}
+          changeModalState={this.changeModalState}
+        /> */}
+        {/* <button className="ui button"> */}
+        <button className="ui button" onClick={this.changeModalState}>
+          Show Modal
+        </button>
       </div>
     );
   }
