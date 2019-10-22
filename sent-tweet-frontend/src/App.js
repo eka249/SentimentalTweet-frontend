@@ -3,6 +3,7 @@ import NavBar from "./containers/NavBar";
 import SearchHome from "./containers/SearchHome";
 import Tweets from "./containers/Tweets";
 import SignInTestButton from "./components/SignIn";
+// import ModalContainer from "./components/ModalContainer";
 
 class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class App extends React.Component {
         <SearchHome />
         <Tweets /> */}
         <SignInTestButton />
+        {/* <ModalContainer /> */}
       </div>
     );
   }
