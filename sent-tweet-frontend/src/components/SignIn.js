@@ -13,7 +13,7 @@ class SignIn extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleShowModal}>Sign in button</button>
+        <button className="ui  blue basic button" onClick={this.handleShowModal}>Sign in button</button>
         {this.state.show ? (
           <ModalContainer
             handleShowModal={this.handleShowModal}

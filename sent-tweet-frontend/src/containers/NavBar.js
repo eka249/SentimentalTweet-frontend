@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SignIn from '../components/SignIn';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import Favorites from '../components/Favorites';
 import Profile from '../components/Profile';
 import SignInTestButton from "../components/SignIn";
@@ -8,7 +8,6 @@ import SignInTestButton from "../components/SignIn";
 
 
 class NavBar extends Component {
-
     signed = () => {
         return (
             <div> 
@@ -19,6 +18,7 @@ class NavBar extends Component {
     }
 
     render() {
+        const loggedin = this.props.loggedin
         return (
             <div className='navBar'>
                 <Router>
@@ -29,16 +29,12 @@ class NavBar extends Component {
                             <SignInTestButton onSignIn={this.props.onSignIn} />
                         )}
                     </div>
-                <Route
-                    exact
-                    path="/favorites"
-                    render={() => <Favorites favs={this.props.favs} deleteFav={this.props.deleteFav}/>}
-                />
-                <Route  
-                    exact
-                    path="/profile"
-                    render={() => <Profile user={this.props.user} updateUser={this.props.updateUser}/>}
-                />
+                    <Route exact path="/favorites">
+                        {loggedin? <Favorites favs={this.props.favs} deleteFav={this.props.deleteFav}/> : <Redirect to="/" />}
+                    </Route>
+                    <Route exact path="/profile">
+                        {loggedin? <Profile user={this.props.user} updateUser={this.props.updateUser}/> :  <Redirect to="/" />}
+                    </Route>
                 </Router> 
             </div>
         )

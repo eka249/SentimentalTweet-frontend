@@ -22,7 +22,6 @@ class Profile extends Component {
     render() {
         return ( 
             <div>
-                {/* {consider profile pic as a stretch goal} */}
                 <div className='profile-name'>
                     {this.state.username}
                 </div>
