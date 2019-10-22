@@ -3,8 +3,7 @@ import ModalContainer from "./ModalContainer";
 
 class SignIn extends Component {
   state = { show: false };
-
-  handleShowModal = () => {
+  showModal = () => {
     this.setState({
       show: !this.state.show
     });
@@ -13,13 +12,8 @@ class SignIn extends Component {
   render() {
     return (
       <div>
-        <button className="ui  blue basic button" onClick={this.handleShowModal}>Sign in button</button>
-        {this.state.show ? (
-          <ModalContainer
-            handleShowModal={this.handleShowModal}
-            onSignIn={this.props.onSignIn}
-          />
-        ) : null}
+        <button onClick={this.showModal}>Sign in button</button>
+        {this.state.show ? <ModalContainer showModal={this.showModal} /> : null}
       </div>
     );
   }

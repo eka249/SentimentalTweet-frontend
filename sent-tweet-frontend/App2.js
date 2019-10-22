@@ -1,16 +1,22 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import NavBar from "./containers/NavBar";
-import SearchHome from "./containers/SearchHome";
-import Tweets from "./containers/Tweets";
-import SignIn from "./components/SignIn";
+const token = localStorage.getItem('token')
+const headers = {
+    ''
+}
+// import SearchHome from "./containers/SearchHome";
+// import Tweets from "./containers/Tweets";
 
-import ModalContainer from "./components/ModalContainer";
+// import ModalContainer from "./components/ModalContainer";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      auth: {
+        user: ""
+      },
       // logged_in: true,
       logged_in: false,
       user: null,
@@ -25,6 +31,7 @@ class App extends React.Component {
       selectedAcc: [] //twitteraccount
     };
   }
+  
 
   loggedInYN = (data, from) => {
     fetch("http://localhost:3000/profile", {
@@ -125,13 +132,12 @@ class App extends React.Component {
           deleteFav={this.deleteFav}
           user={this.state.user}
           updateUser={this.updateUser}
-          onSignIn={this.onSignIn}
+          // onSignIn={this.onSignIn}
         />
-        {/* <SearchHome /> */}
+        {/* <SearchHome />
+        <Tweets /> */}
 
-        {/* <Tweets /> */}
-
-        <SignIn />
+        {/* <ModalContainer /> */}
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SignUp from "./SignUp";
 import { Modal, Form, Header, Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
@@ -9,19 +8,18 @@ class ModalContainer extends Component {
       username: "",
       password: "",
       newUser: {
-        name: "",
-        username: "",
-        password: ""
-      },
-      signUp: false
+        newName: "",
+        newUsername: "",
+        newPassword: ""
+      }
     }
   };
   handleChange = e => {
-    let edited = e.target.value;
-    let fieldName = e.target.name;
+    // console.log(e.target.value);
+    // console.log(e.target.id);
+    let fieldName = e.target.id;
     this.setState({
-      ...this.state.fields,
-      [fieldName]: edited
+      fields: { ...this.state.fields, [fieldName]: e.target.value }
     });
   };
   handleSignUp = e => {
@@ -33,9 +31,9 @@ class ModalContainer extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: e.target.newName.value,
-        username: e.target.newUsername.value,
-        password_digest: e.target.newPassword.value
+        name: this.state.fields.newUser.newName,
+        username: this.state.fields.newUser.newUsername,
+        password_digest: this.state.fields.newUser.password_digest
       })
     })
       .then(response => response.json())
@@ -48,7 +46,7 @@ class ModalContainer extends Component {
   };
 
   handleSignIn = e => {
-    console.log("signin pushed successfully");
+    console.log("reached sign in function");
     e.preventDefault();
 
     fetch("http://localhost:3000/login", {
@@ -79,16 +77,15 @@ class ModalContainer extends Component {
         // onSubmit={e => this.handleSignUp(e)}
         open={true}
         size="tiny"
-        // closeIcon={this.props.handleShowModal}
+        // closeIcon={this.props.showModal}
       >
         <Header content="Sign In" as="h2"></Header>
         <Modal.Actions>
           <Button
-            onClick={this.props.handleShowModal}
+            onClick={this.props.showModal}
             color="black"
             icon="x"
             size="tiny"
-            align="right"
           />
         </Modal.Actions>
         <Modal.Content>
@@ -98,6 +95,7 @@ class ModalContainer extends Component {
             type="text"
             placeholder="Username"
             id="username"
+            onChange={this.handleChange}
           />
           <Form.Input
             label="Password"
@@ -105,14 +103,15 @@ class ModalContainer extends Component {
             type="password"
             placeholder="Password"
             id="password"
+            onChange={this.handleChange}
           />
         </Modal.Content>
         <Modal.Actions>
           <Button
             color="green"
-            // icon="save"
             content="Sign In"
-            onClick={this.handleSignIn}
+            // onClick={console.log("sign in hit")}
+            onClick={e => this.handleSignIn(e)}
           />
         </Modal.Actions>
         <Modal.Content>
@@ -121,22 +120,31 @@ class ModalContainer extends Component {
             label="Your Name"
             // required
             type="text"
-            placeholder="Username"
+            placeholder="User"
+            name="newName"
             id="newName"
+            // value={this.state.newUser.newName}
+            onChange={this.handleChange}
           />
           <Form.Input
             label=" New username"
             // required
             type="text"
             placeholder="Username"
+            name="newUsername"
             id="newUsername"
+            // value={this.state.newUser.newUsername}
+            onChange={this.handleChange}
           />
           <Form.Input
             label=" New password"
             // required
             type="password"
             placeholder="Password"
+            name="newPassword"
             id="newPassword"
+            // value={this.state.newUser.newPassword}
+            onChange={this.handleChange}
           />
         </Modal.Content>
         <Modal.Actions>
