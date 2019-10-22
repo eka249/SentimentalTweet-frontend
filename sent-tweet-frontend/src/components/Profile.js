@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form } from 'semantic-ui-react';
 
 class Profile extends Component {
     state = {
@@ -15,16 +16,7 @@ class Profile extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("handleSubmit")
-        // fetch(Url + this.props.user.id , {
-        //     method: 'Update',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Accept: 'application/json'
-        //     },
-        //     body: JSON.stringify({ name })
-        // })
-        // .then(resp => resp.json())
-        // .then(data => this.handleChange(data.name))
+        this.props.updateUser(this.state.name)
     }
 
     render() {
@@ -34,10 +26,13 @@ class Profile extends Component {
                 <div className='profile-name'>
                     {this.state.username}
                 </div>
-                <form onSubmit={e => this.handleSubmit(e)}>  
-                    <input type="text" onChange={ e => this.handleChange(e.target.value)} name="displayName" value={this.state.name} />
-                    <input type="submit"/>
-                </form>
+                <Form onSubmit={e => this.handleSubmit(e)}>  
+                    <Form.Field onChange={ e => this.handleChange(e.target.value)}>
+                        <label>Set New Name</label>
+                        <input placeholder={this.state.name} />
+                    </Form.Field>
+                    <Form.Button>Submit</Form.Button>
+                </Form>
             </div>
         )     
     }

@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import SignIn from '../components/SignIn';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Favorites from '../components/Favorites'
-import Profile from '../components/Profile'
-import SignIn from '../components/SignIn'
+import Favorites from '../components/Favorites';
+import Profile from '../components/Profile';
+
 
 
 class NavBar extends Component {
@@ -20,24 +21,24 @@ class NavBar extends Component {
         return (
             <div className='navBar'>
                 <Router>
-                <div className="ui buttons">
-                    {this.props.loggedin === true ? ( 
-                        this.signed()
-                    ) : (
-                        <SignIn />
-                    )}
-                </div>
+                    <div className="ui buttons">
+                        {this.props.loggedin === true ? ( 
+                            this.signed()
+                        ) : (
+                            <SignIn />
+                        )}
+                    </div>
                 <Route
                     exact
                     path="/favorites"
-                    render={() => <Favorites favs={this.props.favs}/>}
+                    render={() => <Favorites favs={this.props.favs} deleteFav={this.props.deleteFav}/>}
                 />
                 <Route  
                     exact
                     path="/profile"
-                    render={() => {return <Profile user={this.props.user}/>}}
+                    render={() => <Profile user={this.props.user} updateUser={this.props.updateUser}/>}
                 />
-                </Router>
+                </Router> 
             </div>
         )
     };

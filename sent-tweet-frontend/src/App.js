@@ -1,9 +1,9 @@
 import React from "react";
+import 'semantic-ui-css/semantic.min.css'
 import NavBar from "./containers/NavBar";
-import SearchHome from "./containers/SearchHome";
-import Tweets from "./containers/Tweets";
+// import SearchHome from "./containers/SearchHome";
+// import Tweets from "./containers/Tweets";
 import SignInTestButton from "./components/SignIn";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   state = {
@@ -18,17 +18,72 @@ class App extends React.Component {
     console.log("will sign out")
   };
 
-  updateUser = () => {
-    // fetch update User displayname and/or password, then setState
+  updateUser = (e) => {
+        // fetch(Url + this.state.user.id , {
+        //     method: 'UPDATE',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept: 'application/json'
+        //     },
+        //     body: JSON.stringify({ name })
+        // })
+        // .then(resp => resp.json())
+        // .then(data => this.handleChange(data.name))
+        // MAKE SURE data.name IS  THE NAME ONLY
   }
+
+  deleteFav = (e) => {
+    //********* RECEIVE ALL FAVS of USER as RETURNED DATA
+
+    // fetch(Url + e.id {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json'
+    //   }
+    // })
+    // .then(resp => resp.json())
+    // .then(data => {
+    //   this.setData({
+    //     favorites: data
+    //   })
+    // })
+  }
+
+  addFav = (e) => {
+      // const user_id = this.state.user.id
+      // const twitter_account_id = e.target.id
+      ////////double check on the e.target.id to match twitteracc id. 
+
+
+        // fetch(Url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept: 'application/json'
+        //     },
+        //     body: JSON.stringify({ user_id, twitter_account_id })
+        // })
+        // .then(resp => resp.json())
+        // .then(data => {
+        //   this.setState({
+        //    favorites: [...this.state.favorites, data] 
+        // })})
+  }
+
 
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar loggedin={this.state.loggedin} favs={this.state.favorites} user={this.state.user}/>
+        <NavBar loggedin={this.state.loggedin} signout={this.signout}
+          favs={this.state.favorites} deleteFav={this.deleteFav}
+          user={this.state.user} updateUser={this.updateUser}
+        />
         {/* <SearchHome />
         <Tweets /> */}
-        <SignInTestButton />
+        {/* <SignInTestButton /> */}
+
+
       </div>
     );
   }
