@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 class App extends React.Component {
   state = {
     loggedin: true,
-    displayName: "", //user's displayName
+    user: {'username':'tester1', 'name':'tester1', 'password':'tester1', 'id':1},
     favorites: [{'one':1}, {'two':2}], //user's list of fav
     tweets: [], //tweets of selectedAcc 
     selectedAcc: [] //twitteraccount
@@ -18,10 +18,14 @@ class App extends React.Component {
     console.log("will sign out")
   };
 
+  updateUser = () => {
+    // fetch update User displayname and/or password, then setState
+  }
+
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar loggedin={this.state.loggedin} favs={this.state.favorites} />
+        <NavBar loggedin={this.state.loggedin} favs={this.state.favorites} user={this.state.user}/>
         {/* <SearchHome />
         <Tweets /> */}
         <SignInTestButton />

@@ -35,7 +35,7 @@ class NavBar extends Component {
                 <Route  
                     exact
                     path="/profile"
-                    render={() => (<Profile />)}
+                    render={() => {return <Profile user={this.props.user}/>}}
                 />
                 </Router>
             </div>
