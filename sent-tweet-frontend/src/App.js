@@ -3,19 +3,58 @@ import 'semantic-ui-css/semantic.min.css'
 import NavBar from "./containers/NavBar";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
-import SignInTestButton from "./components/SignIn";
+
+// import ModalContainer from "./components/ModalContainer";
 
 class App extends React.Component {
-  state = {
-    loggedin: true,
-    user: {'username':'tester1', 'name':'tester1', 'password':'tester1', 'id':1},
-    favorites: [{'one':1}, {'two':2}], //user's list of fav
-    tweets: [], //tweets of selectedAcc 
-    selectedAcc: [] //twitteraccount
+  constructor() {
+    super();
+    this.state = {
+      logged_in: true,
+      // user: null,
+          user: {'username':'tester1', 'name':'tester1', 'password':'tester1', 'id':1},
+      favorites: [{'one':1}, {'two':2}], //user's list of fav
+      tweets: [], //tweets of selectedAcc 
+      selectedAcc: [] //twitteraccount
+    };
+  }
+
+  loggedInYN = (data, from) => {
+    fetch("http://localhost:3000/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          return { logged_in: true, user: data.user };
+        });
+      });
   };
 
-  signout = () => {
-    console.log("will sign out")
+  getUser = () => {
+    fetch(`http://localhost:3000/users/${this.state.user.id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          return {
+            logged_in: true,
+            user: data
+          };
+        });
+      });
+  };
+
+  logOut = () => {
+    localStorage.removeItem("token");
+    this.setState(prevState => {
+      return {
+        logged_in: false,
+        user: null
+      };
+    });
   };
 
   updateUser = (e) => {
@@ -71,19 +110,19 @@ class App extends React.Component {
         // })})
   }
 
-
   render() {
+    //use loggedInYN as props flag throughout routes
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <NavBar loggedin={this.state.loggedin} signout={this.signout}
+        <NavBar loggedin={this.state.logged_in} signout={this.logOut}
           favs={this.state.favorites} deleteFav={this.deleteFav}
           user={this.state.user} updateUser={this.updateUser}
+          onSignIn={this.onSignIn}
         />
         {/* <SearchHome />
         <Tweets /> */}
-        {/* <SignInTestButton /> */}
 
-
+        {/* <ModalContainer /> */}
       </div>
     );
   }
