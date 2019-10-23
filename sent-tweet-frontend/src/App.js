@@ -7,7 +7,6 @@ import SignIn from "./components/SignIn";
 import CardFlip from "./components/CardFlip";
 import Favorites from "./components/Favorites";
 import Profile from "./components/Profile";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import tweets from "./components/SampleData";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
@@ -16,7 +15,6 @@ import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 
 import NavBarOpener from "./buttonComponents/NavBarOpener";
-import SearchHome from "./containers/SearchHome";
 import ModalContainer from "./components/ModalContainer";
 import CelebIteration from "./components/CelebIteration";
 import ActualTweetCard from "./components/ActualTweetCard";
