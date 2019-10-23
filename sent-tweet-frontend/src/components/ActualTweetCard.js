@@ -7,9 +7,11 @@ const ActualTweetCard = props => {
     <div onClick={props.handleClick} id="back">
       <div className="ui card">
         <div className="content">
-          <div className="header">{props.date}<span className="right floated smile">
-            <i className={`icon-left large ${icon} ${hue} icon`} />
-          </span></div>
+          <div className="header">{props.date}
+            <span className="right floated smile">
+              <i className={`icon-left large ${icon} ${hue} icon`} />
+            </span>
+          </div>
           <div className="description">
             <p>
               {props.content}

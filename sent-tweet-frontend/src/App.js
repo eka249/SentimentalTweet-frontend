@@ -5,6 +5,7 @@ import { Icon, Menu, Sidebar } from 'semantic-ui-react'
 
 import NavBarOpener from "./buttonComponents/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
+import SearchBar from "./components/SearchBar";
 // import Favorites from './components/Favorites';
 // import Profile from './components/Profile';
 
@@ -25,7 +26,7 @@ class App extends React.Component {
       },
       favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
       tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ], //tweets of selectedAcc
-      selectedAcc: [], //twitteraccount
+      selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
       navBarShow: false
     };
   }
@@ -119,6 +120,27 @@ class App extends React.Component {
   };
 
 
+  searchTwitter = celeb => {
+    // fetch(http://localhost:3000/tweets, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: ""
+    //   },
+    //   body: JSON.stringify({
+    //     celeb
+    //   })
+    // })
+    //   .then(response => response.json)
+    //   .then(data => {
+    //     this.setState({
+    //       tweets: data
+    //     });
+    //   });
+  };
+ 
+
   toggleNav = () => {
     this.setState({
       navBarShow: !this.state.navBarShow
@@ -178,9 +200,10 @@ class App extends React.Component {
                 <NavBarOpener toggle={this.toggleNav}/>                
                 <Route exact path="/">
                   {console.log('above Searchome')}
-                  <SearchHome tweets={this.state.tweets} />
+                  <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/>
                   {console.log('below Searchome')}
                 </Route>
+                <SearchBar searchTwitter={this.searchTwitter} />
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>
