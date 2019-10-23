@@ -1,27 +1,43 @@
+html, body {
+  width: 100%;
+  height: 100vh;
+  background-image: url('./assets/home1.21.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .App {
-  text-align: center;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  display: grid;
+
 }
 
-.App-logo {
-  height: 40vmin;
+#navBarBtn {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  left: 4%;
+  bottom: 5%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.tweetcards {
+  margin-top:10%;
+  margin-left:15%;
+  margin-right:15%;
+  margin-bottom:10%;
+  position: fixed;
+  left: auto;
+  top: auto; 
 }
 
-.App-link {
-  color: #09d3ac;
-}
+#tweets img {
+  max-height: 110px;
+  position: relative;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 5%;
+  opacity: 0.8;
 
-.navbar a {
-  color: #fff!important;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.5) inset!important;
 }

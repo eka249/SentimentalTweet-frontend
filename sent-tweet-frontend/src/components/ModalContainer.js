@@ -1,113 +1,156 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import SignUp from "./SignUp";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Form, Header, Button } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
 class ModalContainer extends Component {
-  constructor() {
-    super();
-    this.state = {
+  state = {
+    fields: {
       username: "",
       password: "",
       newUser: {
         name: "",
         username: "",
         password: ""
-      }
-    };
-  }
-
+      },
+      signUp: false
+    }
+  };
   handleChange = e => {
     let edited = e.target.value;
     let fieldName = e.target.name;
     this.setState({
-      ...this.state,
+      ...this.state.fields,
       [fieldName]: edited
     });
   };
-
-  handleSubmit = e => {
-    //add auth here
+  handleSignUp = e => {
+    e.preventDefault();
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        name: e.target.newName.value,
+        username: e.target.newUsername.value,
+        password_digest: e.target.newPassword.value
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("after sign up form", data);
+        // this.setState(prevState => {
+        //   return { signedUp: true };
+        // });
+      });
   };
 
+  handleSignIn = e => {
+    console.log("signin pushed successfully");
+    e.preventDefault();
+
+    fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.fields.username,
+        password: this.state.fields.password
+      })
+    })
+      .then(response => response.json())
+      .then(json => {
+        //do something to update App state to deal with the logged_in status
+        if (json.jwt) {
+          localStorage.setItem("token", json.jwt);
+          // debugger
+          this.props.onSignIn(json);
+        }
+      });
+  };
   render() {
     return (
-      <div className="ui field">
-        <form onSubmit={this.handleSubmit}>
-          <div className="ui field">
-            <label>Username</label>
-            <input
-              name="username"
-              type="text"
-              required
-              placeholder="Username"
-              value={this.state.username}
-              onChange={this.handleChange}
-            ></input>
-          </div>
-          <br></br>
-          <div className="ui field">
-            <label>Password</label>
-            <input
-              name="password"
-              type="password"
-              required
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            ></input>
-          </div>
-          <br></br>
-          <button type="submit" className="btn btn-primary">
-            Sign In
-          </button>
-        </form>
-        <div>
-          <ModalContainer
-          // onSignIn={this.props.onSignIn}
+      <Modal
+        // as={Form}
+        // onSubmit={e => this.handleSignUp(e)}
+        open={true}
+        size="tiny"
+        // closeIcon={this.props.handleShowModal}
+      >
+        <Header content="Sign In" as="h2"></Header>
+        <Modal.Actions>
+          <Button
+            onClick={this.props.handleShowModal}
+            color="black"
+            icon="x"
+            size="tiny"
+            align="right"
           />
-        </div>
-      </div>
+        </Modal.Actions>
+        <Modal.Content>
+          <Form.Input
+            label="Username"
+            // required
+            type="text"
+            placeholder="Username"
+            id="username"
+          />
+          <Form.Input
+            label="Password"
+            // required
+            type="password"
+            placeholder="Password"
+            id="password"
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            color="green"
+            // icon="save"
+            content="Sign In"
+            onClick={this.handleSignIn}
+          />
+        </Modal.Actions>
+        <Modal.Content>
+          <Header content="Or Sign Up!" as="h3"></Header>
+          <Form.Input
+            label="Your Name"
+            // required
+            type="text"
+            placeholder="Username"
+            id="newName"
+          />
+          <Form.Input
+            label=" New username"
+            // required
+            type="text"
+            placeholder="Username"
+            id="newUsername"
+          />
+          <Form.Input
+            label=" New password"
+            // required
+            type="password"
+            placeholder="Password"
+            id="newPassword"
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            // type="submit"
+            onClick={e => this.handleSignUp(e)}
+            color="green"
+            icon="pencil"
+            content="Sign Up!"
+          />
+        </Modal.Actions>
+      </Modal>
     );
   }
 }
-
-// function ModalContainer(props) {
-//   const [show, setShow] = useState(false);
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
-
-//   return (
-//     <div>
-//       <br></br>
-//       <Button
-//         className="btn btn-primary"
-//         name="toggleButton"
-//         // variant="link"
-//         onClick={handleShow}
-//       >
-//         Don't have an account? Sign Up!
-//       </Button>
-//       <Modal
-//         // className= "btn btn-primary"
-//         // fade= {false}
-//         show={show}
-//         onHide={handleClose}
-//       >
-//         <Modal.Header closeButton>Sign Up!</Modal.Header>
-//         <Modal.Body>
-//           <SignUp onSignUp={props.onSignIn} />
-//         </Modal.Body>
-//         <Modal.Footer>
-//           {/* <Button onClick = {handleClose} className="btn btn-primary">
-//                   Close
-//                 </Button> */}
-//           {/* <Button onClick = {handleClose} className="btn btn-primary">
-//                 Create username
-//                 </Button> */}
-//         </Modal.Footer>
-//       </Modal>
-//     </div>
-//   );
-// }
 
 export default ModalContainer;

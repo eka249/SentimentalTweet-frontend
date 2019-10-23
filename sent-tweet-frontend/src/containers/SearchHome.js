@@ -1,36 +1,51 @@
-// var Twitter = require("twitter");
-// var json = require("../src/api/config.json");
+import React from 'react';
+import { Grid, Image } from 'semantic-ui-react'
+import bcard from '../assets/bcard.jpg'
 
-// state = {
-//   tweets: []
-//   // ,term: ""
-// };
 
-// searchTwitter = term => {
-//   // console.log("hit");
-//   // this.setState({ term });
-//   // console.log("passed through state", term);
-//   let client = new Twitter({
-//     consumer_key: json.consumer_key,
-//     consumer_secret: json.consumer_secret,
-//     access_token_key: json.access_token_key,
-//     access_token_secret: json.access_token_secret
-//   });
+const SearchHome = () => {
 
-//   let params = {
-//     screen_name: term
-//   };
+    return ( 
+        <div class='tweetcards'>
+        <Grid id="tweets">
+    <Grid.Row columns={3} >
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+    </Grid.Row>
 
-//   client.get(
-//     // "https://api.twitter.com/1.1/users/lookup.json",
-//     "statuses/user_timeline",
-//     params,
-//     function(error, tweets, response) {
-//       console.log(response.body);
-//       // response.writeHead(200, { "Content-Type": "application/json" });
-//       // response.end(JSON.stringify(response.body)); // This line sends the tweets to the client making the http request.
-//     }
-//   );
-// };
+    <Grid.Row columns={3}>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+    </Grid.Row>
 
-// <SearchBar searchTwitter={this.searchTwitter} />;
+    <Grid.Row columns={3}>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={bcard} />
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
+  </div>
+    )
+
+}
+export default SearchHome;
