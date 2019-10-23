@@ -34,7 +34,7 @@ class App extends React.Component {
       },
       favorites: [], //user's list of fav
       tweets: [], //tweets of selectedAcc
-      selectedAcc: [], //twitteraccount
+      selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
       top10: [
         {
           key: "Barack Obama",
@@ -93,6 +93,11 @@ class App extends React.Component {
     });
   };
 
+  updateSelectedAcc = (name, account) => {
+    this.setState({
+      selectedAcc: { name: { name }, twitterHandle: { account } }
+    });
+  };
   updateUser = e => {
     // fetch(Url + this.state.user.id , {
     //     method: 'UPDATE',
