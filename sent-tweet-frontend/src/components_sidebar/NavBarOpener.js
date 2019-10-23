@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Icon } from 'semantic-ui-react'
-import { checkPropTypes } from 'prop-types'
+import { Button } from 'semantic-ui-react'
+
 
 const openNavButton = (props) => (
   <Button circular basic inverted color='blue'  id='navBarBtn' onClick={props.toggle}>

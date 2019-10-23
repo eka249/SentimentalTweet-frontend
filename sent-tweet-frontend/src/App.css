@@ -1,9 +1,11 @@
 html, body {
   width: 100%;
   height: 100vh;
-  background-image: url('./assets/home1.21.jpg');
+  background-color: black;
+  background-image: url('./assets/home2.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .App {
@@ -27,17 +29,64 @@ html, body {
   margin-left:15%;
   margin-right:15%;
   margin-bottom:10%;
-  position: fixed;
+  /* position: fixed; */
   left: auto;
   top: auto; 
+  height:110px;
+  border-radius: 5%;
 }
+/* 
 
-#tweets img {
-  max-height: 110px;
+#front {
   position: relative;
   margin-left:auto;
   margin-right:auto;
   border-radius: 5%;
-  opacity: 0.8;
+}
 
+#back {
+  overflow: scroll;
+} */
+
+.tweetcards img {
+  height: 110px;
+  position: relative;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 5%;
+  opacity: 0.2;
+}
+
+.tweetfront {
+  height: 110px;
+  /* background-color: rgb(255, 255, 255); */
+  border-radius: 5%;
+  text-align: center;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+}
+
+#icon {
+  height: 100px;
+  width: 100px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+}
+
+
+.ui.card {
+  height: 110px;
+  width: 275px;
+  background-color: rgba(255, 255, 255, 0.89);
+}
+.ui.segment{
+  width: 200px;
+  height: 100px;
+
+}
+
+.flip-cart {
+  text-align: center;
 }
