@@ -5,12 +5,9 @@ const ActualTweetCard = props => {
     <div onClick={props.handleClick}>
       <div className="ui card">
         <div className="content">
-          <div className="header">Tweet Date</div>
+          <div className="header">{props.tweeter}</div>
           <div className="description">
-            <p>
-              This tweet is about me and me alone. No one else needs to be
-              mentioned.
-            </p>
+            <p>{props.tweet}</p>
           </div>
         </div>
         <div className="extra content">

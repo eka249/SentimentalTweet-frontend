@@ -8,10 +8,17 @@ import CardFlip from "./components/CardFlip";
 import Favorites from "./components/Favorites";
 import Profile from "./components/Profile";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import tweets from "./components/SampleData";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
 
 import ModalContainer from "./components/ModalContainer";
+import CelebIteration from "./components/CelebIteration";
+import ActualTweetCard from "./components/ActualTweetCard";
+import DataIteration from "./components/SampleDataIteration";
+import DropDown2 from "./components/DropDown";
+import SearchBar from "./components/SearchBar";
+import DropDownIterator from "./components/DropDownIterator";
 
 class App extends React.Component {
   constructor() {
@@ -28,7 +35,24 @@ class App extends React.Component {
       // },
       // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
       tweets: [], //tweets of selectedAcc
-      selectedAcc: [] //twitteraccount
+      selectedAcc: [], //twitteraccount
+      top10: [
+        {
+          key: "Barack Obama",
+          value: "Barack Obama",
+          text: "@BarackObama"
+        },
+        {
+          key: "Katy Perry",
+          value: "Katy Perry",
+          text: "@katyperry"
+        },
+        {
+          key: "Justin BIeber",
+          value: "Justin Bieber",
+          text: "@justinbieber"
+        }
+      ]
     };
   }
 
@@ -119,6 +143,27 @@ class App extends React.Component {
     //   this.setState({
     //    favorites: [...this.state.favorites, data]
     // })})
+  };
+
+  searchTwitter = celeb => {
+    fetch(`http://localhost:3000/tweets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: ""
+      },
+
+      body: JSON.stringify({
+        celeb
+      })
+    })
+      .then(response => response.json)
+      .then(data => {
+        this.setState({
+          tweets: data
+        });
+      });
   };
 
   render() {
