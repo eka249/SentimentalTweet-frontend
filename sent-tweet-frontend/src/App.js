@@ -8,27 +8,50 @@ import CardFlip from "./components/CardFlip";
 import Favorites from "./components/Favorites";
 import Profile from "./components/Profile";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import tweets from "./components/SampleData";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
 
 import ModalContainer from "./components/ModalContainer";
+import CelebIteration from "./components/CelebIteration";
+import ActualTweetCard from "./components/ActualTweetCard";
+import DataIteration from "./components/SampleDataIteration";
+import DropDown2 from "./components/DropDown";
+import SearchBar from "./components/SearchBar";
+import DropDownIterator from "./components/DropDownIterator";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       // logged_in: true,
-      logged_in: false,
-      user: null,
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
+      logged_in: true,
+      user: {
+        username: "tester1",
+        name: "tester1",
+        password: "tester1",
+        id: 1
+      },
+      favorites: [], //user's list of fav
       tweets: [], //tweets of selectedAcc
-      selectedAcc: [] //twitteraccount
+      selectedAcc: [], //twitteraccount
+      top10: [
+        {
+          key: "Barack Obama",
+          value: "Barack Obama",
+          text: "@BarackObama"
+        },
+        {
+          key: "Katy Perry",
+          value: "Katy Perry",
+          text: "@katyperry"
+        },
+        {
+          key: "Justin BIeber",
+          value: "Justin Bieber",
+          text: "@justinbieber"
+        }
+      ]
     };
   }
 
@@ -120,6 +143,27 @@ class App extends React.Component {
     // })})
   };
 
+  searchTwitter = celeb => {
+    fetch(`http://localhost:3000/tweets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: ""
+      },
+
+      body: JSON.stringify({
+        celeb
+      })
+    })
+      .then(response => response.json)
+      .then(data => {
+        this.setState({
+          tweets: data
+        });
+      });
+  };
+
   render() {
     //use loggedInYN as props flag throughout routes
     return (
@@ -132,7 +176,10 @@ class App extends React.Component {
           />
           <Route exact path="/favorites">
             {this.state.logged_in ? (
-              <Favorites favs={this.state.favs} deleteFav={this.deleteFav} />
+              <Favorites
+                favs={this.state.favorites}
+                deleteFav={this.deleteFav}
+              />
             ) : (
               <Redirect to="/" />
             )}
@@ -144,10 +191,18 @@ class App extends React.Component {
               <Redirect to="/" />
             )}
           </Route>
-          {/* <SearchHome />
-          <Tweets /> */}
+          {/* <SearchHome /> */}
+          {/* <Tweets /> */}
           {/* <ModalContainer /> */}
         </Router>
+        {/* <SearchBar searchTwitter={this.searchTwitter} /> */}
+        {/* <DropDownIterator top10={this.state.top10}/> */}
+        <DropDown2
+          top10={this.state.top10}
+          searchTwitter={this.searchTwitter}
+        />
+        {/* <CardFlip /> */}
+        {/* <DataIteration tweets={tweets} /> */}
       </div>
     );
   }

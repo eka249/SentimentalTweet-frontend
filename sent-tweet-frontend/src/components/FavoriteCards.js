@@ -5,8 +5,8 @@ const FavoriteCard = props => {
     console.log("I have been clicked Asif");
   };
   return (
-    <div>
-      <div className="ui card">
+    <div class="ui four cards">
+      <div className="card">
         <div className="image">
           <img src={process.env.PUBLIC_URL + "/logo192.png"} alt=" " />
         </div>
@@ -21,12 +21,12 @@ const FavoriteCard = props => {
             <i className={`icon-left large ${"smile outline"} icon`} />
             22
           </span>
-          <span className="center floated heart" onClick={addFavorite}>
-            <i className={`icon-center large ${"heart outline"} icon`} />
+          <span className="right floated heart" onClick={addFavorite}>
+            <i className={`icon-right large ${"heart outline"} icon`} />
             22
           </span>
-          <span className="right floated frown">
-            <i className={`icon-right large ${"frown outline"} icon`} />2
+          <span className="left floated frown">
+            <i className={`icon-left large ${"frown outline"} icon`} />2
           </span>
         </div>
       </div>
