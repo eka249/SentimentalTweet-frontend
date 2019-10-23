@@ -1,12 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
 
 import NavBarOpener from "./buttonComponents/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Favorites from './components/Favorites';
-import Profile from './components/Profile';
+// import Favorites from './components/Favorites';
+// import Profile from './components/Profile';
+
 // import Tweets from "./containers/Tweets";
 // import ModalContainer from "./components/ModalContainer";
 
@@ -16,9 +17,14 @@ class App extends React.Component {
     this.state = {
       logged_in: true,
       // user: null,
-          user: {'username':'tester1', 'name':'tester1', 'password':'tester1', 'id':1},
-      favorites: [{'one':1}, {'two':2}], //user's list of fav
-      tweets: [], //tweets of selectedAcc 
+      user: {
+        username: "tester1",
+        name: "tester1",
+        password: "tester1",
+        id: 1
+      },
+      favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
+      tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ], //tweets of selectedAcc
       selectedAcc: [], //twitteraccount
       navBarShow: false
     };
@@ -62,23 +68,22 @@ class App extends React.Component {
     });
   };
 
-  updateUser = (e) => {
-        // fetch(Url + this.state.user.id , {
-        //     method: 'UPDATE',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Accept: 'application/json'
-        //     },
-        //     body: JSON.stringify({ name })
-        // })
-        // .then(resp => resp.json())
-        // .then(data => this.handleChange(data.name))
-        // MAKE SURE data.name IS  THE NAME ONLY
-  }
+  updateUser = e => {
+    // fetch(Url + this.state.user.id , {
+    //     method: 'UPDATE',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json'
+    //     },
+    //     body: JSON.stringify({ name })
+    // })
+    // .then(resp => resp.json())
+    // .then(data => this.handleChange(data.name))
+    // MAKE SURE data.name IS  THE NAME ONLY
+  };
 
-  deleteFav = (e) => {
+  deleteFav = e => {
     //********* RECEIVE ALL FAVS of USER as RETURNED DATA
-
     // fetch(Url + e.id {
     //   method: 'DELETE',
     //   headers: {
@@ -92,28 +97,26 @@ class App extends React.Component {
     //     favorites: data
     //   })
     // })
-  }
+  };
 
-  addFav = (e) => {
-      // const user_id = this.state.user.id
-      // const twitter_account_id = e.target.id
-      ////////double check on the e.target.id to match twitteracc id. 
-
-
-        // fetch(Url, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Accept: 'application/json'
-        //     },
-        //     body: JSON.stringify({ user_id, twitter_account_id })
-        // })
-        // .then(resp => resp.json())
-        // .then(data => {
-        //   this.setState({
-        //    favorites: [...this.state.favorites, data] 
-        // })})
-  }
+  addFav = e => {
+    // const user_id = this.state.user.id
+    // const twitter_account_id = e.target.id
+    ////////double check on the e.target.id to match twitteracc id.
+    // fetch(Url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json'
+    //     },
+    //     body: JSON.stringify({ user_id, twitter_account_id })
+    // })
+    // .then(resp => resp.json())
+    // .then(data => {
+    //   this.setState({
+    //    favorites: [...this.state.favorites, data]
+    // })})
+  };
 
 
   toggleNav = () => {
@@ -174,7 +177,9 @@ class App extends React.Component {
               <div className="App"> 
                 <NavBarOpener toggle={this.toggleNav}/>                
                 <Route exact path="/">
-                  {/* <SearchHome /> */}
+                  {console.log('above Searchome')}
+                  <SearchHome tweets={this.state.tweets} />
+                  {console.log('below Searchome')}
                 </Route>
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
