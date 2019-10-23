@@ -174,7 +174,7 @@ class App extends React.Component {
               <div className="App"> 
                 <NavBarOpener toggle={this.toggleNav}/>                
                 <Route exact path="/">
-                  <SearchHome />
+                  {/* <SearchHome /> */}
                 </Route>
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
