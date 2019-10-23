@@ -19,15 +19,19 @@ class CardFlip extends React.Component {
 
   render() {
     return (
-      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical">
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical" id='flipcard'>
         <ActualTweetCardFront
           key="front"
           handleClick={this.handleClick}
+          sent={this.props.tweet.sentiment}
         ></ActualTweetCardFront>
 
         <ActualTweetCard
           key="back"
           handleClick={this.handleClick}
+          content={this.props.tweet.content}
+          date={this.props.tweet.date}
+          sent={this.props.tweet.sentiment}
         ></ActualTweetCard>
       </ReactCardFlip>
     );

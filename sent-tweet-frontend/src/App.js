@@ -11,7 +11,12 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import tweets from "./components/SampleData";
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import "semantic-ui-css/semantic.min.css";
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
 
+import NavBarOpener from "./buttonComponents/NavBarOpener";
+import SearchHome from "./containers/SearchHome";
 import ModalContainer from "./components/ModalContainer";
 import CelebIteration from "./components/CelebIteration";
 import ActualTweetCard from "./components/ActualTweetCard";
@@ -34,7 +39,12 @@ class App extends React.Component {
       //   id: 1
       // },
       // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
-      tweets: [], //tweets of selectedAcc
+      tweets: [
+        { content: "Hello", sentiment: 0.5, date: "10/23/19" },
+        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
+      ], //tweets of selectedAcc
+      selectedAcc: [], //twitteraccount
+      navBarShow: false,
       selectedAcc: [], //twitteraccount
       top10: [
         {
@@ -166,43 +176,86 @@ class App extends React.Component {
       });
   };
 
-  render() {
-    //use loggedInYN as props flag throughout routes
+  toggleNav = () => {
+    this.setState({
+      navBarShow: !this.state.navBarShow
+    });
+  };
+
+  signed = () => {
     return (
-      <div className="ui container" style={{ marginTop: "10px" }}>
-        {/* <Router>
-          <NavBar
-            loggedin={this.state.logged_in}
-            signout={this.logOut}
-            onSignIn={this.onSignIn}
-          />
-          <Route exact path="/favorites">
+      <React.Fragment>
+        <Menu.Item as="a">
+          <Icon name="home" />
+          Home
+        </Menu.Item>
+        <Menu.Item as={Link} to="/favorites">
+          <Icon name="heart outline" />
+          Favorites
+        </Menu.Item>
+        <Menu.Item as={Link} to="/profile">
+          <Icon name="camera" />
+          Profile
+        </Menu.Item>
+        <Menu.Item onClick={() => this.logOut()}>
+          <Icon name="sign out" />
+          Sign-out
+        </Menu.Item>
+      </React.Fragment>
+    );
+  };
+
+  render() {
+    return (
+      <Router>
+        <Sidebar.Pushable>
+          <Sidebar
+            as={Menu}
+            animation="overlay"
+            icon="labeled"
+            inverted
+            onHide={() => this.toggleNav()}
+            vertical
+            visible={this.state.navBarShow}
+            width="thin"
+          >
             {this.state.logged_in ? (
-              <Favorites
-                favs={this.state.favorites}
-                deleteFav={this.deleteFav}
-              />
+              this.signed()
             ) : (
-              <Redirect to="/" />
+              <Menu.Item onClick={() => this.onSignIn()}>
+                <Icon name="sign in" />
+                Sign-in
+              </Menu.Item>
             )}
-          </Route>
-          <Route exact path="/profile">
-            {this.state.logged_in ? (
-              <Profile user={this.state.user} updateUser={this.updateUser} />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route> */}
-        {/* <SearchHome />
-          <Tweets /> */}
-        <SignIn
-          logged_in={this.state.logged_in}
-          user={this.state.user}
-          getLoggedIn={this.getLoggedIn}
-        />
-        {/* <ModalContainer /> */}
-        {/* </Router> */}
-      </div>
+          </Sidebar>
+
+          <Sidebar.Pusher dimmed={this.state.navBarShow}>
+            <React.Fragment>
+              <div className="App">
+                <NavBarOpener toggle={this.toggleNav} />
+                <Route exact path="/">
+                  {console.log("above Searchome")}
+                  <SearchHome tweets={this.state.tweets} />
+                  {console.log("below Searchome")}
+                </Route>
+                <Route exact path="/favorites">
+                  {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
+                </Route>
+                <Route exact path="/profile">
+                  {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
+                </Route>
+                {/* <Tweets />
+                <ModalContainer /> */}
+                <SignIn
+                  logged_in={this.state.logged_in}
+                  user={this.state.user}
+                  getLoggedIn={this.getLoggedIn}
+                />
+              </div>
+            </React.Fragment>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </Router>
     );
   }
 }
