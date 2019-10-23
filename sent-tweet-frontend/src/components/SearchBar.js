@@ -39,7 +39,7 @@ export class SearchBar extends React.Component {
 
   handleSearchTwitter = e => {
     e.preventDefault();
-    console.log("searchbar term value", this.state.term);
+    // console.log("searchbar term value", this.state.term);
     // this.setState({term: })
     let celeb = this.state.term;
     this.props.searchTwitter(celeb);

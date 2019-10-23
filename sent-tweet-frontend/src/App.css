@@ -1,27 +1,86 @@
+html, body {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  background-image: url('./assets/home2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
 .App {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  display: grid;
+
+}
+
+#navBarBtn {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  left: 4%;
+  bottom: 5%;
+}
+
+.tweetcards {
+  margin-top:10%;
+  margin-left:15%;
+  margin-right:15%;
+  margin-bottom:10%;
+  /* position: fixed; */
+  left: auto;
+  top: auto; 
+  height:110px;
+  border-radius: 5%;
+}
+/* 
+
+#front {
+  position: relative;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 5%;
+}
+
+#back {
+  overflow: scroll;
+} */
+
+.tweetcards img {
+  height: 110px;
+  position: relative;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 5%;
+  opacity: 0.8;
+}
+
+.tweetfront {
+  height: 110px;
+  /* background-color: rgb(255, 255, 255); */
+  border-radius: 5%;
   text-align: center;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
 }
 
-.App-logo {
-  height: 40vmin;
+#icon {
+  height: 100px;
+  width: 100px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #09d3ac;
+.ui.card {
+  height: 110px;
+  width: 275px;
+  background-color: rgba(255, 255, 255, 0.89);
 }
+#back {
 
-.navbar a {
-  color: #fff!important;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.5) inset!important;
 }

@@ -3,18 +3,24 @@ import { Modal, Form, Header, Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 class ModalContainer extends Component {
-  state = {
-    fields: {
-      username: "",
-      password: "",
-      newUser: {
-        newName: "",
-        newUsername: "",
-        newPassword: ""
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fields: {
+        username: "",
+        password: "",
+        newUser: {
+          newName: "",
+          newUsername: "",
+          newPassword: ""
+        },
+        signedUp: false
       }
-    }
-  };
+    };
+  }
   handleChange = e => {
+    // console.log(this.state.fields.username);
     // console.log(e.target.value);
     // console.log(e.target.id);
     let fieldName = e.target.id;
@@ -23,7 +29,8 @@ class ModalContainer extends Component {
     });
   };
   handleSignUp = e => {
-    e.preventDefault();
+    // e.preventDefault();
+    // console.log("reached handle sign up");
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
@@ -33,22 +40,20 @@ class ModalContainer extends Component {
       body: JSON.stringify({
         name: this.state.fields.newUser.newName,
         username: this.state.fields.newUser.newUsername,
-        password_digest: this.state.fields.newUser.password_digest
+        password: this.state.fields.newUser.password_digest
       })
     })
       .then(response => response.json())
       .then(data => {
-        console.log("after sign up form", data);
+        // console.log("after sign up form", data);
         // this.setState(prevState => {
         //   return { signedUp: true };
         // });
       });
   };
 
-  handleSignIn = e => {
-    console.log("reached sign in function");
-    e.preventDefault();
-
+  onSignIn = () => {
+    // console.log("reached sign in function");
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -66,7 +71,8 @@ class ModalContainer extends Component {
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
           // debugger
-          this.props.onSignIn(json);
+          // console.log(json);
+          this.props.getLoggedIn(json);
         }
       });
   };
@@ -111,7 +117,7 @@ class ModalContainer extends Component {
             color="green"
             content="Sign In"
             // onClick={console.log("sign in hit")}
-            onClick={e => this.handleSignIn(e)}
+            onClick={this.onSignIn}
           />
         </Modal.Actions>
         <Modal.Content>
@@ -150,7 +156,7 @@ class ModalContainer extends Component {
         <Modal.Actions>
           <Button
             // type="submit"
-            onClick={e => this.handleSignUp(e)}
+            onClick={this.handleSignUp}
             color="green"
             icon="pencil"
             content="Sign Up!"

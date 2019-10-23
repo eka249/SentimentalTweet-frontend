@@ -6,8 +6,6 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import Favorites from "../components/Favorites";
-import Profile from "../components/Profile";
 import SignInTestButton from "../components/SignIn";
 
 class NavBar extends Component {
@@ -38,7 +36,7 @@ class NavBar extends Component {
           {loggedin ? (
             this.signed()
           ) : (
-            <SignInTestButton onSignIn={this.props.onSignIn} />
+            <SignInTestButton onSignIn={() => this.props.onSignIn()} />
           )}
         </div>
       </div>
