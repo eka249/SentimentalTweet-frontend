@@ -1,14 +1,22 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
+<<<<<<< HEAD
 import NavBar from "./containers/NavBar";
 import SearchHome from "./containers/SearchHome";
 import Tweets from "./containers/Tweets";
 import SignIn from "./components/SignIn";
 import CardFlip from "./components/CardFlip";
+=======
+import { Icon, Menu, Sidebar } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import NavBarOpener from "./buttonComponents/NavBarOpener";
+import SearchHome from "./containers/SearchHome";
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
 import Favorites from "./components/Favorites";
 import Profile from "./components/Profile";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import tweets from "./components/SampleData";
+<<<<<<< HEAD
 // import SearchHome from "./containers/SearchHome";
 // import Tweets from "./containers/Tweets";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -17,6 +25,8 @@ import { Icon, Menu, Sidebar } from "semantic-ui-react";
 
 import NavBarOpener from "./buttonComponents/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
+=======
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
 import ModalContainer from "./components/ModalContainer";
 import CelebIteration from "./components/CelebIteration";
 import ActualTweetCard from "./components/ActualTweetCard";
@@ -37,9 +47,15 @@ class App extends React.Component {
         password: "tester1",
         id: 1
       },
+<<<<<<< HEAD
       favorites: [], //user's list of fav
       tweets: [], //tweets of selectedAcc
       selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
+=======
+      favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
+      tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ], //tweets of selectedAcc
+      selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
       navBarShow: false,
       top10: [
         {
@@ -155,6 +171,37 @@ class App extends React.Component {
     // })})
   };
 
+<<<<<<< HEAD
+=======
+  toggleNav = () => {
+    this.setState({
+      navBarShow: !this.state.navBarShow
+    })
+  }
+
+  signed = () => {
+    return (
+        <React.Fragment >
+            <Menu.Item as='a'>
+                <Icon name='home' />
+                Home
+            </Menu.Item>
+            <Menu.Item as={Link} to='/favorites'>
+                <Icon name='heart outline' />
+                Favorites
+            </Menu.Item>
+            <Menu.Item as={Link} to='/profile'>
+                <Icon name='camera' />
+                Profile
+            </Menu.Item>
+            <Menu.Item onClick={()=>this.logOut()}>
+                <Icon name='sign out' />
+                Sign-out 
+            </Menu.Item>
+        </React.Fragment>
+    )
+}  
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
   searchTwitter = celeb => {
     fetch(`http://localhost:3000/tweets`, {
       method: "POST",
@@ -175,6 +222,7 @@ class App extends React.Component {
         });
       });
   };
+<<<<<<< HEAD
 
   toggleNav = () => {
     this.setState({
@@ -204,6 +252,8 @@ class App extends React.Component {
       </React.Fragment>
     );
   };
+=======
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
 
   render() {
     return (
@@ -234,10 +284,17 @@ class App extends React.Component {
               <div className="App">
                 <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
+<<<<<<< HEAD
                   {console.log("above Searchome")}
                   <SearchHome tweets={this.state.tweets} />
                   {console.log("below Searchome")}
+=======
+                  {console.log('above Searchome')}
+                  <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/>
+                  {console.log('below Searchome')}
+>>>>>>> 32774aceedec07a901e366fd83782572c390be2f
                 </Route>
+                <SearchBar searchTwitter={this.searchTwitter} />
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>
