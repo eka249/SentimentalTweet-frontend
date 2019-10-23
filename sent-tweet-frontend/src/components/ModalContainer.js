@@ -3,18 +3,24 @@ import { Modal, Form, Header, Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 class ModalContainer extends Component {
-  state = {
-    fields: {
-      username: "",
-      password: "",
-      newUser: {
-        newName: "",
-        newUsername: "",
-        newPassword: ""
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fields: {
+        username: "",
+        password: "",
+        newUser: {
+          newName: "",
+          newUsername: "",
+          newPassword: ""
+        },
+        signedUp: false
       }
-    }
-  };
+    };
+  }
   handleChange = e => {
+    // console.log(this.state.fields.username);
     // console.log(e.target.value);
     // console.log(e.target.id);
     let fieldName = e.target.id;
@@ -23,7 +29,8 @@ class ModalContainer extends Component {
     });
   };
   handleSignUp = e => {
-    e.preventDefault();
+    // e.preventDefault();
+    console.log("reached handle sign up");
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
@@ -31,9 +38,14 @@ class ModalContainer extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: this.state.fields.newUser.newName,
-        username: this.state.fields.newUser.newUsername,
-        password_digest: this.state.fields.newUser.password_digest
+        name:
+          // this.state.fields.newUser.newName,
+          "test4",
+        username:
+          // this.state.fields.newUser.newUsername
+          "test4",
+        password_digest: "test4"
+        // this.state.fields.newUser.password_digest
       })
     })
       .then(response => response.json())
@@ -45,10 +57,8 @@ class ModalContainer extends Component {
       });
   };
 
-  handleSignIn = e => {
+  onSignIn = () => {
     console.log("reached sign in function");
-    e.preventDefault();
-
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -56,8 +66,10 @@ class ModalContainer extends Component {
         Accepts: "application/json"
       },
       body: JSON.stringify({
-        username: this.state.fields.username,
-        password: this.state.fields.password
+        username: "test4",
+        // this.state.fields.username,
+        password: "test4"
+        // this.state.fields.password
       })
     })
       .then(response => response.json())
@@ -111,7 +123,7 @@ class ModalContainer extends Component {
             color="green"
             content="Sign In"
             // onClick={console.log("sign in hit")}
-            onClick={e => this.handleSignIn(e)}
+            onClick={this.onSignIn}
           />
         </Modal.Actions>
         <Modal.Content>
@@ -150,7 +162,7 @@ class ModalContainer extends Component {
         <Modal.Actions>
           <Button
             // type="submit"
-            onClick={e => this.handleSignUp(e)}
+            onClick={this.handleSignUp}
             color="green"
             icon="pencil"
             content="Sign Up!"

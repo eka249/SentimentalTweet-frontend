@@ -17,8 +17,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      // logged_in: true,
-      logged_in: false,
+      // logged_in: false,
+      logged_in: true,
       user: null,
       // user: {
       //   username: "tester1",
@@ -26,13 +26,14 @@ class App extends React.Component {
       //   password: "tester1",
       //   id: 1
       // },
-      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
+      // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
       tweets: [], //tweets of selectedAcc
       selectedAcc: [] //twitteraccount
     };
   }
 
-  loggedInYN = (data, from) => {
+  getLoggedIn = (data, from) => {
+    console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -124,7 +125,7 @@ class App extends React.Component {
     //use loggedInYN as props flag throughout routes
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <Router>
+        {/* <Router>
           <NavBar
             loggedin={this.state.logged_in}
             signout={this.logOut}
@@ -132,7 +133,10 @@ class App extends React.Component {
           />
           <Route exact path="/favorites">
             {this.state.logged_in ? (
-              <Favorites favs={this.state.favs} deleteFav={this.deleteFav} />
+              <Favorites
+                favs={this.state.favorites}
+                deleteFav={this.deleteFav}
+              />
             ) : (
               <Redirect to="/" />
             )}
@@ -143,11 +147,16 @@ class App extends React.Component {
             ) : (
               <Redirect to="/" />
             )}
-          </Route>
-          {/* <SearchHome />
+          </Route> */}
+        {/* <SearchHome />
           <Tweets /> */}
-          {/* <ModalContainer /> */}
-        </Router>
+        <SignIn
+          logged_in={this.state.logged_in}
+          user={this.state.user}
+          getLoggedIn={this.getLoggedIn}
+        />
+        {/* <ModalContainer /> */}
+        {/* </Router> */}
       </div>
     );
   }
