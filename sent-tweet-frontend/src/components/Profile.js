@@ -15,7 +15,7 @@ class Profile extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("handleSubmit");
+    // console.log("handleSubmit");
     this.props.updateUser(this.state.name);
   };
 

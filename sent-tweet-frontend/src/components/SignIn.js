@@ -12,8 +12,10 @@ class SignIn extends Component {
     });
   };
   fetchTwitter = e => {
-    console.log("signed in as:", this.props.user);
-    console.log("initiated fetch from front end");
+    // console.log("signed in as:", this.props.user);
+    // console.log("local storage token", localStorage.token);
+    console.log("began fetchtwitter on front end-should go to /celebs");
+
     let celeb = "realDonaldTrump";
     //^insert field name that asif makes here
     fetch(`http://localhost:3000/celebs`, {
@@ -23,9 +25,7 @@ class SignIn extends Component {
         Accept: "application/json",
         Authorization: `Bearer ${localStorage.token}`
       },
-      body: JSON.stringify({
-        celeb: celeb
-      })
+      body: JSON.stringify({ celeb: celeb })
     });
   };
 
@@ -35,7 +35,8 @@ class SignIn extends Component {
         <button onClick={this.showModal}>Sign in button</button>
         {this.state.show ? (
           <ModalContainer
-            onSignIn={this.props.onSignIn}
+            user={this.props.user}
+            getLoggedIn={this.props.getLoggedIn}
             showModal={this.showModal}
           />
         ) : null}

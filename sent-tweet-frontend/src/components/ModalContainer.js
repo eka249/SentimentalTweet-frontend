@@ -30,7 +30,7 @@ class ModalContainer extends Component {
   };
   handleSignUp = e => {
     // e.preventDefault();
-    console.log("reached handle sign up");
+    // console.log("reached handle sign up");
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
@@ -38,19 +38,14 @@ class ModalContainer extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name:
-          // this.state.fields.newUser.newName,
-          "test4",
-        username:
-          // this.state.fields.newUser.newUsername
-          "test4",
-        password_digest: "test4"
-        // this.state.fields.newUser.password_digest
+        name: this.state.fields.newUser.newName,
+        username: this.state.fields.newUser.newUsername,
+        password: this.state.fields.newUser.password_digest
       })
     })
       .then(response => response.json())
       .then(data => {
-        console.log("after sign up form", data);
+        // console.log("after sign up form", data);
         // this.setState(prevState => {
         //   return { signedUp: true };
         // });
@@ -58,7 +53,7 @@ class ModalContainer extends Component {
   };
 
   onSignIn = () => {
-    console.log("reached sign in function");
+    // console.log("reached sign in function");
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -66,10 +61,8 @@ class ModalContainer extends Component {
         Accepts: "application/json"
       },
       body: JSON.stringify({
-        username: "test4",
-        // this.state.fields.username,
-        password: "test4"
-        // this.state.fields.password
+        username: this.state.fields.username,
+        password: this.state.fields.password
       })
     })
       .then(response => response.json())
@@ -78,7 +71,8 @@ class ModalContainer extends Component {
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
           // debugger
-          this.props.onSignIn(json);
+          // console.log(json);
+          this.props.getLoggedIn(json);
         }
       });
   };

@@ -3,7 +3,7 @@ import React from "react";
 
 const TweetIndex = props => {
   return props.tweets.map(tweet => {
-    console.log(tweet);
+    // console.log(tweet);
     return <TweetCard text={tweet.text} />;
   });
 };

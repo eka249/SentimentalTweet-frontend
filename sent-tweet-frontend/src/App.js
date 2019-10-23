@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   getLoggedIn = (data, from) => {
-    console.log("initiated sign in fetch");
+    // console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
