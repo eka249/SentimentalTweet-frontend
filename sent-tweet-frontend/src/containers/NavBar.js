@@ -20,7 +20,7 @@ class NavBar extends Component {
                     {loggedin? ( 
                         this.signed()
                     ) : (
-                        <SignInTestButton onSignIn={this.props.onSignIn} />
+                        <SignInTestButton onSignIn={() =>this.props.onSignIn()} />
                     )}
                 </div>
             </div>
