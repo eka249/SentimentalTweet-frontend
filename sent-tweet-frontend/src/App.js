@@ -1,23 +1,27 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import 'semantic-ui-css/semantic.min.css'
+import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import NavBarOpener from "./buttonComponents/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
+import Favorites from "./components/Favorites";
+import Profile from "./components/Profile";
+import tweets from "./components/SampleData";
+import ModalContainer from "./components/ModalContainer";
+import CelebIteration from "./components/CelebIteration";
+import ActualTweetCard from "./components/ActualTweetCard";
+import DataIteration from "./components/SampleDataIteration";
+import DropDown2 from "./components/DropDown";
 import SearchBar from "./components/SearchBar";
-// import Favorites from './components/Favorites';
-// import Profile from './components/Profile';
-
-// import Tweets from "./containers/Tweets";
-// import ModalContainer from "./components/ModalContainer";
+import DropDownIterator from "./components/DropDownIterator";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      // logged_in: true,
       logged_in: true,
-      // user: null,
       user: {
         username: "tester1",
         name: "tester1",
@@ -27,7 +31,24 @@ class App extends React.Component {
       favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
       tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ], //tweets of selectedAcc
       selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
-      navBarShow: false
+      navBarShow: false,
+      top10: [
+        {
+          key: "Barack Obama",
+          value: "Barack Obama",
+          text: "@BarackObama"
+        },
+        {
+          key: "Katy Perry",
+          value: "Katy Perry",
+          text: "@katyperry"
+        },
+        {
+          key: "Justin BIeber",
+          value: "Justin Bieber",
+          text: "@justinbieber"
+        }
+      ]
     };
   }
 
@@ -119,28 +140,6 @@ class App extends React.Component {
     // })})
   };
 
-
-  searchTwitter = celeb => {
-    // fetch(http://localhost:3000/tweets, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //     Authorization: ""
-    //   },
-    //   body: JSON.stringify({
-    //     celeb
-    //   })
-    // })
-    //   .then(response => response.json)
-    //   .then(data => {
-    //     this.setState({
-    //       tweets: data
-    //     });
-    //   });
-  };
- 
-
   toggleNav = () => {
     this.setState({
       navBarShow: !this.state.navBarShow
@@ -169,6 +168,26 @@ class App extends React.Component {
         </React.Fragment>
     )
 }  
+  searchTwitter = celeb => {
+    fetch(`http://localhost:3000/tweets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: ""
+      },
+
+      body: JSON.stringify({
+        celeb
+      })
+    })
+      .then(response => response.json)
+      .then(data => {
+        this.setState({
+          tweets: data
+        });
+      });
+  };
 
   render() {
     return (
