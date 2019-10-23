@@ -1,20 +1,13 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import NavBar from "./containers/NavBar";
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import NavBarOpener from "./buttonComponents/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Tweets from "./containers/Tweets";
-import SignIn from "./components/SignIn";
-import CardFlip from "./components/CardFlip";
 import Favorites from "./components/Favorites";
 import Profile from "./components/Profile";
 import tweets from "./components/SampleData";
-// import SearchHome from "./containers/SearchHome";
-// import Tweets from "./containers/Tweets";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import "semantic-ui-css/semantic.min.css";
-import { Icon, Menu, Sidebar } from "semantic-ui-react";
-
-import NavBarOpener from "./buttonComponents/NavBarOpener";
 import ModalContainer from "./components/ModalContainer";
 import CelebIteration from "./components/CelebIteration";
 import ActualTweetCard from "./components/ActualTweetCard";
@@ -168,27 +161,6 @@ class App extends React.Component {
     // })})
   };
 
-  searchTwitter = celeb => {
-    fetch(`http://localhost:3000/tweets`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: ""
-      },
-
-      body: JSON.stringify({
-        celeb
-      })
-    })
-      .then(response => response.json)
-      .then(data => {
-        this.setState({
-          tweets: data
-        });
-      });
-  };
-
   toggleNav = () => {
     this.setState({
       navBarShow: !this.state.navBarShow
@@ -216,6 +188,26 @@ class App extends React.Component {
         </Menu.Item>
       </React.Fragment>
     );
+  };
+  searchTwitter = celeb => {
+    fetch(`http://localhost:3000/tweets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: ""
+      },
+
+      body: JSON.stringify({
+        celeb
+      })
+    })
+      .then(response => response.json)
+      .then(data => {
+        this.setState({
+          tweets: data
+        });
+      });
   };
 
   render() {
@@ -248,9 +240,13 @@ class App extends React.Component {
                 <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
                   {console.log("above Searchome")}
-                  <SearchHome tweets={this.state.tweets} />
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
                   {console.log("below Searchome")}
                 </Route>
+                <SearchBar searchTwitter={this.searchTwitter} />
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>

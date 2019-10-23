@@ -34,8 +34,8 @@
 
 import React from "react";
 
-export class SearchBar extends React.Component {
-  state = { term: "" };
+class SearchBar extends React.Component {
+ state = { term: "" };
 
   handleSearchTwitter = e => {
     e.preventDefault();
@@ -45,23 +45,23 @@ export class SearchBar extends React.Component {
     this.props.searchTwitter(celeb);
   };
 
-  render() {
+ render() {
     return (
       <div className="ui segment">
         <form onSubmit={e => this.handleSearchTwitter(e)} className="ui form">
           <div className="field">
             <label>Search Bar: </label>
             <input
-              type="text"
-              value={this.state.term}
-              onChange={event => this.setState({ term: event.target.value })}
-            />
-            <button type="submit">Submit</button>
+             type="text"
+             value={this.state.term}
+             onChange={event => this.setState({ term: event.target.value })}
+            /><span type="submit">
+                <i className={`circular search icon`} />
+            </span>
           </div>
         </form>
-      </div>
-    );
+      </div> 
+    )
   }
 }
-
 export default SearchBar;
