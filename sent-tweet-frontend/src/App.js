@@ -13,6 +13,7 @@ import Profile from "./containers/Profile";
 
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
+import SearchHome from "./containers/SearchHome";
 
 import Entered from "./HOC/Entered";
 
@@ -20,45 +21,48 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      // logged_in: true,
       entered: false,
       show: false,
       logged_in: false,
-      // user: null,
-      user: {
-        username: "tester1",
-        name: "tester1",
-        password: "tester1",
-        id: 1
-      },
-      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
+      user: null,
+      // user: {
+      //   username: "tester1",
+      //   name: "tester1",
+      //   password: "tester1",
+      //   id: 1
+      // },
+      // favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
       tweets: [
         { content: "Hello", sentiment: 0.5, date: "10/23/19" },
         { content: "Bye", sentiment: 0.3, date: "10/23/19" }
       ], //tweets of selectedAcc
       selectedAcc: [], //twitteraccount
-      navBarShow: false,
+      navBarShow: false
       // favorites: [], //user's list of fav
       // tweets: [], //tweets of selectedAcc
       // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
-      top10: [
-        {
-          key: "Barack Obama",
-          text: "Barack Obama",
-          value: "@BarackObama"
-        },
-        {
-          key: "Katy Perry",
-          text: "Katy Perry",
-          value: "@katyperry"
-        },
-        {
-          key: "Justin BIeber",
-          text: "Justin Bieber",
-          value: "@justinbieber"
-        }
-      ]
+      // top10: [
+      //   {
+      //     key: "Barack Obama",
+      //     text: "Barack Obama",
+      //     value: "@BarackObama"
+      //   },
+      //   {
+      //     key: "Katy Perry",
+      //     text: "Katy Perry",
+      //     value: "@katyperry"
+      //   },
+      //   {
+      //     key: "Justin BIeber",
+      //     text: "Justin Bieber",
+      //     value: "@justinbieber"
+      //   }
+      // ]
     };
+    let allCelebs = fetch("http://localhost:3000/profile")
+      .then(resp => resp.json())
+      .then(data => console.log(data));
+    // .then(data => this.setState((allCelebs = data)));
   }
   showModal = () => {
     this.setState({
@@ -66,7 +70,7 @@ class App extends React.Component {
     });
   };
 
-  getLoggedIn = (data, from) => {
+  getLoggedIn = json => {
     console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
@@ -81,19 +85,6 @@ class App extends React.Component {
         });
       });
   };
-
-  // getUser = () => {
-  //   fetch(`http://localhost:3000/users/${this.state.user.id}`)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       this.setState(prevState => {
-  //         return {
-  //           logged_in: true,
-  //           user: data
-  //         };
-  //       });
-  //     });
-  // };
 
   logOut = () => {
     localStorage.removeItem("token");
@@ -208,7 +199,11 @@ class App extends React.Component {
         <FavBar favs={this.state.favorites} />
         <NavBarOpener toggle={this.toggleNav} />
         {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
-        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
+        <DropDown
+          // top10={this.state.top10}
+          allCelebs={this.state.allCelebs}
+          searchTwitter={this.searchTwitter}
+        />
       </React.Fragment>
     );
   };
@@ -277,6 +272,7 @@ class App extends React.Component {
                   <Favorites
                     loggedin={this.state.logged_in}
                     favs={this.state.favorites}
+                    user={this.state.user}
                     deleteFav={this.deleteFav}
                     toggleNav={this.toggleNav}
                   />

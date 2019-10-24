@@ -51,8 +51,6 @@ class ModalContainer extends Component {
   };
 
   onSignIn = () => {
-    // console.log("reached sign in function");
-    // () => this.props.showModal;
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -69,12 +67,11 @@ class ModalContainer extends Component {
         //do something to update App state to deal with the logged_in status
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
-          // debugger
-          // console.log(json);
           this.props.getLoggedIn(json);
         }
       });
   };
+
   render() {
     return (
       <Modal
@@ -83,7 +80,8 @@ class ModalContainer extends Component {
         open={true}
         size="tiny"
         // closeIcon={this.props.showModal}
-      className='c-modal'>
+        className="c-modal"
+      >
         <Header content="Sign In" as="h2"></Header>
         <Modal.Actions>
           <Button
@@ -116,12 +114,15 @@ class ModalContainer extends Component {
             color="green"
             content="Sign In"
             // onClick={console.log("sign in hit")}
-            onClick={this.onSignIn}
+            onClick={
+              this.onSignIn
+              // , this.props.showModal
+            }
           />
         </Modal.Actions>
         <Modal.Content>
           <Header content="Or Sign Up!" as="h3"></Header>
-          
+
           <Form.Input
             label="Your Name"
             // required

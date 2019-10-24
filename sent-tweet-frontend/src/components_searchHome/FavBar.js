@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
 import LoggedInHOC from "../HOC/LoggedInHOC";
 
-const FavBar = (props) => {
-    
-    return (
-        <div className="fav-list">
-            <div id="empty">{ " "} </div>
+const FavBar = props => {
+  return (
+    <div className="fav-list">
+      {/* <div id="empty">{ " "} </div>
             {props.favs.map( acc => {
                 console.log('here')
                 return (
@@ -13,9 +12,9 @@ const FavBar = (props) => {
                         {acc.name}
                     </div>
                 )
-            })}
-        </div>
-    )
-}
+            })} */}
+    </div>
+  );
+};
 
 export default LoggedInHOC(FavBar);
