@@ -149,6 +149,36 @@ class App extends React.Component {
       </React.Fragment>
     );
   };
+
+  toggleNav = () => {
+    this.setState({
+      navBarShow: !this.state.navBarShow
+    });
+  };
+
+  signed = () => {
+    return (
+      <React.Fragment>
+        <Menu.Item as="a">
+          <Icon name="home" />
+          Home
+        </Menu.Item>
+        <Menu.Item as={Link} to="/favorites">
+          <Icon name="heart outline" />
+          Favorites
+        </Menu.Item>
+        <Menu.Item as={Link} to="/profile">
+          <Icon name="camera" />
+          Profile
+        </Menu.Item>
+        <Menu.Item onClick={() => this.logOut()}>
+          <Icon name="sign out" />
+          Sign-out
+        </Menu.Item>
+      </React.Fragment>
+    );
+  };
+
   searchTwitter = celeb => {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
@@ -239,6 +269,13 @@ class App extends React.Component {
                     searchTwitter={this.searchTwitter}
                     updateSelectedAcc={this.updateSelectedAcc}
                   />
+                  {console.log("below Searchome")}
+                  {console.log("above Searchome")}
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
+                  {console.log("below Searchome")}
                 </Route>
 
                 <Route exact path="/favorites">
