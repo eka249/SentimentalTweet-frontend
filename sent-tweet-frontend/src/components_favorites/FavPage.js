@@ -1,18 +1,17 @@
 import React from "react";
-import AllCelebs from "../components_favorites/AllCelebs";
-import UserFavoriteTweeters from "../components_favorites/UsersFavoriteTweeters";
-import { CardGroup } from "semantic-ui-react";
+import FavoriteCard from "./FavoriteCards";
+import AllTweeters from "./AllTweeters";
 
-class Favorites extends React.Component {
+class FavPage extends React.Component {
   render() {
     return (
       <div>
-        <UserFavoriteTweeters
+        <FavoriteCard
           favorites={this.props.favorites}
           addToFavorites={this.props.addToFavorites}
         />
 
-        <AllCelebs
+        <AllTweeters
           favorites={this.props.favorites}
           allTweeters={this.props.allTweeters}
           addToFavorites={this.addToFavorites}
@@ -22,4 +21,4 @@ class Favorites extends React.Component {
   }
 }
 
-export default Favorites;
+export default FavPage;

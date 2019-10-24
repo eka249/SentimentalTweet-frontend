@@ -2,20 +2,17 @@ import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import FavBar from "./components_searchHome/FavBar";
 import NavBarOpener from "./components_sidebar/NavBarOpener";
-import DropDown from "./components_searchHome/DropDown";
-// import Banner from "./components/Banner"
-
+import SearchHome from "./containers/SearchHome";
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
 
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
-import SearchHome from "./containers/SearchHome";
-
-import Entered from "./HOC/Entered";
+import CelebIteration from "./components_searchHome/CelebIteration";
+import ActualTweetCard from "./components_searchHome/ActualTweetCard";
+import DropDown2 from "./components_searchHome/DropDown";
+import twitteraccounts from "./components_favorites/TwitterAccts";
 
 class App extends React.Component {
   constructor() {
@@ -46,6 +43,19 @@ class App extends React.Component {
       // .then(data => console.log(data));
       .then(data => this.setState({ allCelebs: data }));
   };
+  addToFavorites = favorite => {
+    //***************
+    let favoriteTweeters = this.state.favorites;
+
+    if (!favoriteTweeters.includes(favorite)) {
+      this.setState({ favorites: [...this.state.favorites, favorite] });
+    } else {
+      let filteredTweeters = favoriteTweeters.filter(
+        unFavorite => unFavorite.id !== favorite.id
+      );
+      this.setState({ favorites: [...filteredTweeters] });
+    }
+  }; //NEED TO RENDER TO FAVORITES PAGE
 
   showModal = () => {
     this.setState({
@@ -140,35 +150,6 @@ class App extends React.Component {
         </Menu.Item>
         <Menu.Item as={Link} to="/profile">
           <Icon name="user outline" />
-          Profile
-        </Menu.Item>
-        <Menu.Item onClick={() => this.logOut()}>
-          <Icon name="sign out" />
-          Sign-out
-        </Menu.Item>
-      </React.Fragment>
-    );
-  };
-
-  toggleNav = () => {
-    this.setState({
-      navBarShow: !this.state.navBarShow
-    });
-  };
-
-  signed = () => {
-    return (
-      <React.Fragment>
-        <Menu.Item as="a">
-          <Icon name="home" />
-          Home
-        </Menu.Item>
-        <Menu.Item as={Link} to="/favorites">
-          <Icon name="heart outline" />
-          Favorites
-        </Menu.Item>
-        <Menu.Item as={Link} to="/profile">
-          <Icon name="camera" />
           Profile
         </Menu.Item>
         <Menu.Item onClick={() => this.logOut()}>
@@ -279,13 +260,19 @@ class App extends React.Component {
                 </Route>
 
                 <Route exact path="/favorites">
-                  <Favorites
-                    loggedin={this.state.logged_in}
-                    favs={this.state.favorites}
-                    user={this.state.user}
-                    deleteFav={this.deleteFav}
-                    toggleNav={this.toggleNav}
-                  />
+                  {this.state.logged_in ? (
+                    <Favorites
+                      favs={this.state.favs}
+                      toggleNav={this.toggleNav}
+                      allTweeters={this.state.allTweeters}
+                      favorites={this.state.favorites}
+                      addToFavorites={this.addToFavorites}
+                      user={this.state.user}
+                      deleteFav={this.deleteFav}
+                    />
+                  ) : (
+                    <Redirect to="/" />
+                  )}
                 </Route>
 
                 <Route exact path="/profile">

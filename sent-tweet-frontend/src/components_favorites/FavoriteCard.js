@@ -1,32 +1,31 @@
 import React from "react";
 
 const FavoriteCard = props => {
-  const addFavorite = () => {
-    console.log("I have been clicked Asif");
-  };
+  const { tweeter, addToFavorites } = props;
   return (
-    <div class="ui four cards">
-      <div className="card">
+    <div className="ui column">
+      <div className="ui card" onClick={() => addToFavorites(tweeter)}>
         <div className="image">
           <img src={process.env.PUBLIC_URL + "/logo192.png"} alt=" " />
         </div>
         <div className="content">
-          <div className="header">{props.person.id}</div>
-          <div className="meta">
-            <span className="username">{props.person.id}</span>
+          <div className="header">
+            {tweeter.value}
+            {tweeter.text}
+          </div>
+          <div className="meta text-wrap">
+            <medium>{tweeter.bio}</medium>
           </div>
         </div>
         <div className="extra content">
           <span className="left floated smile">
             <i className={`icon-left large ${"smile outline"} icon`} />
-            22
           </span>
-          <span className="right floated heart" onClick={addFavorite}>
+          <span className="right floated heart">
             <i className={`icon-right large ${"heart outline"} icon`} />
-            22
           </span>
           <span className="left floated frown">
-            <i className={`icon-left large ${"frown outline"} icon`} />2
+            <i className={`icon-left large ${"frown outline"} icon`} />
           </span>
         </div>
       </div>
