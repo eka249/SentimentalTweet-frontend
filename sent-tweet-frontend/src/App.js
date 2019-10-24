@@ -46,7 +46,7 @@ class App extends React.Component {
         }
       ], 
       tweets: [{content:"Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
-      selectedAcc: {}, //twitteraccount
+      selectedAcc: {name: "", twitterHandle: ""}, //twitteraccount
       navBarShow: false,
       top10: [
         {
@@ -112,8 +112,8 @@ class App extends React.Component {
     });
   };
 
-  updateSelectedAcc = (name, account) => {
-    this.setState({
+  updateSelectedAcc = async (name, account) => {
+    await this.setState({
       selectedAcc: { name: name, twitterHandle: account }
     });
   };
@@ -199,15 +199,15 @@ class App extends React.Component {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
     // console.log("began fetchtwitter on front end-should go to /celebs");
-    fetch(`http://localhost:3000/celebs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.token}`
-      },
-      body: JSON.stringify({ celebrity: celeb })
-    });
+                // fetch(`http://localhost:3000/celebs`, {
+                //   method: "POST",
+                //   headers: {
+                //     "Content-Type": "application/json",
+                //     Accept: "application/json",
+                //     Authorization: `Bearer ${localStorage.token}`
+                //   },
+                //   body: JSON.stringify({ celebrity: celeb })
+                // });
     // .then(response => response.json)
     // .then(data => {
     //   this.setState({
@@ -275,7 +275,7 @@ class App extends React.Component {
               <div className="App"> 
 
                 <Route exact path="/">
-                  <Entered state={this.state} enter={this.toggleEnter} toggle={this.toggleNav} searchTwitter={this.searchTwitter} updateSelectedAcc={this.updateSelectedAcc}/>
+                  <Entered state={this.state} Acc={this.state.selectedAcc} enter={this.toggleEnter} toggle={this.toggleNav} searchTwitter={this.searchTwitter} updateSelectedAcc={this.updateSelectedAcc}/>
                 </Route>
 
                 <Route exact path="/favorites">

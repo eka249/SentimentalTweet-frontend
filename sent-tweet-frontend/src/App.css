@@ -215,6 +215,10 @@ html, body {
   color:#1dcaff
 }
 
+.drpdwn .ui.selection.dropdown .menu>.message {
+  color:white;
+}
+
 
 .profile .ui.form input{
   max-width: 200px;
@@ -275,8 +279,6 @@ html, body {
   text-align: center;
 }
 
-
-/* ///////////// */
 .fav-list .ui.inverted.segment{
   width: 100%;
   height: 50px;
@@ -290,6 +292,10 @@ html, body {
 }
 
 .fav-list .ui.button:hover {
+  color: #1dcaff;
+}
+
+.fav-list .ui.button:focus {
   color: #1dcaff;
 }
 

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Grid, Image } from 'semantic-ui-react'
-import bcard from '../assets/bcard.jpg'
+import { Grid, Image } from 'semantic-ui-react';
+import bcard from '../assets/bcard.jpg';
 import CardFlip from "../components_searchHome/CardFlip";
+import AccSelected from "../HOC/AccSelected";
 
 
 const SearchHome = props => {
 
     const allCards = props.tweets.map( tweet => {
+        console.log('searchHOme')
         return <CardFlip tweet={tweet}/>
     })
 
@@ -14,7 +16,7 @@ const SearchHome = props => {
         return allCards[num]? allCards[num] : <Image src={bcard} />
     }
 
-    return ( 
+    return (
         <div className='tweetcards'>
             <React.Fragment>
                 <Grid className="flip-card">
@@ -59,4 +61,4 @@ const SearchHome = props => {
     )
 }
 
-export default SearchHome;
+export default AccSelected(SearchHome);
