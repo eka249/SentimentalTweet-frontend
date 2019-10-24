@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     name: this.props.user.name,
     username: this.props.user.username
@@ -16,7 +19,15 @@ class Profile extends Component {
   handleSubmit = e => {
     e.preventDefault();
     // console.log("handleSubmit");
-    this.props.updateUser(this.state.name);
+    fetch(`http://localhost:3000/users/${this.state.user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({ name: this.state.name })
+    });
   };
 
   render() {

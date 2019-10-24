@@ -17,30 +17,22 @@ class App extends React.Component {
     super();
     this.state = {
       show: false,
-      logged_in: false,
-      user: null,
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
+      logged_in: true,
+      // user: null,
+      user: {
+        username: "tester1",
+        name: "tester1",
+        password: "tester1",
+        id: 1
+      },
+      favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
       tweets: [
         { content: "Hello", sentiment: 0.5, date: "10/23/19" },
         { content: "Bye", sentiment: 0.3, date: "10/23/19" }
       ], //tweets of selectedAcc
       selectedAcc: [], //twitteraccount
       navBarShow: false,
-      selectedAcc: [], //twitteraccount
-
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      favorites: [], //user's list of fav
+      // favorites: [], //user's list of fav
       // tweets: [], //tweets of selectedAcc
       // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
       top10: [
@@ -84,18 +76,18 @@ class App extends React.Component {
       });
   };
 
-  getUser = () => {
-    fetch(`http://localhost:3000/users/${this.state.user.id}`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState(prevState => {
-          return {
-            logged_in: true,
-            user: data
-          };
-        });
-      });
-  };
+  // getUser = () => {
+  //   fetch(`http://localhost:3000/users/${this.state.user.id}`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       this.setState(prevState => {
+  //         return {
+  //           logged_in: true,
+  //           user: data
+  //         };
+  //       });
+  //     });
+  // };
 
   logOut = () => {
     localStorage.removeItem("token");
@@ -111,19 +103,6 @@ class App extends React.Component {
     this.setState({
       selectedAcc: { name: { name }, twitterHandle: { account } }
     });
-  };
-  updateUser = e => {
-    // fetch(Url + this.state.user.id , {
-    //     method: 'UPDATE',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Accept: 'application/json'
-    //     },
-    //     body: JSON.stringify({ name })
-    // })
-    // .then(resp => resp.json())
-    // .then(data => this.handleChange(data.name))
-    // MAKE SURE data.name IS  THE NAME ONLY
   };
 
   deleteFav = e => {
@@ -250,13 +229,13 @@ class App extends React.Component {
               <div className="App">
                 <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
-                  {console.log("above Searchome")}
+                  {/* {console.log("above Searchome")} */}
                   <SearchHome
                     tweets={this.state.tweets}
                     name={this.state.selectedAcc.name}
                     user={this.state.user}
                   />
-                  {console.log("below Searchome")}
+                  {/* {console.log("below Searchome")} */}
                 </Route>
 
                 <Route exact path="/favorites">

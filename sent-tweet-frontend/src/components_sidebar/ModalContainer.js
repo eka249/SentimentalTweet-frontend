@@ -10,19 +10,14 @@ class ModalContainer extends Component {
       fields: {
         username: "",
         password: "",
-        newUser: {
-          newName: "",
-          newUsername: "",
-          newPassword: ""
-        },
+        newName: "",
+        newUsername: "",
+        newPassword: "",
         signedUp: false
       }
     };
   }
   handleChange = e => {
-    // console.log(this.state.fields.username);
-    // console.log(e.target.value);
-    // console.log(e.target.id);
     let fieldName = e.target.id;
     this.setState({
       fields: { ...this.state.fields, [fieldName]: e.target.value }
@@ -31,7 +26,8 @@ class ModalContainer extends Component {
   };
   handleSignUp = e => {
     // e.preventDefault();
-    // console.log("reached handle sign up");
+    console.log("reached handle sign up");
+    console.log("password:", this.state.fields.newPassword);
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
@@ -39,9 +35,10 @@ class ModalContainer extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: this.state.fields.newUser.newName,
-        username: this.state.fields.newUser.newUsername,
-        password: this.state.fields.newUser.password
+        name: this.state.fields.newName,
+        username: this.state.fields.newUsername,
+        password_digest: this.state.fields.newPassword
+        // MAKE SURE THE ABOVE IS password_digest:
       })
     })
       .then(response => response.json())
@@ -51,13 +48,11 @@ class ModalContainer extends Component {
         //   return { signedUp: true };
         // });
       });
-    // {
-    //   this.props.showModal;
-    // }
   };
 
   onSignIn = () => {
     // console.log("reached sign in function");
+    // () => this.props.showModal;
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
