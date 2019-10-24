@@ -10,6 +10,7 @@ const Dropdown2 = props => {
 
     let celeb = e.target.value;
     props.searchTwitter(celeb);
+    props.updateSelectedAcc(celeb);
   };
 
   return (

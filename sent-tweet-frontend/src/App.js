@@ -46,7 +46,7 @@ class App extends React.Component {
         }
       ], 
       tweets: [{content:"Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
-      selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
+      selectedAcc: {}, //twitteraccount
       navBarShow: false,
       top10: [
         {
@@ -275,7 +275,7 @@ class App extends React.Component {
               <div className="App"> 
 
                 <Route exact path="/">
-                  <Entered entered={this.state.entered} enter={this.toggleEnter} favorites={this.state.favorites} toggle={this.toggleNav} top10={this.state.top10} searchTwitter={this.searchTwitter} loggedin={this.state.logged_in} selectedAcc={this.state.selectedAcc} tweets={this.state.tweets}/>
+                  <Entered state={this.state} enter={this.toggleEnter} toggle={this.toggleNav} searchTwitter={this.searchTwitter}/>
                 </Route>
 
                 <Route exact path="/favorites">
