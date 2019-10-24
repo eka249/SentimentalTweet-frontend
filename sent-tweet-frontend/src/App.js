@@ -17,8 +17,7 @@ class App extends React.Component {
     super();
     this.state = {
       show: false,
-      // logged_in: false,
-      logged_in: true,
+      logged_in: false,
       user: null,
       // user: {
       //   username: "tester1",
@@ -70,7 +69,7 @@ class App extends React.Component {
   };
 
   getLoggedIn = (data, from) => {
-    // console.log("initiated sign in fetch");
+    console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -255,6 +254,7 @@ class App extends React.Component {
                   <SearchHome
                     tweets={this.state.tweets}
                     name={this.state.selectedAcc.name}
+                    user={this.state.user}
                   />
                   {console.log("below Searchome")}
                 </Route>

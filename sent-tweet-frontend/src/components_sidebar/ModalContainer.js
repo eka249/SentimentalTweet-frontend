@@ -27,6 +27,7 @@ class ModalContainer extends Component {
     this.setState({
       fields: { ...this.state.fields, [fieldName]: e.target.value }
     });
+    // ,() => this.props.showModal;
   };
   handleSignUp = e => {
     // e.preventDefault();
@@ -40,7 +41,7 @@ class ModalContainer extends Component {
       body: JSON.stringify({
         name: this.state.fields.newUser.newName,
         username: this.state.fields.newUser.newUsername,
-        password: this.state.fields.newUser.password_digest
+        password: this.state.fields.newUser.password
       })
     })
       .then(response => response.json())
@@ -50,6 +51,9 @@ class ModalContainer extends Component {
         //   return { signedUp: true };
         // });
       });
+    // {
+    //   this.props.showModal;
+    // }
   };
 
   onSignIn = () => {
