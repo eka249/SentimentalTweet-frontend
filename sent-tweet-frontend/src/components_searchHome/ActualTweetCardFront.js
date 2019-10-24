@@ -8,7 +8,6 @@ const  ActualTweetCardFront = (props) =>  {
   return (
 
     <div onClick={props.handleClick} className='tweetfront' id={hue}>
-        {/* <Icon  name={icon}  size='big'/> */}
         <Header size='huge'>
           {props.sent >= 0.5? '#positive': '#negative'}
         </Header>

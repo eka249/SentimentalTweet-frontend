@@ -33,35 +33,36 @@ class App extends React.Component {
       },
       favorites: [
         {
-          name: "Barack Obama",
+          name: "Asif Khan",
           twitter_account_id: "@BarackObama"
         },
         {
-          name: "Katy Perry",
+          name: "Catherine Yang",
           twitter_account_id: "@katyperry"
         },
         {
-          name: "Justin BIeber",
+          name: "Ellyn Anderson",
           twitter_account_id: "@justinbieber"
         }
       ], 
       tweets: [{content:"Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
       selectedAcc: {name: "", twitterHandle: ""}, //twitteraccount
       navBarShow: false,
+      
       top10: [
         {
           key: "Barack Obama",
-          text: "Barack Obama",
+          text: "Asif Khan",
           value: "@BarackObama"
         },
         {
           key: "Katy Perry",
-          text: "Katy Perry",
+          text: "Catherine Yang",
           value: "@katyperry"
         },
         {
           key: "Justin BIeber",
-          text: "Justin Bieber",
+          text: "Ellyn Anderson",
           value: "@justinbieber"
         }
       ]
