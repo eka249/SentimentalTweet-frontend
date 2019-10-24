@@ -1,23 +1,27 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 import FavBar from "./components_searchHome/FavBar"
 import NavBarOpener from "./components_sidebar/NavBarOpener";
-import SearchHome from "./containers/SearchHome";
-// import Favorites from "./containers/Favorites";
-// import Profile from "./containers/Profile";
 import DropDown from "./components_searchHome/DropDown";
 import Banner from "./components/Banner"
+
+import SearchHome from "./containers/SearchHome";
+// import Favorites from "./containers/Favorites";
+import Profile from "./containers/Profile";
+
 import SearchBar from "./components_searchHome/SearchBar";
+
+import Entered from "./HOC/Entered";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       // logged_in: true,
-      enter: true,
+      entered: false,
       logged_in: true,
       user: {
         username: "tester1",
@@ -204,7 +208,7 @@ class App extends React.Component {
 
   toggleEnter = () => {
     this.setState({
-      enter: false
+      entered: true
     })
   }
 
@@ -249,7 +253,7 @@ class App extends React.Component {
               <div className="App"> 
 
                 <Route exact path="/">
-                  {this.state.enter? <Banner enter={this.toggleEnter}/> : this.entered()}
+                  <Entered entered={this.state.entered} enter={this.toggleEnter} favorites={this.state.favorites} toggle={this.toggleNav} top10={this.state.top10} searchTwitter={this.searchTwitter}/>
                 </Route>
 
                 <Route exact path="/favorites">
@@ -257,7 +261,7 @@ class App extends React.Component {
                 </Route>
                 
                 <Route exact path="/profile">
-                  {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
+                  {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
                 </Route>
                 
               </div>  

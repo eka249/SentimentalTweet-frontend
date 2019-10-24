@@ -1,6 +1,5 @@
 import React from 'react'
 import img from '../assets/sentweet2.31.png'
-import { checkPropTypes } from 'prop-types';
 
 const Banner = (props) => {
     return (

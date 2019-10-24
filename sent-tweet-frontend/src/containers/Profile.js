@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'semantic-ui-react';
+import img from '../assets/profile2.12.jpg';
 
 class Profile extends Component {
     state = {
@@ -21,7 +22,12 @@ class Profile extends Component {
 
     render() {
         return ( 
-            <div>
+            <div style={{  
+                backgroundImage: `url(${img})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}>
                 <div className='profile-name'>
                     {this.state.username}
                 </div>
