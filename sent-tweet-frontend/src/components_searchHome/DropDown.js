@@ -1,0 +1,95 @@
+import React from "react";
+import { Dropdown } from "semantic-ui-react";
+
+class Dropdown2 extends React.Component {
+  state = {
+    selected: {}
+  };
+
+  handleSearchTwitter = async (e, data) => {
+    e.persist();
+
+    const eaccount = data.value.slice(1);
+    const ename = e.target.textContent;
+
+    await this.setState({
+      name: ename,
+      account: eaccount
+    });
+    this.props.searchTwitter(this.state.account);
+    this.props.updateSelectedAcc(this.state.name, this.state.account);
+  };
+
+  render() {
+    let favoriteOptions = this.props.top10;
+
+    return (
+      <div className="drpdwn">
+        <Dropdown
+          inverted
+          placeholder="Select Twitter Account"
+          fluid
+          search
+          selection
+          options={favoriteOptions}
+          onChange={this.handleSearchTwitter}
+          className="searchDown"
+        />
+      </div>
+    );
+  }
+}
+
+export default Dropdown2;
+
+// const DropdownExampleSearchSelection = () => (
+//   <Dropdown
+//     placeholder="Select Country"
+//     fluid
+//     search
+//     selection
+//     options={countryOptions}
+//   />
+// );
+
+// //   {
+// //     key: "Justen Kitsune",
+// //     text: "Justen Kitsune",
+// //     value: "Justen Kitsune",
+// //     image: {
+// //       avatar: true,
+// //       src: "https://react.semantic-ui.com/images/avatar/small/justen.jpg"
+// //     }
+// //   }
+// // ];
+//   <Dropdown
+//     placeholder="Select Favorite"
+//     fluid
+//     selection
+//     options={props.options}
+//   />
+// );
+
+// export default Dropdown2;
+
+// class DropDown extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <Dropdown
+//           placeholder="Select Favorite"
+//           fluid
+//           selection
+//           options={this.props.options.id}
+//           key={this.props.options.id}
+//         />
+//       </div>
+//     );
+//   }
+// }
+
+// export default DropDown;

@@ -7,24 +7,22 @@ import SearchHome from "../containers/SearchHome";
 
 class Entered extends React.Component {
 
-    entered = () => {
-        return this.props.entered;
-    }
-
     enteredcom = () => {
+        const { favorites, top10, logged_in, tweets, selectedAcc } = this.props.state
         return (
             <React.Fragment>
-                <FavBar favs={this.props.favorites} loggedin={this.props.loggedin}/>
+                <FavBar favs={favorites} loggedin={logged_in}/>
                 <NavBarOpener toggle={this.props.toggle}/>          
-                <SearchHome tweets={this.props.tweets} name={this.props.selectedAcc.name}/>
-                <DropDown top10={this.props.top10} searchTwitter={this.props.searchTwitter}/>
+                <SearchHome tweets={tweets} name={selectedAcc.name}/>
+                <DropDown top10={top10} searchTwitter={this.props.searchTwitter} updateSelectedAcc={this.props.updateSelectedAcc}/>
             </React.Fragment>
         )
         }
 
     render() {
+        const { entered } = this.props.state
         return (
-        this.entered()? this.enteredcom() : <Banner visible={this.props.entered} enter={this.props.enter}/>
+        entered? this.enteredcom() : <Banner visible={this.props.entered} enter={this.props.enter}/>
         )
     }
    

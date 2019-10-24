@@ -4,7 +4,7 @@ const ActualTweetCard = props => {
   const icon = props.sent >= 0.5 ? "smile outline" : "frown outline";
   const hue = props.sent >= 0.5 ? "yellow" : "blue";
   return (
-    <div onClick={props.handleClick} id="back">
+    <div onClick={props.handleClick} className="tweetback">
       <div className="ui card">
         <div className="content">
           <div className="header">
@@ -17,7 +17,6 @@ const ActualTweetCard = props => {
             <p>{props.content}</p>
           </div>
         </div>
-        <div className="extra content"></div>
       </div>
     </div>
   );

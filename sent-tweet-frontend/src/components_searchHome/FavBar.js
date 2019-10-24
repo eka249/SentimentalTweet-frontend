@@ -1,18 +1,16 @@
 import React from "react";
 import LoggedInHOC from "../HOC/LoggedInHOC";
+import { Segment, Button } from "semantic-ui-react";
 
 const FavBar = props => {
   return (
     <div className="fav-list">
-      {/* <div id="empty">{ " "} </div>
-            {props.favs.map( acc => {
-                console.log('here')
-                return (
-                    <div key={acc.name}>
-                        {acc.name}
-                    </div>
-                )
-            })} */}
+      <Segment inverted>
+        {props.favs.map(acc => {
+          return <Button className="favBarBtn">{acc.name}</Button>;
+        })}
+      </Segment>
+      <div id="empty"> </div>
     </div>
   );
 };

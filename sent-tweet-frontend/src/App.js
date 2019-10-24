@@ -36,7 +36,7 @@ class App extends React.Component {
         { content: "Hello", sentiment: 0.5, date: "10/23/19" },
         { content: "Bye", sentiment: 0.3, date: "10/23/19" }
       ], //tweets of selectedAcc
-      selectedAcc: [], //twitteraccount
+      selectedAcc: {}, //twitteraccount
       navBarShow: false
       // favorites: [], //user's list of fav
       // tweets: [], //tweets of selectedAcc
@@ -98,7 +98,7 @@ class App extends React.Component {
 
   updateSelectedAcc = (name, account) => {
     this.setState({
-      selectedAcc: { name: { name }, twitterHandle: { account } }
+      selectedAcc: { name: name, twitterHandle: account }
     });
   };
 
@@ -169,7 +169,7 @@ class App extends React.Component {
   searchTwitter = celeb => {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
-    console.log("began fetchtwitter on front end-should go to /celebs");
+    // console.log("began fetchtwitter on front end-should go to /celebs");
     fetch(`http://localhost:3000/celebs`, {
       method: "POST",
       headers: {
@@ -248,23 +248,12 @@ class App extends React.Component {
             <React.Fragment>
               <div className="App">
                 <Route exact path="/">
-                  {/* {console.log("above Searchome")} */}
-                  <SearchHome
-                    tweets={this.state.tweets}
-                    name={this.state.selectedAcc.name}
-                    user={this.state.user}
-                  />
-                  {/* {console.log("below Searchome")} */}
                   <Entered
-                    entered={this.state.entered}
+                    state={this.state}
                     enter={this.toggleEnter}
-                    favorites={this.state.favorites}
                     toggle={this.toggleNav}
-                    top10={this.state.top10}
                     searchTwitter={this.searchTwitter}
-                    loggedin={this.state.logged_in}
-                    selectedAcc={this.state.selectedAcc}
-                    tweets={this.state.tweets}
+                    updateSelectedAcc={this.updateSelectedAcc}
                   />
                 </Route>
 

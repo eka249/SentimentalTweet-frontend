@@ -201,11 +201,18 @@ html, body {
 .ui.upward.selection.dropdown .menu {
   background-color: rgba(0, 0, 0, 0.637);
   border:none;
+}
 
+.ui.upward.selection.dropdown .menu>.item:hover {
+  color: #1dcaff;
 }
 
 .ui.labeled.icon.menu .item:hover {
   color:#1dcaff;
+}
+
+.drpdwn .ui.search.dropdown.active>input.search:focus {
+  color:#1dcaff
 }
 
 
@@ -218,7 +225,7 @@ html, body {
 .ui.form .field .ui.input input:focus{
   background-color: rgba(255, 255, 255, 0.384);
   color:white;
-text-align: center;
+  text-align: center;
 
 }
 
@@ -263,6 +270,58 @@ text-align: center;
 
 .fav-list {
   position:fixed;
-  display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr auto;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+
+/* ///////////// */
+.fav-list .ui.inverted.segment{
+  width: 100%;
+  height: 50px;
+}
+
+.fav-list .ui.button {
+  margin: auto 5px;
+  border: none;
+  color: white;
+  background: rgba(0, 0, 0, 0);
+}
+
+.fav-list .ui.button:hover {
+  color: #1dcaff;
+}
+
+.ui.card>.content{
+  overflow: scroll;
+}
+
+#negative {
+  background-color: rgba(255, 255, 255, 0.623);
+}
+
+#negative .ui.icon.header {
+  color: #03ade0;
+}
+
+#positive {
+  background-color: #1dcaff96;
+}
+
+#positive .ui.icon.header {
+  color: rgba(255, 255, 255, 0.781);
+}
+
+.tweetfront, .tweetback {
+  min-width: 200px;
+  min-height: 100px;
+}
+
+.tweetfront .ui.icon.header {
+  margin-top: 30px;
+}
+
+.tweetback .ui.card{
+  background-color: rgba(227, 240, 255, 0.801);
 }
