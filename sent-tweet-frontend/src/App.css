@@ -174,17 +174,24 @@ html, body {
 }
 
 .ui.input>input {
-  background-color: rgba(255, 255, 255, 0.575);
+  background-color: rgba(255, 255, 255, 0.349);
   right: 200px;
   max-width: 200px;
+  color:white;
 }
 
-.field {
+.ui.input>input:focus {
+  background-color: rgba(255, 255, 255, 0.349);
+  color:white;
+  font-weight: bold;
+}
+
+.c-modal .field {
   display: grid;
   grid-template-columns: 100px auto;
 }
 
-.field label {
+.c-modal .field label {
   margin: auto 0;
 }
 
@@ -198,7 +205,55 @@ html, body {
 }
 
 .ui.upward.selection.dropdown .menu {
-  background-color: rgba(0, 0, 0, 0.575);
+  background-color: rgba(0, 0, 0, 0.637);
   border:none;
 
 }
+
+.ui.labeled.icon.menu .item:hover {
+  color:#1dcaff;
+}
+
+
+.profile .ui.form input{
+  max-width: 200px;
+  background-color: rgba(255, 255, 255, 0.384);
+  border: none;
+  text-align: center;
+}
+.ui.form .field .ui.input input:focus{
+  background-color: rgba(255, 255, 255, 0.384);
+  color:white;
+text-align: center;
+
+}
+
+.profile-center {
+  display: grid;
+  grid-template-areas:
+  'a a a b b a a a'
+  'a a c c c d a a';
+  position: fixed;
+  text-align: center;
+  left:0;
+  right:0;
+    bottom: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-center h2 {
+  /* grid-area: b; */
+  font-weight: bold;
+  color:white;
+}
+
+.profile-center .profile-submit .ui.inverted.button {
+  /* grid-area: d; */
+  max-width: 50px;
+  border-color: rgba(255, 255, 255, 0.726);
+  border-radius:20%;
+  margin-top:10px;
+}
+
+

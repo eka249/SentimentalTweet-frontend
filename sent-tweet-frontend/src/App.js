@@ -187,7 +187,7 @@ class App extends React.Component {
   signed = () => {
     return (
       <React.Fragment>
-        <Menu.Item as="a">
+        <Menu.Item as={Link} to="/">
           <Icon name="home" />
           Home
         </Menu.Item>
@@ -196,7 +196,7 @@ class App extends React.Component {
           Favorites
         </Menu.Item>
         <Menu.Item as={Link} to="/profile">
-          <Icon name="camera" />
+          <Icon name="user outline" />
           Profile
         </Menu.Item>
         <Menu.Item onClick={() => this.logOut()}>
@@ -292,7 +292,7 @@ class App extends React.Component {
                 </Route>
                 
                 <Route exact path="/profile">
-                  {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
+                  {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/> :  <Redirect to="/" />}
                 </Route>
               </div>
             </React.Fragment>

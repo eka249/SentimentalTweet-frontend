@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Icon, Input } from 'semantic-ui-react';
 import img from '../assets/profile2.12.jpg';
+import NavBarOpener from "../components_sidebar/NavBarOpener";
 
 class Profile extends Component {
   state = {
@@ -22,22 +23,27 @@ class Profile extends Component {
 
     render() {
         return ( 
-            <div style={{  
+            <div 
+            style={{  
                 backgroundImage: `url(${img})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'
-              }}>
-                <div className='profile-name'>
-                    {this.state.username}
+              }}
+            className="profile"
+              >
+                <NavBarOpener toggle={this.props.toggleNav}/>   
+                <div className='profile-center'>
+                    <h2 className='profile-name'>
+                        {this.state.username}
+                    </h2>
+                    <Form onSubmit={e => this.handleSubmit(e)}>
+                        <Form.Field inline onChange={ e => this.handleChange(e.target.value)}>
+                        <Input placeholder='Set New Name' />
+                        <Form.Button inverted icon className="profile-submit"><Icon name='pencil' /></Form.Button>
+                        </Form.Field>
+                    </Form>
                 </div>
-                <Form onSubmit={e => this.handleSubmit(e)}>  
-                    <Form.Field onChange={ e => this.handleChange(e.target.value)}>
-                        <label>Set New Name</label>
-                        <input placeholder={this.state.name} />
-                    </Form.Field>
-                    <Form.Button>Submit</Form.Button>
-                </Form>
             </div>
         )     
     }

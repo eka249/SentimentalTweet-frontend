@@ -88,7 +88,7 @@ class ModalContainer extends Component {
         open={true}
         size="tiny"
         // closeIcon={this.props.showModal}
-      >
+      className='c-modal'>
         <Header content="Sign In" as="h2"></Header>
         <Modal.Actions>
           <Button
