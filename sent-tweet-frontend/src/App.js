@@ -13,6 +13,7 @@ import SearchHome from "./containers/SearchHome";
 import Profile from "./containers/Profile";
 
 import SearchBar from "./components_searchHome/SearchBar";
+import ModalContainer from "./components_sidebar/ModalContainer";
 
 import Entered from "./HOC/Entered";
 
@@ -21,8 +22,9 @@ class App extends React.Component {
     super();
     this.state = {
       // logged_in: true,
-      entered: false,
-      logged_in: true,
+      entered: true,
+      show: false,
+      logged_in: false,
       user: {
         username: "tester1",
         name: "tester1",
@@ -49,6 +51,17 @@ class App extends React.Component {
       tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
       selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
       navBarShow: false,
+      selectedAcc: [], //twitteraccount
+
+      // user: {
+      //   username: "tester1",
+      //   name: "tester1",
+      //   password: "tester1",
+      //   id: 1
+      // },
+      favorites: [], //user's list of fav
+      // tweets: [], //tweets of selectedAcc
+      // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
       top10: [
         {
           key: "Barack Obama",
@@ -68,8 +81,14 @@ class App extends React.Component {
       ]
     };
   }
+  showModal = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  };
 
-  loggedInYN = (data, from) => {
+  getLoggedIn = (data, from) => {
+    console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -107,6 +126,11 @@ class App extends React.Component {
     });
   };
 
+  updateSelectedAcc = (name, account) => {
+    this.setState({
+      selectedAcc: { name: { name }, twitterHandle: { account } }
+    });
+  };
   updateUser = e => {
     // fetch(Url + this.state.user.id , {
     //     method: 'UPDATE',
@@ -160,50 +184,50 @@ class App extends React.Component {
   toggleNav = () => {
     this.setState({
       navBarShow: !this.state.navBarShow
-    })
-  }
+    });
+  };
 
   signed = () => {
     return (
-        <React.Fragment >
-            <Menu.Item as='a'>
-                <Icon name='home' />
-                Home
-            </Menu.Item>
-            <Menu.Item as={Link} to='/favorites'>
-                <Icon name='heart outline' />
-                Favorites
-            </Menu.Item>
-            <Menu.Item as={Link} to='/profile'>
-                <Icon name='camera' />
-                Profile
-            </Menu.Item>
-            <Menu.Item onClick={()=>this.logOut()}>
-                <Icon name='sign out' />
-                Sign-out 
-            </Menu.Item>
-        </React.Fragment>
-    )
-}  
+      <React.Fragment>
+        <Menu.Item as="a">
+          <Icon name="home" />
+          Home
+        </Menu.Item>
+        <Menu.Item as={Link} to="/favorites">
+          <Icon name="heart outline" />
+          Favorites
+        </Menu.Item>
+        <Menu.Item as={Link} to="/profile">
+          <Icon name="camera" />
+          Profile
+        </Menu.Item>
+        <Menu.Item onClick={() => this.logOut()}>
+          <Icon name="sign out" />
+          Sign-out
+        </Menu.Item>
+      </React.Fragment>
+    );
+  };
   searchTwitter = celeb => {
-    // fetch(`http://localhost:3000/tweets`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //     Authorization: ""
-    //   },
-
-    //   body: JSON.stringify({
-    //     celeb
-    //   })
-    // })
-    //   .then(response => response.json)
-    //   .then(data => {
-    //     this.setState({
-    //       tweets: data
-    //     });
+    // console.log("signed in as:", this.state.user);
+    // console.log("local storage token", localStorage.token);
+    console.log("began fetchtwitter on front end-should go to /celebs");
+    fetch(`http://localhost:3000/celebs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({ celebrity: celeb })
+    });
+    // .then(response => response.json)
+    // .then(data => {
+    //   this.setState({
+    //     tweets: data
     //   });
+    // });
   };
 
   toggleEnter = () => {
@@ -230,25 +254,35 @@ class App extends React.Component {
         <Sidebar.Pushable >
           <Sidebar
             as={Menu}
-            animation='overlay'
-            icon='labeled'
+            animation="overlay"
+            icon="labeled"
             inverted
             onHide={() => this.toggleNav()}
             vertical
             visible={this.state.navBarShow}
-            width='thin'
+            width="thin"
           >
-            {this.state.logged_in? ( 
-                this.signed()
+            {this.state.logged_in ? (
+              this.signed()
             ) : (
-                <Menu.Item onClick={() => this.onSignIn()}>
-                    <Icon name='sign in' />
-                    Sign-in
-                </Menu.Item>
-            )} 
+              <Menu.Item
+                onClick={this.showModal}
+                // {() => this.onSignIn()}
+              >
+                <Icon name="sign in" />
+                Sign-in
+              </Menu.Item>
+            )}
           </Sidebar>
-
-          <Sidebar.Pusher dimmed={this.state.navBarShow} >
+          {this.state.show ? (
+            <ModalContainer
+              logged_in={this.state.logged_in}
+              user={this.state.user}
+              getLoggedIn={this.getLoggedIn}
+              showModal={this.showModal}
+            />
+          ) : null}
+          <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App"> 
 
@@ -263,8 +297,7 @@ class App extends React.Component {
                 <Route exact path="/profile">
                   {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />}
                 </Route>
-                
-              </div>  
+              </div>
             </React.Fragment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

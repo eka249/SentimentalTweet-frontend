@@ -3,22 +3,22 @@ import { Form } from 'semantic-ui-react';
 import img from '../assets/profile2.12.jpg';
 
 class Profile extends Component {
-    state = {
-        name: this.props.user.name,
-        username: this.props.user.username,
-    }
+  state = {
+    name: this.props.user.name,
+    username: this.props.user.username
+  };
 
-    handleChange = (e) => {
-        this.setState({
-            name: e
-        })
-    }
+  handleChange = e => {
+    this.setState({
+      name: e
+    });
+  };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("handleSubmit")
-        this.props.updateUser(this.state.name)
-    }
+  handleSubmit = e => {
+    e.preventDefault();
+    // console.log("handleSubmit");
+    this.props.updateUser(this.state.name);
+  };
 
     render() {
         return ( 

@@ -11,6 +11,7 @@ const Dropdown2 = props => {
     let celeb = e.target.value;
     props.searchTwitter(celeb);
   };
+
   return (
     <div className="drpdwn"> 
       <Dropdown

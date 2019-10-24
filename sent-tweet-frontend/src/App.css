@@ -140,3 +140,50 @@ html, body {
   position: fixed;
   top:40%;
 }
+
+
+
+.ui.modal {
+  background-image:url('./assets/signin3.12.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.ui.modal > .header{
+  background-color: rgba(255, 255, 255, 0) !important;
+  color: white;
+}
+
+.ui.modal > .content {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+
+.ui.modal > .content h3{
+  color:white;
+}
+
+.ui.modal > .actions   {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+
+.ui.modal > .actions >.button  {
+  background-color: rgba(202, 225, 255, 0.404);
+}
+
+.ui.input>input {
+  background-color: rgba(255, 255, 255, 0.575);
+  right: 200px;
+  max-width: 200px;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+
+.field label {
+  margin: auto 0;
+}
