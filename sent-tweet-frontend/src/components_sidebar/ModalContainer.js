@@ -72,6 +72,9 @@ class ModalContainer extends Component {
       })
       .then(() => {
         this.props.generateAllTweets();
+      })
+      .then(() => {
+        this.props.searchTwitter();
       });
   };
 

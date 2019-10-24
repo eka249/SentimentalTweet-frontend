@@ -26,6 +26,7 @@ class App extends React.Component {
     super();
     this.state = {
       entered: false,
+      tweets: [],
       show: false,
       logged_in: false,
       user: null,
@@ -51,6 +52,8 @@ class App extends React.Component {
       //.then map to put correct proper format (on front or back end?)
       // .then(data => this.setState({ top10: [...data] }));
       .then(data => this.setState({ top10: data }));
+
+    console.log();
   };
   addToFavorites = favorite => {
     //***************
@@ -173,7 +176,7 @@ class App extends React.Component {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
     // console.log("began fetchtwitter on front end-should go to /celebs");
-    fetch(`http://localhost:3000/celebs`, {
+    return fetch("http://localhost:3000/celebs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -181,13 +184,16 @@ class App extends React.Component {
         Authorization: `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({ celebrity: celeb })
-    });
-    // .then(response => response.json)
-    // .then(data => {
-    //   this.setState({
-    //     tweets: data
-    //   });
-    // });
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .then(data => {
+        this.setState({
+          ...this.state,
+          tweets: data
+        });
+      });
+    //////////PLEASE SET THIS STATE IM CRYING///////////////
   };
 
   toggleEnter = () => {
@@ -244,6 +250,7 @@ class App extends React.Component {
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
               generateAllTweets={this.generateAllTweets}
+              searchTwitter={this.searchTwitter}
             />
           ) : null}
 

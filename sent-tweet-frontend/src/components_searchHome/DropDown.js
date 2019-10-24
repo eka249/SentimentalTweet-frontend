@@ -3,7 +3,7 @@ import { Dropdown } from "semantic-ui-react";
 
 class Dropdown2 extends React.Component {
   state = {
-    selected: {},
+    selected: [],
     account: "",
     name: ""
   };
