@@ -114,7 +114,7 @@ class App extends React.Component {
 
   updateSelectedAcc = (name, account) => {
     this.setState({
-      selectedAcc: { name: { name }, twitterHandle: { account } }
+      selectedAcc: { name: name, twitterHandle: account }
     });
   };
   updateUser = e => {
@@ -198,7 +198,7 @@ class App extends React.Component {
   searchTwitter = celeb => {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
-    console.log("began fetchtwitter on front end-should go to /celebs");
+    // console.log("began fetchtwitter on front end-should go to /celebs");
     fetch(`http://localhost:3000/celebs`, {
       method: "POST",
       headers: {
@@ -275,7 +275,7 @@ class App extends React.Component {
               <div className="App"> 
 
                 <Route exact path="/">
-                  <Entered state={this.state} enter={this.toggleEnter} toggle={this.toggleNav} searchTwitter={this.searchTwitter}/>
+                  <Entered state={this.state} enter={this.toggleEnter} toggle={this.toggleNav} searchTwitter={this.searchTwitter} updateSelectedAcc={this.updateSelectedAcc}/>
                 </Route>
 
                 <Route exact path="/favorites">

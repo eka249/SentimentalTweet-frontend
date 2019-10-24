@@ -8,7 +8,6 @@ const FavBar = (props) => {
         <div className="fav-list">
             <Segment inverted>
                 {props.favs.map( acc => {
-                    console.log('here')
                     return (
                         <Button className="favBarBtn">{acc.name}</Button>
                     )
