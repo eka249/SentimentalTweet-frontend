@@ -10,7 +10,7 @@ class FavBar extends React.Component {
                 <Segment inverted>
                     <Button.Group toggle>
                         {this.props.favs.map( acc => {
-                            return <Button key={acc.name} className="favBarBtn" onClick={this.updateSelectedAcc}>{acc.name}</Button>
+                            return <Button key={acc.name} className="favBarBtn" onClick={this.props.updateSelectedAcc}>{acc.name}</Button>
                         })}
                     </Button.Group>
                 </Segment>
