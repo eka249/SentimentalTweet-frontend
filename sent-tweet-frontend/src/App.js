@@ -3,23 +3,20 @@ import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import NavBarOpener from "./buttonComponents/NavBarOpener";
+import NavBarOpener from "./components_sidebar/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Favorites from "./components/Favorites";
-import Profile from "./components/Profile";
-import tweets from "./components/SampleData";
-import ModalContainer from "./components/ModalContainer";
-import CelebIteration from "./components/CelebIteration";
-import ActualTweetCard from "./components/ActualTweetCard";
-import DataIteration from "./components/SampleDataIteration";
-import DropDown2 from "./components/DropDown";
-import SearchBar from "./components/SearchBar";
-import DropDownIterator from "./components/DropDownIterator";
+import Favorites from "./components_favorites/FavoriteCards";
+import Profile from "./containers/Profile";
+import ModalContainer from "./components_sidebar/ModalContainer";
+import CelebIteration from "./components_searchHome/CelebIteration";
+import ActualTweetCard from "./components_searchHome/ActualTweetCard";
+import DropDown2 from "./components_searchHome/DropDown";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      show: false,
       // logged_in: false,
       logged_in: true,
       user: null,
@@ -66,6 +63,11 @@ class App extends React.Component {
       ]
     };
   }
+  showModal = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  };
 
   getLoggedIn = (data, from) => {
     // console.log("initiated sign in fetch");
@@ -190,24 +192,24 @@ class App extends React.Component {
     );
   };
   searchTwitter = celeb => {
-    fetch(`http://localhost:3000/tweets`, {
+    // console.log("signed in as:", this.state.user);
+    // console.log("local storage token", localStorage.token);
+    console.log("began fetchtwitter on front end-should go to /celebs");
+    fetch(`http://localhost:3000/celebs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: ""
+        Authorization: `Bearer ${localStorage.token}`
       },
-
-      body: JSON.stringify({
-        celeb
-      })
-    })
-      .then(response => response.json)
-      .then(data => {
-        this.setState({
-          tweets: data
-        });
-      });
+      body: JSON.stringify({ celebrity: celeb })
+    });
+    // .then(response => response.json)
+    // .then(data => {
+    //   this.setState({
+    //     tweets: data
+    //   });
+    // });
   };
 
   render() {
@@ -227,13 +229,23 @@ class App extends React.Component {
             {this.state.logged_in ? (
               this.signed()
             ) : (
-              <Menu.Item onClick={() => this.onSignIn()}>
+              <Menu.Item
+                onClick={this.showModal}
+                // {() => this.onSignIn()}
+              >
                 <Icon name="sign in" />
                 Sign-in
               </Menu.Item>
             )}
           </Sidebar>
-
+          {this.state.show ? (
+            <ModalContainer
+              logged_in={this.state.logged_in}
+              user={this.state.user}
+              getLoggedIn={this.getLoggedIn}
+              showModal={this.showModal}
+            />
+          ) : null}
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
@@ -246,20 +258,13 @@ class App extends React.Component {
                   />
                   {console.log("below Searchome")}
                 </Route>
-                <SearchBar searchTwitter={this.searchTwitter} />
+
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>
                 <Route exact path="/profile">
                   {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
                 </Route>
-                {/* <Tweets />
-                <ModalContainer /> */}
-                <SignIn
-                  logged_in={this.state.logged_in}
-                  user={this.state.user}
-                  getLoggedIn={this.getLoggedIn}
-                />
               </div>
             </React.Fragment>
           </Sidebar.Pusher>
