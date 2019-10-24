@@ -1,18 +1,18 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import FavBar from "./components_searchHome/FavBar"
 import NavBarOpener from "./components_sidebar/NavBarOpener";
 import DropDown from "./components_searchHome/DropDown";
-import Banner from "./components/Banner"
+// import Banner from "./components/Banner"
 
-import SearchHome from "./containers/SearchHome";
+
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
 
-import SearchBar from "./components_searchHome/SearchBar";
+// import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
 
 import Entered from "./HOC/Entered";
@@ -48,17 +48,6 @@ class App extends React.Component {
       tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
       selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
       navBarShow: false,
-      selectedAcc: [], //twitteraccount
-
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      favorites: [], //user's list of fav
-      // tweets: [], //tweets of selectedAcc
-      // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
       top10: [
         {
           key: "Barack Obama",
@@ -271,6 +260,7 @@ class App extends React.Component {
               </Menu.Item>
             )}
           </Sidebar>
+
           {this.state.show ? (
             <ModalContainer
               logged_in={this.state.logged_in}
@@ -279,20 +269,21 @@ class App extends React.Component {
               showModal={this.showModal}
             />
           ) : null}
+
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App"> 
 
                 <Route exact path="/">
-                  <Entered entered={this.state.entered} enter={this.toggleEnter} favorites={this.state.favorites} toggle={this.toggleNav} top10={this.state.top10} searchTwitter={this.searchTwitter}/>
+                  <Entered entered={this.state.entered} enter={this.toggleEnter} favorites={this.state.favorites} toggle={this.toggleNav} top10={this.state.top10} searchTwitter={this.searchTwitter} loggedin={this.state.logged_in} selectedAcc={this.state.selectedAcc} tweets={this.state.tweets}/>
                 </Route>
 
                 <Route exact path="/favorites">
-                  {this.state.logged_in? <Favorites favs={this.state.favorites} deleteFav={this.deleteFav} toggleNav={this.toggleNav}/> : <Redirect to="/" />}
+                  <Favorites loggedin={this.state.logged_in} favs={this.state.favorites} deleteFav={this.deleteFav} toggleNav={this.toggleNav}/>
                 </Route>
                 
                 <Route exact path="/profile">
-                  {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/> :  <Redirect to="/" />}
+                  <Profile loggedin={this.state.logged_in} user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/>
                 </Route>
               </div>
             </React.Fragment>

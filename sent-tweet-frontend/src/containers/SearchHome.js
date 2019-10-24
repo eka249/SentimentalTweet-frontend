@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Image, Header } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import bcard from '../assets/bcard.jpg'
 import CardFlip from "../components_searchHome/CardFlip";
 

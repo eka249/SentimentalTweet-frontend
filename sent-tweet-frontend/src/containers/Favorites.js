@@ -2,6 +2,8 @@ import React from "react";
 import FavoriteCard from "../components_favorites/FavoriteCards";
 import img from '../assets/favs1.2.jpg';
 import NavBarOpener from "../components_sidebar/NavBarOpener";
+import LoggedInHOC from "../HOC/LoggedInHOC";
+
 
 const Favorites = props => {
   const map = () => {
@@ -25,6 +27,6 @@ const Favorites = props => {
   )
 };
 
-export default Favorites;
+export default LoggedInHOC(Favorites);
 
 

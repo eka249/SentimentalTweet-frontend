@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Icon, Input } from 'semantic-ui-react';
 import img from '../assets/profile2.12.jpg';
 import NavBarOpener from "../components_sidebar/NavBarOpener";
+import LoggedInHOC from "../HOC/LoggedInHOC";
 
 class Profile extends Component {
   state = {
@@ -49,4 +50,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default LoggedInHOC(Profile);
