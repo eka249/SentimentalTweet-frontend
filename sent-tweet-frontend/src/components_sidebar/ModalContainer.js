@@ -83,7 +83,7 @@ class ModalContainer extends Component {
         open={true}
         size="tiny"
         // closeIcon={this.props.showModal}
-      >
+      className='c-modal'>
         <Header content="Sign In" as="h2"></Header>
         <Modal.Actions>
           <Button
@@ -95,7 +95,7 @@ class ModalContainer extends Component {
         </Modal.Actions>
         <Modal.Content>
           <Form.Input
-            label="Username"
+            label="Username "
             // required
             type="text"
             placeholder="Username"
@@ -103,7 +103,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label="Password"
+            label="Password "
             // required
             type="password"
             placeholder="Password"
@@ -121,6 +121,7 @@ class ModalContainer extends Component {
         </Modal.Actions>
         <Modal.Content>
           <Header content="Or Sign Up!" as="h3"></Header>
+          
           <Form.Input
             label="Your Name"
             // required
@@ -132,7 +133,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label=" New username"
+            label=" New username "
             // required
             type="text"
             placeholder="Username"
@@ -142,7 +143,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label=" New password"
+            label=" New password "
             // required
             type="password"
             placeholder="Password"

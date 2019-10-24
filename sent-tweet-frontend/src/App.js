@@ -3,19 +3,25 @@ import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import FavBar from "./components_searchHome/FavBar";
 import NavBarOpener from "./components_sidebar/NavBarOpener";
-import SearchHome from "./containers/SearchHome";
-import Favorites from "./components_favorites/FavoriteCards";
+import DropDown from "./components_searchHome/DropDown";
+// import Banner from "./components/Banner"
+
+import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
+
+// import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
-import CelebIteration from "./components_searchHome/CelebIteration";
-import ActualTweetCard from "./components_searchHome/ActualTweetCard";
-import DropDown2 from "./components_searchHome/DropDown";
+
+import Entered from "./HOC/Entered";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      // logged_in: true,
+      entered: false,
       show: false,
       logged_in: false,
       // user: null,
@@ -38,18 +44,18 @@ class App extends React.Component {
       top10: [
         {
           key: "Barack Obama",
-          value: "Barack Obama",
-          text: "@BarackObama"
+          text: "Barack Obama",
+          value: "@BarackObama"
         },
         {
           key: "Katy Perry",
-          value: "Katy Perry",
-          text: "@katyperry"
+          text: "Katy Perry",
+          value: "@katyperry"
         },
         {
           key: "Justin BIeber",
-          value: "Justin Bieber",
-          text: "@justinbieber"
+          text: "Justin Bieber",
+          value: "@justinbieber"
         }
       ]
     };
@@ -150,7 +156,7 @@ class App extends React.Component {
   signed = () => {
     return (
       <React.Fragment>
-        <Menu.Item as="a">
+        <Menu.Item as={Link} to="/">
           <Icon name="home" />
           Home
         </Menu.Item>
@@ -159,7 +165,7 @@ class App extends React.Component {
           Favorites
         </Menu.Item>
         <Menu.Item as={Link} to="/profile">
-          <Icon name="camera" />
+          <Icon name="user outline" />
           Profile
         </Menu.Item>
         <Menu.Item onClick={() => this.logOut()}>
@@ -190,6 +196,23 @@ class App extends React.Component {
     // });
   };
 
+  toggleEnter = () => {
+    this.setState({
+      entered: true
+    });
+  };
+
+  entered = () => {
+    return (
+      <React.Fragment>
+        <FavBar favs={this.state.favorites} />
+        <NavBarOpener toggle={this.toggleNav} />
+        {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
+        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
+      </React.Fragment>
+    );
+  };
+
   render() {
     return (
       <Router>
@@ -216,6 +239,7 @@ class App extends React.Component {
               </Menu.Item>
             )}
           </Sidebar>
+
           {this.state.show ? (
             <ModalContainer
               logged_in={this.state.logged_in}
@@ -224,10 +248,10 @@ class App extends React.Component {
               showModal={this.showModal}
             />
           ) : null}
+
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
                   {/* {console.log("above Searchome")} */}
                   <SearchHome
@@ -236,13 +260,35 @@ class App extends React.Component {
                     user={this.state.user}
                   />
                   {/* {console.log("below Searchome")} */}
+                  <Entered
+                    entered={this.state.entered}
+                    enter={this.toggleEnter}
+                    favorites={this.state.favorites}
+                    toggle={this.toggleNav}
+                    top10={this.state.top10}
+                    searchTwitter={this.searchTwitter}
+                    loggedin={this.state.logged_in}
+                    selectedAcc={this.state.selectedAcc}
+                    tweets={this.state.tweets}
+                  />
                 </Route>
 
                 <Route exact path="/favorites">
-                  {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
+                  <Favorites
+                    loggedin={this.state.logged_in}
+                    favs={this.state.favorites}
+                    deleteFav={this.deleteFav}
+                    toggleNav={this.toggleNav}
+                  />
                 </Route>
+
                 <Route exact path="/profile">
-                  {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
+                  <Profile
+                    loggedin={this.state.logged_in}
+                    user={this.state.user}
+                    updateUser={this.updateUser}
+                    toggleNav={this.toggleNav}
+                  />
                 </Route>
               </div>
             </React.Fragment>

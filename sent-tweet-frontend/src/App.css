@@ -2,7 +2,7 @@ html, body {
   width: 100%;
   height: 100vh;
   background-color: black;
-  background-image: url('./assets/home2.jpg');
+  background-image: url('./assets/home1.6.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -87,6 +87,182 @@ html, body {
 
 }
 
-.flip-cart {
+.flip-card {
   text-align: center;
+}
+/* 
+.search {
+  width: 200px;
+} */
+
+.ui.fluid.dropdown {
+  background-color: rgba(0, 0, 0, 0.61);
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 10vh;
+  width: 200px; 
+  color: white;
+}
+
+.ui.fluid.dropdown input, text {
+  color: white;
+}
+
+/* .ui.active.selection.dropdown {
+  width:200px;
+  background-color: rgba(0, 0, 0, 0.61);
+  text-decoration-color: white;
+} */
+
+
+/* 
+.ui.active.selection.dropdown input, text  {
+  color: white;
+} */
+
+/* 
+.drpdwn {
+  width:200px;
+  background-color: rgba(0, 0, 0, 0.61);
+  color: white;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10vh;
+}  */
+
+
+
+
+.ui.modal {
+  background-image:url('./assets/signin3.12.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.ui.modal > .header{
+  background-color: rgba(255, 255, 255, 0) !important;
+  color: white;
+}
+
+.ui.modal > .content {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+
+.ui.modal > .content h3{
+  color:white;
+}
+
+.ui.modal > .actions   {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+
+.ui.modal > .actions >.button  {
+  background-color: rgba(202, 225, 255, 0.404);
+}
+
+.ui.input>input {
+  background-color: rgba(255, 255, 255, 0.349);
+  right: 200px;
+  max-width: 200px;
+  color:white;
+}
+
+.ui.input>input:focus {
+  background-color: rgba(255, 255, 255, 0.349);
+  color:white;
+  font-weight: bold;
+}
+
+.c-modal .field {
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+
+.c-modal .field label {
+  margin: auto 0;
+}
+
+.search {
+  border-color: black;
+}
+
+.ui.selection.dropdown .menu>.item {
+  border:none;
+  color:white;
+}
+
+.ui.upward.selection.dropdown .menu {
+  background-color: rgba(0, 0, 0, 0.637);
+  border:none;
+
+}
+
+.ui.labeled.icon.menu .item:hover {
+  color:#1dcaff;
+}
+
+
+.profile .ui.form input{
+  max-width: 200px;
+  background-color: rgba(255, 255, 255, 0.384);
+  border: none;
+  text-align: center;
+}
+.ui.form .field .ui.input input:focus{
+  background-color: rgba(255, 255, 255, 0.384);
+  color:white;
+text-align: center;
+
+}
+
+.profile-center {
+  display: grid;
+  grid-template-areas:
+  'a a a b b a a a'
+  'a a c c c d a a';
+  position: fixed;
+  text-align: center;
+  left:0;
+  right:0;
+    bottom: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-center h2 {
+  /* grid-area: b; */
+  font-weight: bold;
+  color:white;
+}
+
+.profile-center .profile-submit .ui.inverted.button {
+  /* grid-area: d; */
+  max-width: 50px;
+  border-color: rgba(255, 255, 255, 0.726);
+  border-radius:20%;
+  margin-top:10px;
+}
+
+#banner {
+  background-color: rgba(0, 0, 0, 0.836);;
+}
+
+#banner img {
+  background-color: rgba(0, 0, 0, 0.637);
+  width: 100%;
+  position: fixed;
+  top:40%;
+}
+
+.fav-list {
+  position:fixed;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr auto;
 }

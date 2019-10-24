@@ -13,14 +13,18 @@ const Dropdown2 = props => {
   };
 
   return (
-    <Dropdown
-      placeholder="Select Favorite"
-      fluid
-      search
-      selection
-      options={favoriteOptions}
-      onChange={e => handleSearchTwitter(e)}
-    />
+    <div className="drpdwn"> 
+      <Dropdown
+        inverted
+        placeholder="Select Twitter Account"
+        fluid
+        search
+        selection
+        options={favoriteOptions}
+        onChange={e => handleSearchTwitter(e)}
+        className='searchDown'
+      />
+    </div>
   );
 };
 
