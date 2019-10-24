@@ -1,5 +1,5 @@
 import React from "react";
-import FavoriteCard from "./FavoriteCards";
+import FavoriteCard from "../components_favorites/FavoriteCards";
 
 const Favorites = props => {
   return props.favs.map(person => {

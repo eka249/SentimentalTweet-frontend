@@ -3,24 +3,21 @@ import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import NavBarOpener from "./buttonComponents/NavBarOpener";
+import FavBar from "./components_searchHome/FavBar"
+import NavBarOpener from "./components_sidebar/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Favorites from "./components/Favorites";
-import Profile from "./components/Profile";
-import tweets from "./components/SampleData";
-import ModalContainer from "./components/ModalContainer";
-import CelebIteration from "./components/CelebIteration";
-import ActualTweetCard from "./components/ActualTweetCard";
-import DataIteration from "./components/SampleDataIteration";
-import DropDown2 from "./components/DropDown";
-import SearchBar from "./components/SearchBar";
-import DropDownIterator from "./components/DropDownIterator";
+// import Favorites from "./containers/Favorites";
+// import Profile from "./containers/Profile";
+import DropDown from "./components_searchHome/DropDown";
+import Banner from "./components/Banner"
+import SearchBar from "./components_searchHome/SearchBar";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       // logged_in: true,
+      enter: true,
       logged_in: true,
       user: {
         username: "tester1",
@@ -28,15 +25,31 @@ class App extends React.Component {
         password: "tester1",
         id: 1
       },
-      favorites: [{ id: 1 }, { id: 2 }], //user's list of fav
-      tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ], //tweets of selectedAcc
+      favorites: [
+        {
+          key: "Barack Obama",
+          value: "Barack Obama",
+          text: "@BarackObama"
+        },
+        {
+          key: "Katy Perry",
+          value: "Katy Perry",
+          text: "@katyperry"
+        },
+        {
+          key: "Justin BIeber",
+          value: "Justin Bieber",
+          text: "@justinbieber"
+        }
+      ], 
+      tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
       selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
       navBarShow: false,
       top10: [
         {
           key: "Barack Obama",
-          value: "Barack Obama",
-          text: "@BarackObama"
+          text: "Barack Obama",
+          value: "@BarackObama"
         },
         {
           key: "Katy Perry",
@@ -169,29 +182,47 @@ class App extends React.Component {
     )
 }  
   searchTwitter = celeb => {
-    fetch(`http://localhost:3000/tweets`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: ""
-      },
+    // fetch(`http://localhost:3000/tweets`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: ""
+    //   },
 
-      body: JSON.stringify({
-        celeb
-      })
-    })
-      .then(response => response.json)
-      .then(data => {
-        this.setState({
-          tweets: data
-        });
-      });
+    //   body: JSON.stringify({
+    //     celeb
+    //   })
+    // })
+    //   .then(response => response.json)
+    //   .then(data => {
+    //     this.setState({
+    //       tweets: data
+    //     });
+    //   });
   };
+
+  toggleEnter = () => {
+    this.setState({
+      enter: false
+    })
+  }
+
+  entered = () => {
+    return (
+      <React.Fragment>
+        <FavBar favs={this.state.favorites}/>
+        <NavBarOpener toggle={this.toggleNav}/>          
+        {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
+        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter}/>
+      </React.Fragment>
+    )
+  }
 
   render() {
     return (
       <Router>
+        
         <Sidebar.Pushable >
           <Sidebar
             as={Menu}
@@ -216,21 +247,19 @@ class App extends React.Component {
           <Sidebar.Pusher dimmed={this.state.navBarShow} >
             <React.Fragment>
               <div className="App"> 
-                <NavBarOpener toggle={this.toggleNav}/>                
+
                 <Route exact path="/">
-                  {console.log('above Searchome')}
-                  <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/>
-                  {console.log('below Searchome')}
+                  {this.state.enter? <Banner enter={this.toggleEnter}/> : this.entered()}
                 </Route>
-                <SearchBar searchTwitter={this.searchTwitter} />
+
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>
+                
                 <Route exact path="/profile">
                   {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
                 </Route>
-                {/* <Tweets />
-                <ModalContainer /> */}
+                
               </div>  
             </React.Fragment>
           </Sidebar.Pusher>

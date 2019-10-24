@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Image, Header } from 'semantic-ui-react'
 import bcard from '../assets/bcard.jpg'
-import CardFlip from "../components/CardFlip";
+import CardFlip from "../components_searchHome/CardFlip";
 
 
 const SearchHome = props => {
@@ -47,7 +47,7 @@ const SearchHome = props => {
                         {check(6)}
                     </Grid.Column>
                     <Grid.Column>
-                        <Header as='h2'>{props.name}</Header>
+                        
                     </Grid.Column>
                     <Grid.Column>
                         {check(7)}
