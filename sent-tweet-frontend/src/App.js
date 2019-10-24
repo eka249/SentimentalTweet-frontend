@@ -22,9 +22,9 @@ class App extends React.Component {
     super();
     this.state = {
       // logged_in: true,
-      entered: true,
+      entered: false,
       show: false,
-      logged_in: false,
+      logged_in: true,
       user: {
         username: "tester1",
         name: "tester1",
@@ -33,19 +33,16 @@ class App extends React.Component {
       },
       favorites: [
         {
-          key: "Barack Obama",
-          value: "Barack Obama",
-          text: "@BarackObama"
+          name: "Barack Obama",
+          twitter_account_id: "@BarackObama"
         },
         {
-          key: "Katy Perry",
-          value: "Katy Perry",
-          text: "@katyperry"
+          name: "Katy Perry",
+          twitter_account_id: "@katyperry"
         },
         {
-          key: "Justin BIeber",
-          value: "Justin Bieber",
-          text: "@justinbieber"
+          name: "Justin BIeber",
+          twitter_account_id: "@justinbieber"
         }
       ], 
       tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
@@ -70,13 +67,13 @@ class App extends React.Component {
         },
         {
           key: "Katy Perry",
-          value: "Katy Perry",
-          text: "@katyperry"
+          text: "Katy Perry",
+          value: "@katyperry"
         },
         {
           key: "Justin BIeber",
-          value: "Justin Bieber",
-          text: "@justinbieber"
+          text: "Justin Bieber",
+          value: "@justinbieber"
         }
       ]
     };
