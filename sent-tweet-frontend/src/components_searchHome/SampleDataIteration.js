@@ -1,5 +1,4 @@
 import React from "react";
-
 import ActualTweetCard from "./ActualTweetCard";
 
 const DataIteration = props => {

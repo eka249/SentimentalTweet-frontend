@@ -2,15 +2,15 @@ import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
 import NavBarOpener from "./components_sidebar/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Favorites from "./components_favorites/FavoriteCards";
+import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
 import ModalContainer from "./components_sidebar/ModalContainer";
 import CelebIteration from "./components_searchHome/CelebIteration";
 import ActualTweetCard from "./components_searchHome/ActualTweetCard";
 import DropDown2 from "./components_searchHome/DropDown";
+import twitteraccounts from "./components_favorites/TwitterAccts";
 
 class App extends React.Component {
   constructor() {
@@ -41,28 +41,45 @@ class App extends React.Component {
       //   password: "tester1",
       //   id: 1
       // },
-      favorites: [], //user's list of fav
-      // tweets: [], //tweets of selectedAcc
-      // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
-      top10: [
+      favorites: [
         {
-          key: "Barack Obama",
-          value: "Barack Obama",
-          text: "@BarackObama"
+          key: "Rihanna",
+          value: "Rihanna",
+          text: "@rihanna",
+          bio:
+            "happy to finally share this collection of incredible memories. Make sure you pre-order #theRIHANNAbook now 📚💗"
         },
         {
-          key: "Katy Perry",
-          value: "Katy Perry",
-          text: "@katyperry"
+          key: "Justin Timberlake",
+          value: "Justin Timberlake",
+          text: "@jtimberlake",
+          bio: "@kkwbeauty is now available in all @ultabeauty stores!!!"
         },
         {
-          key: "Justin BIeber",
-          value: "Justin Bieber",
-          text: "@justinbieber"
+          key: "Kim Kardashian West",
+          value: "Kim Kardashian West",
+          text: "",
+          bio: ""
         }
-      ]
+      ],
+      allTweeters: twitteraccounts
     };
   }
+
+  addToFavorites = favorite => {
+    //***************
+    let favoriteTweeters = this.state.favorites;
+
+    if (!favoriteTweeters.includes(favorite)) {
+      this.setState({ favorites: [...this.state.favorites, favorite] });
+    } else {
+      let filteredTweeters = favoriteTweeters.filter(
+        unFavorite => unFavorite.id !== favorite.id
+      );
+      this.setState({ favorites: [...filteredTweeters] });
+    }
+  }; //NEED TO RENDER TO FAVORITES PAGE
+
   showModal = () => {
     this.setState({
       show: !this.state.show
@@ -192,35 +209,6 @@ class App extends React.Component {
     );
   };
 
-  toggleNav = () => {
-    this.setState({
-      navBarShow: !this.state.navBarShow
-    });
-  };
-
-  signed = () => {
-    return (
-      <React.Fragment>
-        <Menu.Item as="a">
-          <Icon name="home" />
-          Home
-        </Menu.Item>
-        <Menu.Item as={Link} to="/favorites">
-          <Icon name="heart outline" />
-          Favorites
-        </Menu.Item>
-        <Menu.Item as={Link} to="/profile">
-          <Icon name="camera" />
-          Profile
-        </Menu.Item>
-        <Menu.Item onClick={() => this.logOut()}>
-          <Icon name="sign out" />
-          Sign-out
-        </Menu.Item>
-      </React.Fragment>
-    );
-  };
-
   searchTwitter = celeb => {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
@@ -297,6 +285,11 @@ class App extends React.Component {
 
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
+                  <Favorites
+                    allTweeters={this.state.allTweeters}
+                    favorites={this.state.favorites}
+                    addToFavorites={this.addToFavorites}
+                  />
                 </Route>
                 <Route exact path="/profile">
                   {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
