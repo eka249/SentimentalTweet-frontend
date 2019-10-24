@@ -69,6 +69,9 @@ class ModalContainer extends Component {
           localStorage.setItem("token", json.jwt);
           this.props.getLoggedIn(json);
         }
+      })
+      .then(() => {
+        this.props.generateAllTweets();
       });
   };
 

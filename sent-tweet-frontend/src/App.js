@@ -25,45 +25,28 @@ class App extends React.Component {
       show: false,
       logged_in: false,
       user: null,
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      // favorites: [{ one: 1 }, { two: 2 }], //user's list of fav
-      tweets: [
-        { content: "Hello", sentiment: 0.5, date: "10/23/19" },
-        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
-      ], //tweets of selectedAcc
-      selectedAcc: {}, //twitteraccount
-      navBarShow: false
+      navBarShow: false,
       // favorites: [], //user's list of fav
       // tweets: [], //tweets of selectedAcc
-      // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
-      // top10: [
-      //   {
-      //     key: "Barack Obama",
-      //     text: "Barack Obama",
-      //     value: "@BarackObama"
-      //   },
-      //   {
-      //     key: "Katy Perry",
-      //     text: "Katy Perry",
-      //     value: "@katyperry"
-      //   },
-      //   {
-      //     key: "Justin BIeber",
-      //     text: "Justin Bieber",
-      //     value: "@justinbieber"
-      //   }
-      // ]
+      allCelebs: [],
+      selectedAcc: { name: "", twitterHandle: "" }
     };
-    let allCelebs = fetch("http://localhost:3000/profile")
-      .then(resp => resp.json())
-      .then(data => console.log(data));
-    // .then(data => this.setState((allCelebs = data)));
   }
+
+  //change this to not be rendered upon sign in;
+  // this function can be used for rendering favorites as well
+  generateAllTweets = () => {
+    fetch("http://localhost:3000/allcelebs", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(resp => resp.json())
+      // .then(data => console.log(data));
+      .then(data => this.setState({ allCelebs: data }));
+  };
+
   showModal = () => {
     this.setState({
       show: !this.state.show
@@ -241,6 +224,7 @@ class App extends React.Component {
               user={this.state.user}
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
+              generateAllTweets={this.generateAllTweets}
             />
           ) : null}
 

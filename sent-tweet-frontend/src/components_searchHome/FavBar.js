@@ -5,11 +5,11 @@ import { Segment, Button } from "semantic-ui-react";
 const FavBar = props => {
   return (
     <div className="fav-list">
-      <Segment inverted>
+      {/* <Segment inverted>
         {props.favs.map(acc => {
           return <Button className="favBarBtn">{acc.name}</Button>;
         })}
-      </Segment>
+      </Segment> */}
       <div id="empty"> </div>
     </div>
   );
