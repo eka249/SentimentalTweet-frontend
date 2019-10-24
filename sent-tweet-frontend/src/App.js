@@ -1,37 +1,49 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Icon, Menu, Sidebar } from 'semantic-ui-react'
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import NavBarOpener from "./buttonComponents/NavBarOpener";
+import NavBarOpener from "./components_sidebar/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
-import Favorites from "./components/Favorites";
-import Profile from "./components/Profile";
-import tweets from "./components/SampleData";
-import ModalContainer from "./components/ModalContainer";
-import CelebIteration from "./components/CelebIteration";
-import ActualTweetCard from "./components/ActualTweetCard";
-import DataIteration from "./components/SampleDataIteration";
-import DropDown2 from "./components/DropDown";
-import SearchBar from "./components/SearchBar";
-import DropDownIterator from "./components/DropDownIterator";
+import Favorites from "./components_favorites/FavoriteCards";
+import Profile from "./containers/Profile";
+import ModalContainer from "./components_sidebar/ModalContainer";
+import CelebIteration from "./components_searchHome/CelebIteration";
+import ActualTweetCard from "./components_searchHome/ActualTweetCard";
+import DropDown2 from "./components_searchHome/DropDown";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      show: false,
       // logged_in: false,
       logged_in: true,
-      user: {
-        username: "tester1",
-        name: "tester1",
-        password: "tester1",
-        id: 1
-      },
-      favorites: [], //user's list of fav
-      tweets: [], //tweets of selectedAcc
-      selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
+      user: null,
+      // user: {
+      //   username: "tester1",
+      //   name: "tester1",
+      //   password: "tester1",
+      //   id: 1
+      // },
+      // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
+      tweets: [
+        { content: "Hello", sentiment: 0.5, date: "10/23/19" },
+        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
+      ], //tweets of selectedAcc
+      selectedAcc: [], //twitteraccount
       navBarShow: false,
+      selectedAcc: [], //twitteraccount
+
+      // user: {
+      //   username: "tester1",
+      //   name: "tester1",
+      //   password: "tester1",
+      //   id: 1
+      // },
+      favorites: [], //user's list of fav
+      // tweets: [], //tweets of selectedAcc
+      // selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
       top10: [
         {
           key: "Barack Obama",
@@ -51,6 +63,11 @@ class App extends React.Component {
       ]
     };
   }
+  showModal = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  };
 
   getLoggedIn = (data, from) => {
     // console.log("initiated sign in fetch");
@@ -146,58 +163,34 @@ class App extends React.Component {
     // })})
   };
 
-<<<<<<< HEAD
-=======
   toggleNav = () => {
     this.setState({
       navBarShow: !this.state.navBarShow
-    })
-  }
+    });
+  };
 
   signed = () => {
     return (
-        <React.Fragment >
-            <Menu.Item as='a'>
-                <Icon name='home' />
-                Home
-            </Menu.Item>
-            <Menu.Item as={Link} to='/favorites'>
-                <Icon name='heart outline' />
-                Favorites
-            </Menu.Item>
-            <Menu.Item as={Link} to='/profile'>
-                <Icon name='camera' />
-                Profile
-            </Menu.Item>
-            <Menu.Item onClick={()=>this.logOut()}>
-                <Icon name='sign out' />
-                Sign-out 
-            </Menu.Item>
-        </React.Fragment>
-    )
-}  
->>>>>>> 32774aceedec07a901e366fd83782572c390be2f
-  searchTwitter = celeb => {
-    fetch(`http://localhost:3000/tweets`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: ""
-      },
-
-      body: JSON.stringify({
-        celeb
-      })
-    })
-      .then(response => response.json)
-      .then(data => {
-        this.setState({
-          tweets: data
-        });
-      });
+      <React.Fragment>
+        <Menu.Item as="a">
+          <Icon name="home" />
+          Home
+        </Menu.Item>
+        <Menu.Item as={Link} to="/favorites">
+          <Icon name="heart outline" />
+          Favorites
+        </Menu.Item>
+        <Menu.Item as={Link} to="/profile">
+          <Icon name="camera" />
+          Profile
+        </Menu.Item>
+        <Menu.Item onClick={() => this.logOut()}>
+          <Icon name="sign out" />
+          Sign-out
+        </Menu.Item>
+      </React.Fragment>
+    );
   };
-<<<<<<< HEAD
 
   toggleNav = () => {
     this.setState({
@@ -227,8 +220,27 @@ class App extends React.Component {
       </React.Fragment>
     );
   };
-=======
->>>>>>> 32774aceedec07a901e366fd83782572c390be2f
+
+  searchTwitter = celeb => {
+    // console.log("signed in as:", this.state.user);
+    // console.log("local storage token", localStorage.token);
+    console.log("began fetchtwitter on front end-should go to /celebs");
+    fetch(`http://localhost:3000/celebs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({ celebrity: celeb })
+    });
+    // .then(response => response.json)
+    // .then(data => {
+    //   this.setState({
+    //     tweets: data
+    //   });
+    // });
+  };
 
   render() {
     return (
@@ -247,42 +259,48 @@ class App extends React.Component {
             {this.state.logged_in ? (
               this.signed()
             ) : (
-              <Menu.Item onClick={() => this.onSignIn()}>
+              <Menu.Item
+                onClick={this.showModal}
+                // {() => this.onSignIn()}
+              >
                 <Icon name="sign in" />
                 Sign-in
               </Menu.Item>
             )}
           </Sidebar>
-
+          {this.state.show ? (
+            <ModalContainer
+              logged_in={this.state.logged_in}
+              user={this.state.user}
+              getLoggedIn={this.getLoggedIn}
+              showModal={this.showModal}
+            />
+          ) : null}
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
                 <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
-<<<<<<< HEAD
                   {console.log("above Searchome")}
-                  <SearchHome tweets={this.state.tweets} />
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
                   {console.log("below Searchome")}
-=======
-                  {console.log('above Searchome')}
-                  <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/>
-                  {console.log('below Searchome')}
->>>>>>> 32774aceedec07a901e366fd83782572c390be2f
+                  {console.log("above Searchome")}
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
+                  {console.log("below Searchome")}
                 </Route>
-                <SearchBar searchTwitter={this.searchTwitter} />
+
                 <Route exact path="/favorites">
                   {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                 </Route>
                 <Route exact path="/profile">
                   {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
                 </Route>
-                {/* <Tweets />
-                <ModalContainer /> */}
-                <SignIn
-                  logged_in={this.state.logged_in}
-                  user={this.state.user}
-                  getLoggedIn={this.getLoggedIn}
-                />
               </div>
             </React.Fragment>
           </Sidebar.Pusher>

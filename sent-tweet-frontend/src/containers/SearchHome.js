@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Image, Header } from "semantic-ui-react";
 import bcard from "../assets/bcard.jpg";
-import CardFlip from "../components/CardFlip";
+import CardFlip from "../components_searchHome/CardFlip";
 
 const SearchHome = props => {
   const allCards = props.tweets.map(tweet => {
