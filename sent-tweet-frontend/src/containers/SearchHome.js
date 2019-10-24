@@ -4,13 +4,13 @@ import bcard from "../assets/bcard.jpg";
 import CardFlip from "../components_searchHome/CardFlip";
 
 const SearchHome = props => {
-  //   const allCards = props.tweets.map(tweet => {
-  //     return <CardFlip tweet={tweet} />;
-  //   });
+  // const allCards = props.tweets.map(tweet => {
+  //   return <CardFlip tweet={tweet} />;
+  // });
 
-  //   const check = num => {
-  //     return allCards[num] ? allCards[num] : <Image src={bcard} />;
-  //   };
+  // const check = num => {
+  //   return allCards[num] ? allCards[num] : <Image src={bcard} />;
+  // };
 
   return (
     <div className="tweetcards">

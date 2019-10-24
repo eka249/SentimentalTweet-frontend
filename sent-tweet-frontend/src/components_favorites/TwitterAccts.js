@@ -1,115 +1,115 @@
 // const twitteraccounts = [{
-//   key: "",
+//   id: "",
 //   value: "",
-//   text: "",
+//   celeb_username: "",
 //   bio: ""
 // },
 const twitteraccounts = [
   {
-    key: "Barack Obama",
+    id: "Barack Obama",
     value: "Barack Obama",
-    text: "@BarackObama",
+    celeb_username: "@BarackObama",
     bio: "Dad, husband, President, citizen."
   },
   {
-    key: "Katy Perry",
+    id: "Katy Perry",
     value: "Katy Perry",
-    text: "@katyperry",
+    celeb_username: "@katyperry",
     bio: "Love. Light."
   },
 
   {
-    key: "Justin Bieber",
+    id: "Justin Bieber",
     value: "Justin Bieber",
-    text: "@justinbieber",
+    celeb_username: "@justinbieber",
     bio: "Let's make the world better."
   },
   {
-    key: "Donald J. Trump",
+    id: "Donald J. Trump",
     value: "Donald J. Trump",
-    text: "@realDonaldTrump",
+    celeb_username: "@realDonaldTrump",
     bio: "45th President of the United States of America🇺🇸"
   },
   {
-    key: "Ariana Grande",
+    id: "Ariana Grande",
     value: "Ariana Grande",
-    text: "@ArianaGrande",
+    celeb_username: "@ArianaGrande",
     bio: "angel"
   },
   {
-    key: "Ellen DeGeneres",
+    id: "Ellen DeGeneres",
     value: "Ellen DeGeneres",
-    text: "@TheEllenShow",
+    celeb_username: "@TheEllenShow",
     bio:
       "Comedian, talk show host and ice road trucker. My tweets are real, and they’re spectacular. @ellentube @theellenfund"
   },
   {
-    key: "Lady Gaga",
+    id: "Lady Gaga",
     value: "Lady Gaga",
-    text: "@ladygaga",
+    celeb_username: "@ladygaga",
     bio: ""
   },
   {
-    key: "Cristiano Ronaldo",
+    id: "Cristiano Ronaldo",
     value: "Cristiano Ronaldo",
-    text: "@Cristiano",
+    celeb_username: "@Cristiano",
     bio:
       "This Privacy Policy addresses the collection and use of personal information - https://t.co/Jp6yh1T58c"
   },
   {
-    key: "Taylor Swift",
+    id: "Taylor Swift",
     value: "Taylor Swift",
-    text: "@taylorswift13",
+    celeb_username: "@taylorswift13",
     bio: "Lover out now"
   },
   {
-    key: "Rihanna",
+    id: "Rihanna",
     value: "Rihanna",
-    text: "@rihanna",
+    celeb_username: "@rihanna",
     bio:
       "happy to finally share this collection of incredible memories. Make sure you pre-order #theRIHANNAbook now 📚💗"
   },
   {
-    key: "Justin Timberlake",
+    id: "Justin Timberlake",
     value: "Justin Timberlake",
-    text: "@jtimberlake",
+    celeb_username: "@jtimberlake",
     bio: "@kkwbeauty is now available in all @ultabeauty stores!!!"
   },
   {
-    key: "Kim Kardashian West",
+    id: "Kim Kardashian West",
     value: "Kim Kardashian West",
-    text: "",
+    celeb_username: "",
     bio: ""
   },
   {
-    key: "Selena Gomez",
+    id: "Selena Gomez",
     value: "Selena Gomez",
-    text: "@selenagomez",
+    celeb_username: "@selenagomez",
     bio: "LOSE YOU TO LOVE ME. 10.23. Presave: https://t.co/WKbGSQEX3X"
   },
   {
-    key: "Britney Spears",
+    id: "Britney Spears",
     value: "Britney Spears",
-    text: "",
+    celeb_username: "",
     bio: ""
   },
   {
-    key: "Shakira",
+    id: "Shakira",
     value: "Shakira",
-    text: "@shakira",
+    celeb_username: "@shakira",
     bio:
       "Shakira In Concert: El Dorado World Tour November 13th https://t.co/oVlMcCKhOv"
   },
   {
-    key: "jimmy fallon",
+    id: "jimmy fallon",
     value: "jimmy fallon",
-    text: "@jimmyfallon",
+    celeb_username: "@jimmyfallon",
     bio: "astrophysicist"
   },
   {
-    key: "Narendra Modi",
+    id: "Narendra Modi",
     value: "Narendra Modi",
-    text: "@narendramodi",
+    celeb_username: "@narendramodi",
     bio: "Prime Minister of India"
   }
 ];

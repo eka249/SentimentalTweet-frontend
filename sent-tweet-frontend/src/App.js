@@ -1,15 +1,22 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import NavBarOpener from "./components_sidebar/NavBarOpener";
 import SearchHome from "./containers/SearchHome";
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
-
+import FavBar from "./components_searchHome/FavBar";
+import DropDown from "./components_searchHome/DropDown";
+import Entered from "./HOC/Entered";
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
-import CelebIteration from "./components_searchHome/CelebIteration";
+
 import ActualTweetCard from "./components_searchHome/ActualTweetCard";
 import DropDown2 from "./components_searchHome/DropDown";
 import twitteraccounts from "./components_favorites/TwitterAccts";
@@ -25,7 +32,7 @@ class App extends React.Component {
       navBarShow: false,
       // favorites: [], //user's list of fav
       // tweets: [], //tweets of selectedAcc
-      allCelebs: [],
+      top10: [],
       selectedAcc: { name: "", twitterHandle: "" }
     };
   }
@@ -40,8 +47,10 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      // .then(data => console.log(data));
-      .then(data => this.setState({ allCelebs: data }));
+      .then(data => console.log(data))
+      //.then map to put correct proper format (on front or back end?)
+      // .then(data => this.setState({ top10: [...data] }));
+      .then(data => this.setState({ top10: data }));
   };
   addToFavorites = favorite => {
     //***************
@@ -192,12 +201,11 @@ class App extends React.Component {
       <React.Fragment>
         <FavBar favs={this.state.favorites} />
         <NavBarOpener toggle={this.toggleNav} />
-        {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
-        <DropDown
-          // top10={this.state.top10}
-          allCelebs={this.state.allCelebs}
-          searchTwitter={this.searchTwitter}
+        <SearchHome
+          tweets={this.state.tweets}
+          name={this.state.selectedAcc.name}
         />
+        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
       </React.Fragment>
     );
   };
@@ -250,13 +258,11 @@ class App extends React.Component {
                     searchTwitter={this.searchTwitter}
                     updateSelectedAcc={this.updateSelectedAcc}
                   />
-                  {console.log("below Searchome")}
-                  {console.log("above Searchome")}
+
                   <SearchHome
                     tweets={this.state.tweets}
                     name={this.state.selectedAcc.name}
                   />
-                  {console.log("below Searchome")}
                 </Route>
 
                 <Route exact path="/favorites">
