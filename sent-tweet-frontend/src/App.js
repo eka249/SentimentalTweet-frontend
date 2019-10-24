@@ -9,7 +9,7 @@ import DropDown from "./components_searchHome/DropDown";
 import Banner from "./components/Banner"
 
 import SearchHome from "./containers/SearchHome";
-// import Favorites from "./containers/Favorites";
+import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
 
 import SearchBar from "./components_searchHome/SearchBar";
@@ -288,7 +288,7 @@ class App extends React.Component {
                 </Route>
 
                 <Route exact path="/favorites">
-                  {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
+                  {this.state.logged_in? <Favorites favs={this.state.favorites} deleteFav={this.deleteFav} toggleNav={this.toggleNav}/> : <Redirect to="/" />}
                 </Route>
                 
                 <Route exact path="/profile">
