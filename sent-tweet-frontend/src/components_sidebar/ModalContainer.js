@@ -37,13 +37,13 @@ class ModalContainer extends Component {
       body: JSON.stringify({
         name: this.state.fields.newName,
         username: this.state.fields.newUsername,
-        password_digest: this.state.fields.newPassword
-        // MAKE SURE THE ABOVE IS password_digest:
+        password: this.state.fields.newPassword
+        // MAKE SURE THE ABOVE IS password:
       })
     })
       .then(response => response.json())
       .then(data => {
-        // console.log("after sign up form", data);
+        console.log("after sign up form", data);
         // this.setState(prevState => {
         //   return { signedUp: true };
         // });

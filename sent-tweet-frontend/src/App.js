@@ -17,7 +17,7 @@ class App extends React.Component {
     super();
     this.state = {
       show: false,
-      logged_in: true,
+      logged_in: false,
       // user: null,
       user: {
         username: "tester1",
