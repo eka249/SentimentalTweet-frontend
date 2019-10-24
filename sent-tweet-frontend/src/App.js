@@ -45,7 +45,7 @@ class App extends React.Component {
           twitter_account_id: "@justinbieber"
         }
       ], 
-      tweets: [{content:"Hello", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
+      tweets: [{content:"Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.", sentiment: 0.5, date: '10/23/19'},{content:"Bye", sentiment:0.3, date: '10/23/19'} ],
       selectedAcc: {name: "tester", twitter_account: 'some_String_for_Twit_acc'}, //twitteraccount
       navBarShow: false,
       top10: [
