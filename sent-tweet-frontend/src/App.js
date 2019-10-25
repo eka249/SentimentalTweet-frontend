@@ -48,10 +48,10 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      .then(data => console.log(data))
-      //.then map to put correct proper format (on front or back end?)
-      // .then(data => this.setState({ top10: [...data] }));
-      .then(data => this.setState({ top10: data }));
+      .then(data => console.log(data));
+    //.then map to put correct proper format (on front or back end?)
+    // .then(data => this.setState({ top10: [...data] }));
+    // .then(data => this.setState({ top10: data }));
 
     console.log();
   };
