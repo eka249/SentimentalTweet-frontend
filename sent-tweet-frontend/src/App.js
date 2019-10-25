@@ -35,15 +35,15 @@ class App extends React.Component {
       },
       favorites: [
         {
-          name: "Asif Khan",
+          name: "Barack Obama",
           twitter_account_id: "@BarackObama"
         },
         {
-          name: "Catherine Yang",
+          name: "Katy Perry",
           twitter_account_id: "@katyperry"
         },
         {
-          name: "Ellyn Anderson",
+          name: "Justin Bieber",
           twitter_account_id: "@justinbieber"
         }
       ], 
@@ -54,17 +54,17 @@ class App extends React.Component {
       top10: [
         {
           key: "Barack Obama",
-          text: "Asif Khan",
+          text: "Barack Obama",
           value: "@BarackObama"
         },
         {
           key: "Katy Perry",
-          text: "Catherine Yang",
+          text: "Katy Perry",
           value: "@katyperry"
         },
         {
-          key: "Justin BIeber",
-          text: "Ellyn Anderson",
+          key: "Justin Bieber",
+          text: "Justin Bieber",
           value: "@justinbieber"
         }
       ]
@@ -295,7 +295,7 @@ class App extends React.Component {
                 </Route>
 
                 <Route exact path="/statistics">
-                  <Statistics loggedin={this.state.logged_in} user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/>
+                  <Statistics top10={this.state.top10} loggedin={this.state.logged_in} toggleNav={this.toggleNav} tweets={this.state.tweets} selectedAcc={this.state.selectedAcc} top10={this.state.top10} searchTwitter={this.searchTwitter} updateSelectedAcc={this.updateSelectedAcc}/>
                 </Route>
               </div>
             </React.Fragment>

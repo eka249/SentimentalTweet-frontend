@@ -312,3 +312,55 @@ html, body {
 .tweetback .ui.card{
   background-color: rgba(227, 240, 255, 0.801);
 }
+
+#statistics {
+  min-height: 600px;
+}
+
+
+
+.stats .ui.selection.dropdown .menu>.item {
+  border:none;
+  color:rgba(45, 71, 212, 0.781);
+  font-weight: bold;
+}
+
+.stats .ui.upward.selection.dropdown .menu {
+  background-color: rgba(255, 255, 255, 0.637);
+  border:none;
+}
+
+.stats .ui.upward.selection.dropdown .menu>.item:hover {
+  background-color: rgba(255, 255, 255, 0.63);
+  color:rgba(58, 176, 255, 0.781);
+}
+
+.stats .ui.labeled.icon.menu .item:hover {
+  color:#1dcaff;
+}
+
+.stats  .drpdwn .ui.search.dropdown.active>input.search:focus {
+  color:#1dcaff
+}
+
+.stats  .drpdwn .ui.selection.dropdown .menu>.message {
+  color:#1dcaff;
+}
+
+.stats .ui.search {
+  background-color: rgba(255, 255, 255, 0.637);
+  color:rgba(58, 176, 255, 0.781);
+  color: rgb(55, 46, 175);
+}
+
+.stream .chartjs-render-monitor{
+  position: relative;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:50px;
+  width: 700px !important;
+  height: 350px !important;
+  color: rgba(0, 0, 0, 0.966); 
+}
