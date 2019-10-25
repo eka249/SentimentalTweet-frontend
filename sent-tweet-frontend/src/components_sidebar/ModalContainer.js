@@ -121,8 +121,8 @@ class ModalContainer extends Component {
             content="Sign In"
             // onClick={console.log("sign in hit")}
             onClick={
-              this.onSignIn
-              // , this.props.showModal
+              // this.onSignIn
+              this.props.showModal
             }
           />
         </Modal.Actions>

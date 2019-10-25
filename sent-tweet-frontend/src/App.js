@@ -20,6 +20,7 @@ import ModalContainer from "./components_sidebar/ModalContainer";
 import ActualTweetCard from "./components_searchHome/ActualTweetCard";
 import DropDown2 from "./components_searchHome/DropDown";
 import twitteraccounts from "./components_favorites/TwitterAccts";
+import searchTweets from "./components_favorites/tweets";
 
 class App extends React.Component {
   constructor() {
@@ -32,8 +33,21 @@ class App extends React.Component {
       user: null,
       navBarShow: false,
       // favorites: [], //user's list of fav
-      // tweets: [], //tweets of selectedAcc
-      top10: [],
+      tweets: [],
+      //tweets of selectedAcc
+      top10: [
+        "Katy Perry",
+        "Lady Gaga",
+        "Tom Holland",
+        "Isaiah Thomas",
+        "Donald J. Trump",
+        "The New York Times",
+        "The Washington Post",
+        "Greta Thunberg",
+        "Louis Tomlinson",
+        "Tommy Dreamer",
+        "Taylor Swift"
+      ],
       selectedAcc: { name: "", twitterHandle: "" }
     };
   }
@@ -71,7 +85,8 @@ class App extends React.Component {
 
   showModal = () => {
     this.setState({
-      show: !this.state.show
+      show: !this.state.show,
+      logged_in: true
     });
   };
 
@@ -97,6 +112,20 @@ class App extends React.Component {
       return {
         logged_in: false,
         user: null
+      };
+    });
+  };
+
+  ////////////////////hard code test login///////////////////////
+  logIn = () => {
+    this.setState(prevState => {
+      return {
+        logged_in: true
+        // user: {
+        //   name: "test",
+        //   userName: "test user",
+        //   password: "1"
+        // }
       };
     });
   };
@@ -173,24 +202,27 @@ class App extends React.Component {
   };
 
   searchTwitter = celeb => {
-    // console.log("signed in as:", this.state.user);
-    // console.log("local storage token", localStorage.token);
-    // console.log("began fetchtwitter on front end-should go to /celebs");
-    return fetch("http://localhost:3000/celebs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.token}`
-      },
-      body: JSON.stringify({ celebrity: celeb })
-    }).then(response => response.json());
-    // .then(data => console.log(data))
-    // .then(data => {
-    //   this.setState({
-    //     tweets: data
-    //   });
-    // });
+    // // console.log("signed in as:", this.state.user);
+    // // console.log("local storage token", localStorage.token);
+    // // console.log("began fetchtwitter on front end-should go to /celebs");
+    // return fetch("http://localhost:3000/celebs", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: `Bearer ${localStorage.token}`
+    //   },
+    //   body: JSON.stringify({ celebrity: celeb })
+    // }).then(response => response.json());
+    // // .then(data => console.log(data))
+    // // .then(data => {
+    // //   this.setState({
+    // //     tweets: data
+    // //   });
+    // // });
+    this.setState = {
+      tweets: searchTweets
+    };
   };
 
   toggleEnter = () => {
