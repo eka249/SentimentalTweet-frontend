@@ -1,17 +1,10 @@
 import React from "react";
-import FavoriteCard from "../components_favorites/FavoriteCards";
-import img from '../assets/favs1.2.jpg';
+import img from '../assets/stats1.jpg';
 import NavBarOpener from "../components_sidebar/NavBarOpener";
 import LoggedInHOC from "../HOC/LoggedInHOC";
 
 
-const Favorites = props => {
-  const map = () => {
-    return props.favs.map(person => {
-      // render favCard
-      // return <FavoriteCard key={person.id} person={person} />;
-    })
-  }
+const Statistics = props => {
 
   return (
     <div style={{  
@@ -20,13 +13,13 @@ const Favorites = props => {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat'
     }}
-  className="profile">
+  className="statistics">
     <NavBarOpener toggle={props.toggleNav}/>   
-    {map()}
+
   </div>
   )
 };
 
-export default LoggedInHOC(Favorites);
+export default LoggedInHOC(Statistics);
 
 

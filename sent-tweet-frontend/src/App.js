@@ -11,6 +11,8 @@ import DropDown from "./components_searchHome/DropDown";
 
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
+import Statistics from "./containers/Statistics";
+
 
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
@@ -26,7 +28,7 @@ class App extends React.Component {
       show: false,
       logged_in: true,
       user: {
-        username: "tester1",
+        username: "Problem Domain",
         name: "tester1",
         password: "tester1",
         id: 1
@@ -185,6 +187,10 @@ class App extends React.Component {
           <Icon name="heart outline" />
           Favorites
         </Menu.Item>
+        <Menu.Item as={Link} to="/statistics">
+          <Icon name="chart area" />
+          Positivities
+        </Menu.Item>
         <Menu.Item as={Link} to="/profile">
           <Icon name="user outline" />
           Profile
@@ -193,6 +199,7 @@ class App extends React.Component {
           <Icon name="sign out" />
           Sign-out
         </Menu.Item>
+
       </React.Fragment>
     );
   };
@@ -285,6 +292,10 @@ class App extends React.Component {
                 
                 <Route exact path="/profile">
                   <Profile loggedin={this.state.logged_in} user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/>
+                </Route>
+
+                <Route exact path="/statistics">
+                  <Statistics loggedin={this.state.logged_in} user={this.state.user} updateUser={this.updateUser} toggleNav={this.toggleNav}/>
                 </Route>
               </div>
             </React.Fragment>

@@ -8,11 +8,7 @@ class Dropdown2 extends React.Component {
   }
 
   handleSearchTwitter = async (e, data) => {
-    console.log(e.type)
-    console.log(e.type === 'keydown'? true:false)
     // if (e.type === 'click') { e.persist()  }
-    console.log(e)
-    // e.persist();
 
     const eaccount = data.value[0] === '@'? data.value.slice(1): data.value;
     const ename = e.target.textContent;
