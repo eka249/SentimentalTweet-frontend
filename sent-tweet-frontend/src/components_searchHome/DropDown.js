@@ -1,27 +1,47 @@
 import React from "react";
+import twitteraccounts from "../components_favorites/TwitterAccts";
 import { Dropdown } from "semantic-ui-react";
 
-const Dropdown2 = props => {
-  let favoriteOptions = props.top10;
-
-  const handleSearchTwitter = e => {
-    e.preventDefault();
-    console.log("searchbar term value", e.target.value);
-
-    let celeb = e.target.value;
-    props.searchTwitter(celeb);
+class Dropdown2 extends React.Component {
+  state = {
+    selected: {},
+    account: "",
+    name: ""
   };
 
-  return (
-    <Dropdown
-      placeholder="Select Favorite"
-      fluid
-      search
-      selection
-      options={favoriteOptions}
-      onChange={e => handleSearchTwitter(e)}
-    />
-  );
-};
+  // handleSearchTwitter = async (e, data) => {
+  //   e.persist();
+
+  //   const eaccount = data.value.slice(1);
+  //   const ename = e.target.textContent;
+
+  //   await this.setState({
+  //     name: ename,
+  //     account: eaccount
+  //   });
+  //   this.props.searchTwitter(this.state.account);
+  //   this.props.updateSelectedAcc(this.state.name, this.state.account);
+  // };
+
+  render() {
+    let favoriteOptions = twitteraccounts;
+    console.log(favoriteOptions);
+
+    return (
+      <div className="drpdwn">
+        <Dropdown
+          inverted
+          placeholder="Select Twitter Account"
+          fluid
+          search
+          selection
+          options={favoriteOptions}
+          onChange={this.handleSearchTwitter}
+          className="searchDown"
+        />
+      </div>
+    );
+  }
+}
 
 export default Dropdown2;

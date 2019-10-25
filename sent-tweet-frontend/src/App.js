@@ -2,36 +2,29 @@ import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import FavBar from "./components_searchHome/FavBar";
 import NavBarOpener from "./components_sidebar/NavBarOpener";
-import SearchHome from "./containers/SearchHome";
+import DropDown from "./components_searchHome/DropDown";
+// import Banner from "./components/Banner"
+
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
+
+// import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
-import CelebIteration from "./components_searchHome/CelebIteration";
-import ActualTweetCard from "./components_searchHome/ActualTweetCard";
-import DropDown2 from "./components_searchHome/DropDown";
+import SearchHome from "./containers/SearchHome";
 import twitteraccounts from "./components_favorites/TwitterAccts";
+import Entered from "./HOC/Entered";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      entered: false,
       show: false,
-      // logged_in: false,
       logged_in: true,
       user: null,
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      // favorites: [{ one: 1 }, { two: 2 }] //user's list of fav
-      tweets: [
-        { content: "Hello", sentiment: 0.5, date: "10/23/19" },
-        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
-      ], //tweets of selectedAcc
-      selectedAcc: [], //twitteraccount
       navBarShow: false,
       selectedAcc: [], //twitteraccount
 
@@ -41,28 +34,8 @@ class App extends React.Component {
       //   password: "tester1",
       //   id: 1
       // },
-      favorites: [
-        {
-          key: "Rihanna",
-          value: "Rihanna",
-          text: "@rihanna",
-          bio:
-            "happy to finally share this collection of incredible memories. Make sure you pre-order #theRIHANNAbook now 📚💗"
-        },
-        {
-          key: "Justin Timberlake",
-          value: "Justin Timberlake",
-          text: "@jtimberlake",
-          bio: "@kkwbeauty is now available in all @ultabeauty stores!!!"
-        },
-        {
-          key: "Kim Kardashian West",
-          value: "Kim Kardashian West",
-          text: "",
-          bio: ""
-        }
-      ],
-      allTweeters: twitteraccounts
+      favorites: [],
+      top10: twitteraccounts
     };
   }
 
@@ -74,11 +47,25 @@ class App extends React.Component {
       this.setState({ favorites: [...this.state.favorites, favorite] });
     } else {
       let filteredTweeters = favoriteTweeters.filter(
-        unFavorite => unFavorite.id !== favorite.id
+        unFavorite => unFavorite !== favorite
       );
       this.setState({ favorites: [...filteredTweeters] });
     }
   }; //NEED TO RENDER TO FAVORITES PAGE
+
+  //change this to not be rendered upon sign in;
+  // this function can be used for rendering favorites as well
+  generateAllTweets = () => {
+    fetch("http://localhost:3000/allcelebs", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(resp => resp.json())
+      // .then(data => console.log(data));
+      .then(data => this.setState({ top10: [...data], data }));
+  };
 
   showModal = () => {
     this.setState({
@@ -86,8 +73,8 @@ class App extends React.Component {
     });
   };
 
-  getLoggedIn = (data, from) => {
-    // console.log("initiated sign in fetch");
+  getLoggedIn = json => {
+    console.log("initiated sign in fetch");
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -98,19 +85,6 @@ class App extends React.Component {
       .then(data => {
         this.setState(prevState => {
           return { logged_in: true, user: data.user };
-        });
-      });
-  };
-
-  getUser = () => {
-    fetch(`http://localhost:3000/users/${this.state.user.id}`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState(prevState => {
-          return {
-            logged_in: true,
-            user: data
-          };
         });
       });
   };
@@ -127,21 +101,8 @@ class App extends React.Component {
 
   updateSelectedAcc = (name, account) => {
     this.setState({
-      selectedAcc: { name: { name }, twitterHandle: { account } }
+      selectedAcc: { name: name, twitterHandle: account }
     });
-  };
-  updateUser = e => {
-    // fetch(Url + this.state.user.id , {
-    //     method: 'UPDATE',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Accept: 'application/json'
-    //     },
-    //     body: JSON.stringify({ name })
-    // })
-    // .then(resp => resp.json())
-    // .then(data => this.handleChange(data.name))
-    // MAKE SURE data.name IS  THE NAME ONLY
   };
 
   deleteFav = e => {
@@ -189,7 +150,7 @@ class App extends React.Component {
   signed = () => {
     return (
       <React.Fragment>
-        <Menu.Item as="a">
+        <Menu.Item as={Link} to="/">
           <Icon name="home" />
           Home
         </Menu.Item>
@@ -198,7 +159,7 @@ class App extends React.Component {
           Favorites
         </Menu.Item>
         <Menu.Item as={Link} to="/profile">
-          <Icon name="camera" />
+          <Icon name="user outline" />
           Profile
         </Menu.Item>
         <Menu.Item onClick={() => this.logOut()}>
@@ -212,7 +173,7 @@ class App extends React.Component {
   searchTwitter = celeb => {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
-    console.log("began fetchtwitter on front end-should go to /celebs");
+    // console.log("began fetchtwitter on front end-should go to /celebs");
     fetch(`http://localhost:3000/celebs`, {
       method: "POST",
       headers: {
@@ -228,6 +189,27 @@ class App extends React.Component {
     //     tweets: data
     //   });
     // });
+  };
+
+  toggleEnter = () => {
+    this.setState({
+      entered: true
+    });
+  };
+
+  entered = () => {
+    return (
+      <React.Fragment>
+        <FavBar favs={this.state.favorites} />
+        <NavBarOpener toggle={this.toggleNav} />
+        {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
+        <DropDown
+          // top10={this.state.top10}
+          top10={this.state.top10}
+          searchTwitter={this.searchTwitter}
+        />
+      </React.Fragment>
+    );
   };
 
   render() {
@@ -256,43 +238,49 @@ class App extends React.Component {
               </Menu.Item>
             )}
           </Sidebar>
+
           {this.state.show ? (
             <ModalContainer
               logged_in={this.state.logged_in}
               user={this.state.user}
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
+              generateAllTweets={this.generateAllTweets}
             />
           ) : null}
+
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                <NavBarOpener toggle={this.toggleNav} />
                 <Route exact path="/">
-                  {console.log("above Searchome")}
-                  <SearchHome
-                    tweets={this.state.tweets}
-                    name={this.state.selectedAcc.name}
+                  <Entered
+                    state={this.state}
+                    enter={this.toggleEnter}
+                    toggle={this.toggleNav}
+                    searchTwitter={this.searchTwitter}
+                    updateSelectedAcc={this.updateSelectedAcc}
                   />
-                  {console.log("below Searchome")}
-                  {console.log("above Searchome")}
-                  <SearchHome
-                    tweets={this.state.tweets}
-                    name={this.state.selectedAcc.name}
-                  />
-                  {console.log("below Searchome")}
                 </Route>
 
                 <Route exact path="/favorites">
-                  {/* {this.state.logged_in? <Favorites favs={this.state.favs} deleteFav={this.deleteFav}/> : <Redirect to="/" />} */}
                   <Favorites
-                    allTweeters={this.state.allTweeters}
-                    favorites={this.state.favorites}
+                    top10={this.state.top10}
+                    loggedin={this.state.logged_in}
+                    favs={this.state.favorites}
+                    user={this.state.user}
+                    deleteFav={this.deleteFav}
+                    toggleNav={this.toggleNav}
                     addToFavorites={this.addToFavorites}
                   />
                 </Route>
+
                 <Route exact path="/profile">
-                  {/* {this.state.logged_in? <Profile user={this.state.user} updateUser={this.updateUser}/> :  <Redirect to="/" />} */}
+                  <Profile
+                    loggedin={this.state.logged_in}
+                    user={this.state.user}
+                    updateUser={this.updateUser}
+                    toggleNav={this.toggleNav}
+                  />
                 </Route>
               </div>
             </React.Fragment>

@@ -1,20 +1,20 @@
 import React from "react";
-import { Grid, Image, Header } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
 import bcard from "../assets/bcard.jpg";
 import CardFlip from "../components_searchHome/CardFlip";
 
 const SearchHome = props => {
-  const allCards = props.tweets.map(tweet => {
-    return <CardFlip tweet={tweet} />;
-  });
+  //   const allCards = props.tweets.map(tweet => {
+  //     return <CardFlip tweet={tweet} />;
+  //   });
 
-  const check = num => {
-    return allCards[num] ? allCards[num] : <Image src={bcard} />;
-  };
+  //   const check = num => {
+  //     return allCards[num] ? allCards[num] : <Image src={bcard} />;
+  //   };
 
   return (
     <div className="tweetcards">
-      <React.Fragment>
+      {/* <React.Fragment>
         <Grid className="flip-card">
           <Grid.Row columns={3}>
             <Grid.Column>{check(0)}</Grid.Column>
@@ -30,13 +30,11 @@ const SearchHome = props => {
 
           <Grid.Row columns={3}>
             <Grid.Column>{check(6)}</Grid.Column>
-            <Grid.Column>
-              <Header as="h2">{props.name}</Header>
-            </Grid.Column>
+            <Grid.Column></Grid.Column>
             <Grid.Column>{check(7)}</Grid.Column>
           </Grid.Row>
         </Grid>
-      </React.Fragment>
+      </React.Fragment> */}
     </div>
   );
 };

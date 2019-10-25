@@ -10,27 +10,24 @@ class ModalContainer extends Component {
       fields: {
         username: "",
         password: "",
-        newUser: {
-          newName: "",
-          newUsername: "",
-          newPassword: ""
-        },
+        newName: "",
+        newUsername: "",
+        newPassword: "",
         signedUp: false
       }
     };
   }
   handleChange = e => {
-    // console.log(this.state.fields.username);
-    // console.log(e.target.value);
-    // console.log(e.target.id);
     let fieldName = e.target.id;
     this.setState({
       fields: { ...this.state.fields, [fieldName]: e.target.value }
     });
+    // ,() => this.props.showModal;
   };
   handleSignUp = e => {
     // e.preventDefault();
-    // console.log("reached handle sign up");
+    console.log("reached handle sign up");
+    console.log("password:", this.state.fields.newPassword);
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
@@ -38,14 +35,15 @@ class ModalContainer extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: this.state.fields.newUser.newName,
-        username: this.state.fields.newUser.newUsername,
-        password: this.state.fields.newUser.password_digest
+        name: this.state.fields.newName,
+        username: this.state.fields.newUsername,
+        password: this.state.fields.newPassword
+        // MAKE SURE THE ABOVE IS password:
       })
     })
       .then(response => response.json())
       .then(data => {
-        // console.log("after sign up form", data);
+        console.log("after sign up form", data);
         // this.setState(prevState => {
         //   return { signedUp: true };
         // });
@@ -53,7 +51,6 @@ class ModalContainer extends Component {
   };
 
   onSignIn = () => {
-    // console.log("reached sign in function");
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -70,12 +67,14 @@ class ModalContainer extends Component {
         //do something to update App state to deal with the logged_in status
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
-          // debugger
-          // console.log(json);
           this.props.getLoggedIn(json);
         }
+      })
+      .then(() => {
+        this.props.generateAllTweets();
       });
   };
+
   render() {
     return (
       <Modal
@@ -84,6 +83,7 @@ class ModalContainer extends Component {
         open={true}
         size="tiny"
         // closeIcon={this.props.showModal}
+        className="c-modal"
       >
         <Header content="Sign In" as="h2"></Header>
         <Modal.Actions>
@@ -96,7 +96,7 @@ class ModalContainer extends Component {
         </Modal.Actions>
         <Modal.Content>
           <Form.Input
-            label="Username"
+            label="Username "
             // required
             type="text"
             placeholder="Username"
@@ -104,7 +104,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label="Password"
+            label="Password "
             // required
             type="password"
             placeholder="Password"
@@ -117,11 +117,15 @@ class ModalContainer extends Component {
             color="green"
             content="Sign In"
             // onClick={console.log("sign in hit")}
-            onClick={this.onSignIn}
+            onClick={
+              this.onSignIn
+              // , this.props.showModal
+            }
           />
         </Modal.Actions>
         <Modal.Content>
           <Header content="Or Sign Up!" as="h3"></Header>
+
           <Form.Input
             label="Your Name"
             // required
@@ -133,7 +137,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label=" New username"
+            label=" New username "
             // required
             type="text"
             placeholder="Username"
@@ -143,7 +147,7 @@ class ModalContainer extends Component {
             onChange={this.handleChange}
           />
           <Form.Input
-            label=" New password"
+            label=" New password "
             // required
             type="password"
             placeholder="Password"
