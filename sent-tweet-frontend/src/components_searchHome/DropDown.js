@@ -34,7 +34,7 @@ class Dropdown2 extends React.Component {
           search
           selection
           options={favoriteOptions}
-          onChange={this.handleSearchTwitter}
+          onChange={e => this.handleSearchTwitter(e)}
           className="searchDown"
         />
       </div>

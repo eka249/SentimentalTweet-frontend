@@ -184,16 +184,13 @@ class App extends React.Component {
         Authorization: `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({ celebrity: celeb })
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .then(data => {
-        this.setState({
-          ...this.state,
-          tweets: data
-        });
-      });
-    //////////PLEASE SET THIS STATE IM CRYING///////////////
+    }).then(response => response.json());
+    // .then(data => console.log(data))
+    // .then(data => {
+    //   this.setState({
+    //     tweets: data
+    //   });
+    // });
   };
 
   toggleEnter = () => {
