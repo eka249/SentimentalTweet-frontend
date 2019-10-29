@@ -10,6 +10,7 @@ import DropDown from "./components_searchHome/DropDown";
 
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
+import Statistics from "./containers/Statistics";
 
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
@@ -24,9 +25,9 @@ class App extends React.Component {
       entered: false,
       show: false,
       logged_in: true,
-      user: null,
-      navBarShow: false,
-      selectedAcc: [], //twitteraccount
+      // user: null,
+      // navBarShow: false,
+      // selectedAcc: [], //twitteraccount
 
       // user: {
       //   username: "tester1",
@@ -34,8 +35,57 @@ class App extends React.Component {
       //   password: "tester1",
       //   id: 1
       // },
-      favorites: [],
-      top10: twitteraccounts
+      // favorites: [],
+      // top10: twitteraccounts
+      user: {
+        username: "Problem Domain",
+        name: "tester1",
+        password: "tester1",
+        id: 1
+      },
+      favorites: [
+        {
+          name: "Barack Obama",
+          twitter_account_id: "@BarackObama"
+        },
+        {
+          name: "Katy Perry",
+          twitter_account_id: "@katyperry"
+        },
+        {
+          name: "Justin Bieber",
+          twitter_account_id: "@justinbieber"
+        }
+      ],
+      tweets: [
+        {
+          content:
+            "Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.",
+          sentiment: 0.5,
+          date: "10/23/19"
+        },
+        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
+      ],
+      selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
+      navBarShow: false,
+
+      top10: [
+        {
+          key: "Barack Obama",
+          text: "Barack Obama",
+          value: "@BarackObama"
+        },
+        {
+          key: "Katy Perry",
+          text: "Katy Perry",
+          value: "@katyperry"
+        },
+        {
+          key: "Justin Bieber",
+          text: "Justin Bieber",
+          value: "@justinbieber"
+        }
+      ]
     };
   }
 
@@ -99,8 +149,8 @@ class App extends React.Component {
     });
   };
 
-  updateSelectedAcc = (name, account) => {
-    this.setState({
+  updateSelectedAcc = async (name, account) => {
+    await this.setState({
       selectedAcc: { name: name, twitterHandle: account }
     });
   };
@@ -158,6 +208,10 @@ class App extends React.Component {
           <Icon name="heart outline" />
           Favorites
         </Menu.Item>
+        <Menu.Item as={Link} to="/statistics">
+          <Icon name="chart area" />
+          Positivities
+        </Menu.Item>
         <Menu.Item as={Link} to="/profile">
           <Icon name="user outline" />
           Profile
@@ -174,15 +228,15 @@ class App extends React.Component {
     // console.log("signed in as:", this.state.user);
     // console.log("local storage token", localStorage.token);
     // console.log("began fetchtwitter on front end-should go to /celebs");
-    fetch(`http://localhost:3000/celebs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.token}`
-      },
-      body: JSON.stringify({ celebrity: celeb })
-    });
+    // fetch(`http://localhost:3000/celebs`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: `Bearer ${localStorage.token}`
+    //   },
+    //   body: JSON.stringify({ celebrity: celeb })
+    // });
     // .then(response => response.json)
     // .then(data => {
     //   this.setState({
@@ -253,8 +307,16 @@ class App extends React.Component {
             <React.Fragment>
               <div className="App">
                 <Route exact path="/">
+                  {/* <Entered
+                    state={this.state}
+                    enter={this.toggleEnter}
+                    toggle={this.toggleNav}
+                    searchTwitter={this.searchTwitter}
+                    updateSelectedAcc={this.updateSelectedAcc}
+                  /> */}
                   <Entered
                     state={this.state}
+                    Acc={this.state.selectedAcc}
                     enter={this.toggleEnter}
                     toggle={this.toggleNav}
                     searchTwitter={this.searchTwitter}
@@ -280,6 +342,19 @@ class App extends React.Component {
                     user={this.state.user}
                     updateUser={this.updateUser}
                     toggleNav={this.toggleNav}
+                  />
+                </Route>
+
+                <Route exact path="/statistics">
+                  <Statistics
+                    top10={this.state.top10}
+                    loggedin={this.state.logged_in}
+                    toggleNav={this.toggleNav}
+                    tweets={this.state.tweets}
+                    selectedAcc={this.state.selectedAcc}
+                    top10={this.state.top10}
+                    searchTwitter={this.searchTwitter}
+                    updateSelectedAcc={this.updateSelectedAcc}
                   />
                 </Route>
               </div>

@@ -30,6 +30,12 @@ const Favorites = props => {
   //     return <FavoriteCard key={person.key} person={person} />;
   //   });
   // };
+  // const map = () => {
+  //   return props.favs.map(person => {
+  //     // render favCard
+  //     // return <FavoriteCard key={person.id} person={person} />;
+  //   })
+  // }
 
   return (
     // style={{

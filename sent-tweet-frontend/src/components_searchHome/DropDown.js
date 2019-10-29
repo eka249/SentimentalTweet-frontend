@@ -14,6 +14,11 @@ class Dropdown2 extends React.Component {
 
   //   const eaccount = data.value.slice(1);
   //   const ename = e.target.textContent;
+  handleSearchTwitter = async (e, data) => {
+    // if (e.type === 'click') { e.persist()  }
+
+    const eaccount = data.value[0] === '@'? data.value.slice(1): data.value;
+    const ename = e.target.textContent;
 
   //   await this.setState({
   //     name: ename,
@@ -30,7 +35,7 @@ class Dropdown2 extends React.Component {
     return (
       <div className="drpdwn">
         <Dropdown
-          inverted
+          clearable
           placeholder="Select Twitter Account"
           fluid
           search
