@@ -55,7 +55,8 @@ class ModalContainer extends Component {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accepts: "application/json"
+        Accepts: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         username: this.state.fields.username,

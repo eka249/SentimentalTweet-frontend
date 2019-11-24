@@ -95,7 +95,10 @@ class App extends React.Component {
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.token}`
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        // ,
+        // Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => response.json())
@@ -286,21 +289,19 @@ class App extends React.Component {
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                <Route exact path="/">
-                  <Entered
-                    state={this.state}
-                    enter={this.toggleEnter}
-                    toggle={this.toggleNav}
-                    searchTwitter={this.searchTwitter}
-                    updateSelectedAcc={this.updateSelectedAcc}
-                  />
-
-                  <SearchHome
-                    tweets={this.state.tweets}
-                    name={this.state.selectedAcc.name}
-                  />
-                </Route>
-
+                exact path="/">
+                <Entered
+                  state={this.state}
+                  enter={this.toggleEnter}
+                  toggle={this.toggleNav}
+                  searchTwitter={this.searchTwitter}
+                  updateSelectedAcc={this.updateSelectedAcc}
+                />
+                <SearchHome
+                  tweets={this.state.tweets}
+                  name={this.state.selectedAcc.name}
+                />
+                {/* </Route> */}
                 <Route exact path="/favorites">
                   {this.state.logged_in ? (
                     <Favorites
@@ -316,7 +317,6 @@ class App extends React.Component {
                     <Redirect to="/" />
                   )}
                 </Route>
-
                 <Route exact path="/profile">
                   <Profile
                     loggedin={this.state.logged_in}
