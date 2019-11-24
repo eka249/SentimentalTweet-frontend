@@ -1,94 +1,74 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import FavBar from "./components_searchHome/FavBar";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import NavBarOpener from "./components_sidebar/NavBarOpener";
-import DropDown from "./components_searchHome/DropDown";
-// import Banner from "./components/Banner"
-
+import SearchHome from "./containers/SearchHome";
 import Favorites from "./containers/Favorites";
 import Profile from "./containers/Profile";
-import Statistics from "./containers/Statistics";
-
+import FavBar from "./components_searchHome/FavBar";
+import DropDown from "./components_searchHome/DropDown";
+import Entered from "./HOC/Entered";
 // import SearchBar from "./components_searchHome/SearchBar";
 import ModalContainer from "./components_sidebar/ModalContainer";
-import SearchHome from "./containers/SearchHome";
+
+import ActualTweetCard from "./components_searchHome/ActualTweetCard";
+import DropDown2 from "./components_searchHome/DropDown";
 import twitteraccounts from "./components_favorites/TwitterAccts";
-import Entered from "./HOC/Entered";
+import searchTweets from "./components_favorites/tweets";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       entered: false,
+      tweets: [],
       show: false,
-      logged_in: true,
-      // user: null,
-      // navBarShow: false,
-      // selectedAcc: [], //twitteraccount
-
-      // user: {
-      //   username: "tester1",
-      //   name: "tester1",
-      //   password: "tester1",
-      //   id: 1
-      // },
-      // favorites: [],
-      // top10: twitteraccounts
-      user: {
-        username: "Problem Domain",
-        name: "tester1",
-        password: "tester1",
-        id: 1
-      },
-      favorites: [
-        {
-          name: "Barack Obama",
-          twitter_account_id: "@BarackObama"
-        },
-        {
-          name: "Katy Perry",
-          twitter_account_id: "@katyperry"
-        },
-        {
-          name: "Justin Bieber",
-          twitter_account_id: "@justinbieber"
-        }
-      ],
-      tweets: [
-        {
-          content:
-            "Hello this is a long content because I need to test a long content for scroll so the long content overflow and doesnt change the height of the card.",
-          sentiment: 0.5,
-          date: "10/23/19"
-        },
-        { content: "Bye", sentiment: 0.3, date: "10/23/19" }
-      ],
-      selectedAcc: { name: "", twitterHandle: "" }, //twitteraccount
+      logged_in: false,
+      user: null,
       navBarShow: false,
-
+      // favorites: [], //user's list of fav
+      tweets: [],
+      //tweets of selectedAcc
       top10: [
-        {
-          key: "Barack Obama",
-          text: "Barack Obama",
-          value: "@BarackObama"
-        },
-        {
-          key: "Katy Perry",
-          text: "Katy Perry",
-          value: "@katyperry"
-        },
-        {
-          key: "Justin Bieber",
-          text: "Justin Bieber",
-          value: "@justinbieber"
-        }
-      ]
+        "Katy Perry",
+        "Lady Gaga",
+        "Tom Holland",
+        "Isaiah Thomas",
+        "Donald J. Trump",
+        "The New York Times",
+        "The Washington Post",
+        "Greta Thunberg",
+        "Louis Tomlinson",
+        "Tommy Dreamer",
+        "Taylor Swift"
+      ],
+      selectedAcc: { name: "", twitterHandle: "" }
     };
   }
 
+  //change this to not be rendered upon sign in;
+  // this function can be used for rendering favorites as well
+  generateAllTweets = () => {
+    fetch("http://localhost:3000/allcelebs", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => console.log(data));
+    //.then map to put correct proper format (on front or back end?)
+    // .then(data => this.setState({ top10: [...data] }));
+    // .then(data => this.setState({ top10: data }));
+
+    console.log();
+  };
   addToFavorites = favorite => {
     //***************
     let favoriteTweeters = this.state.favorites;
@@ -119,7 +99,8 @@ class App extends React.Component {
 
   showModal = () => {
     this.setState({
-      show: !this.state.show
+      show: !this.state.show,
+      logged_in: true
     });
   };
 
@@ -128,7 +109,10 @@ class App extends React.Component {
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.token}`
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        // ,
+        // Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => response.json())
@@ -149,8 +133,22 @@ class App extends React.Component {
     });
   };
 
-  updateSelectedAcc = async (name, account) => {
-    await this.setState({
+  ////////////////////hard code test login///////////////////////
+  logIn = () => {
+    this.setState(prevState => {
+      return {
+        logged_in: true
+        // user: {
+        //   name: "test",
+        //   userName: "test user",
+        //   password: "1"
+        // }
+      };
+    });
+  };
+
+  updateSelectedAcc = (name, account) => {
+    this.setState({
       selectedAcc: { name: name, twitterHandle: account }
     });
   };
@@ -225,10 +223,10 @@ class App extends React.Component {
   };
 
   searchTwitter = celeb => {
-    // console.log("signed in as:", this.state.user);
-    // console.log("local storage token", localStorage.token);
-    // console.log("began fetchtwitter on front end-should go to /celebs");
-    // fetch(`http://localhost:3000/celebs`, {
+    // // console.log("signed in as:", this.state.user);
+    // // console.log("local storage token", localStorage.token);
+    // // console.log("began fetchtwitter on front end-should go to /celebs");
+    // return fetch("http://localhost:3000/celebs", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -236,13 +234,16 @@ class App extends React.Component {
     //     Authorization: `Bearer ${localStorage.token}`
     //   },
     //   body: JSON.stringify({ celebrity: celeb })
-    // });
-    // .then(response => response.json)
-    // .then(data => {
-    //   this.setState({
-    //     tweets: data
-    //   });
-    // });
+    // }).then(response => response.json());
+    // // .then(data => console.log(data))
+    // // .then(data => {
+    // //   this.setState({
+    // //     tweets: data
+    // //   });
+    // // });
+    this.setState = {
+      tweets: searchTweets
+    };
   };
 
   toggleEnter = () => {
@@ -256,12 +257,11 @@ class App extends React.Component {
       <React.Fragment>
         <FavBar favs={this.state.favorites} />
         <NavBarOpener toggle={this.toggleNav} />
-        {/* <SearchHome tweets={this.state.tweets} name={this.state.selectedAcc.name}/> */}
-        <DropDown
-          // top10={this.state.top10}
-          top10={this.state.top10}
-          searchTwitter={this.searchTwitter}
+        <SearchHome
+          tweets={this.state.tweets}
+          name={this.state.selectedAcc.name}
         />
+        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
       </React.Fragment>
     );
   };
@@ -300,42 +300,41 @@ class App extends React.Component {
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
               generateAllTweets={this.generateAllTweets}
+              searchTwitter={this.searchTwitter}
             />
           ) : null}
 
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                <Route exact path="/">
-                  {/* <Entered
-                    state={this.state}
-                    enter={this.toggleEnter}
-                    toggle={this.toggleNav}
-                    searchTwitter={this.searchTwitter}
-                    updateSelectedAcc={this.updateSelectedAcc}
-                  /> */}
-                  <Entered
-                    state={this.state}
-                    Acc={this.state.selectedAcc}
-                    enter={this.toggleEnter}
-                    toggle={this.toggleNav}
-                    searchTwitter={this.searchTwitter}
-                    updateSelectedAcc={this.updateSelectedAcc}
-                  />
-                </Route>
-
+                exact path="/">
+                <Entered
+                  state={this.state}
+                  enter={this.toggleEnter}
+                  toggle={this.toggleNav}
+                  searchTwitter={this.searchTwitter}
+                  updateSelectedAcc={this.updateSelectedAcc}
+                />
+                <SearchHome
+                  tweets={this.state.tweets}
+                  name={this.state.selectedAcc.name}
+                />
+                {/* </Route> */}
                 <Route exact path="/favorites">
-                  <Favorites
-                    top10={this.state.top10}
-                    loggedin={this.state.logged_in}
-                    favs={this.state.favorites}
-                    user={this.state.user}
-                    deleteFav={this.deleteFav}
-                    toggleNav={this.toggleNav}
-                    addToFavorites={this.addToFavorites}
-                  />
+                  {this.state.logged_in ? (
+                    <Favorites
+                      favs={this.state.favs}
+                      toggleNav={this.toggleNav}
+                      allTweeters={this.state.allTweeters}
+                      favorites={this.state.favorites}
+                      addToFavorites={this.addToFavorites}
+                      user={this.state.user}
+                      deleteFav={this.deleteFav}
+                    />
+                  ) : (
+                    <Redirect to="/" />
+                  )}
                 </Route>
-
                 <Route exact path="/profile">
                   <Profile
                     loggedin={this.state.logged_in}
@@ -344,7 +343,6 @@ class App extends React.Component {
                     toggleNav={this.toggleNav}
                   />
                 </Route>
-
                 <Route exact path="/statistics">
                   <Statistics
                     top10={this.state.top10}

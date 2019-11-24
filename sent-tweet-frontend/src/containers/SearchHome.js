@@ -6,8 +6,12 @@ import AccSelected from "../HOC/AccSelected";
 
 const SearchHome = props => {
   const allCards = props.tweets.map(tweet => {
+<<<<<<< HEAD
     console.log("searchHOme");
     return <CardFlip tweet={tweet} />;
+=======
+    return <CardFlip tweet={tweet.content} />;
+>>>>>>> 8310ed22437e5a559dd5f7ae4b6cbfeb9e8c3450
   });
 
   const check = num => {

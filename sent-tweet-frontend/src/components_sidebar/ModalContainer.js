@@ -55,7 +55,8 @@ class ModalContainer extends Component {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accepts: "application/json"
+        Accepts: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
       },
       body: JSON.stringify({
         username: this.state.fields.username,
@@ -72,6 +73,9 @@ class ModalContainer extends Component {
       })
       .then(() => {
         this.props.generateAllTweets();
+      })
+      .then(() => {
+        this.props.searchTwitter();
       });
   };
 
@@ -118,8 +122,8 @@ class ModalContainer extends Component {
             content="Sign In"
             // onClick={console.log("sign in hit")}
             onClick={
-              this.onSignIn
-              // , this.props.showModal
+              // this.onSignIn
+              this.props.showModal
             }
           />
         </Modal.Actions>

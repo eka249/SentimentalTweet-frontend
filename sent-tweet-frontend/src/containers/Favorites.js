@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import FavoriteCard from "../components_favorites/FavoriteCard";
 import img from "../assets/favs1.2.jpg";
 import NavBarOpener from "../components_sidebar/NavBarOpener";
@@ -77,3 +78,29 @@ const Favorites = props => {
 };
 
 export default LoggedInHOC(Favorites);
+=======
+import AllCelebs from "../components_favorites/AllCelebs";
+import UserFavoriteTweeters from "../components_favorites/UsersFavoriteTweeters";
+import { CardGroup } from "semantic-ui-react";
+
+class Favorites extends React.Component {
+  render() {
+    return (
+      <div>
+        <UserFavoriteTweeters
+          favorites={this.props.favorites}
+          addToFavorites={this.props.addToFavorites}
+        />
+
+        <AllCelebs
+          favorites={this.props.favorites}
+          allTweeters={this.props.allTweeters}
+          addToFavorites={this.addToFavorites}
+        />
+      </div>
+    );
+  }
+}
+
+export default Favorites;
+>>>>>>> 8310ed22437e5a559dd5f7ae4b6cbfeb9e8c3450

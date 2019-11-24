@@ -4,7 +4,7 @@ import { Dropdown } from "semantic-ui-react";
 
 class Dropdown2 extends React.Component {
   state = {
-    selected: {},
+    selected: [],
     account: "",
     name: ""
   };
@@ -41,7 +41,7 @@ class Dropdown2 extends React.Component {
           search
           selection
           options={favoriteOptions}
-          onChange={this.handleSearchTwitter}
+          onChange={e => this.handleSearchTwitter(e)}
           className="searchDown"
         />
       </div>
