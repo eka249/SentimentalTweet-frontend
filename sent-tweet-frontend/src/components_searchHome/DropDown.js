@@ -17,16 +17,16 @@ class Dropdown2 extends React.Component {
   handleSearchTwitter = async (e, data) => {
     // if (e.type === 'click') { e.persist()  }
 
-    const eaccount = data.value[0] === '@'? data.value.slice(1): data.value;
+    const eaccount = data.value[0] === "@" ? data.value.slice(1) : data.value;
     const ename = e.target.textContent;
 
-  //   await this.setState({
-  //     name: ename,
-  //     account: eaccount
-  //   });
-  //   this.props.searchTwitter(this.state.account);
-  //   this.props.updateSelectedAcc(this.state.name, this.state.account);
-  // };
+    //   await this.setState({
+    //     name: ename,
+    //     account: eaccount
+    //   });
+    //   this.props.searchTwitter(this.state.account);
+    //   this.props.updateSelectedAcc(this.state.name, this.state.account);
+  };
 
   render() {
     let favoriteOptions = twitteraccounts;
