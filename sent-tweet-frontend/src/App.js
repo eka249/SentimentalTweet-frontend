@@ -106,34 +106,15 @@ class App extends React.Component {
     })
       .then(response => response.json())
       // .then(data => console.log(data))
-      .then(data => this.setUser(data))
-    // .then(this.setUser())
-    // .then(data => this.setState({ username: data.user.username }))
-    // .then(data => this.setState({ name: data.user.name }))
+      // .then(data => this.setUser(data))
+      // .then(this.setUser())
+      .then(data => this.setState({ user: data.user }))
+      .then(this.setState({ logged_in: true }))
+      // .then(data => this.setState({ name: data.user.name }))
 
-    // .then(this.setState({ logged_in: true }))
-    // .then(() => this.showModal())
+      // .then(this.setState({ logged_in: true }))
+      .then(() => this.showModal())
   };
-
-  setUser = (data) => {
-
-    let person = data.user.id
-    // console.log(person.user.id)
-    // person.map(
-    //   user => console.log(user.id, user.name))
-    this.setState({ user: person })
-    console.log(person)
-
-    // this.setState(state => (state.user = person, state))
-    // this.setState(({ user }) => ({
-    //   user: {
-    //     ...user
-    //   }
-    // }))
-
-
-    // this.showModal()
-  }
 
   logOut = () => {
     localStorage.removeItem("token");
@@ -146,18 +127,18 @@ class App extends React.Component {
   };
 
   ////////////////////hard code test login///////////////////////
-  logIn = () => {
-    this.setState(prevState => {
-      return {
-        logged_in: true
-        // user: {
-        //   name: "test",
-        //   userName: "test user",
-        //   password: "1"
-        // }
-      };
-    });
-  };
+  // logIn = () => {
+  //   this.setState(prevState => {
+  //     return {
+  //       logged_in: true
+  //       // user: {
+  //       //   name: "test",
+  //       //   userName: "test user",
+  //       //   password: "1"
+  //       // }
+  //     };
+  //   });
+  // };
 
   updateSelectedAcc = (name, account) => {
     this.setState({
@@ -250,9 +231,9 @@ class App extends React.Component {
     // //     tweets: data
     // //   });
     // // });
-    this.setState = {
-      tweets: searchTweets
-    };
+    // this.setState {
+    //   tweets: searchTweets
+    // });
   };
 
   toggleEnter = () => {
