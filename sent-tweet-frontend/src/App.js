@@ -30,47 +30,51 @@ class App extends React.Component {
       tweets: [],
       show: true,
       logged_in: false,
-      user: null,
+      // username: null,
+      // name: "",
+      user: 2,
       navBarShow: false,
-      // favorites: [], //user's list of fav
+      favorites: [], //user's list of fav
       tweets: [],
       //tweets of selectedAcc
-      top10: [
-        "Katy Perry",
-        "Lady Gaga",
-        "Tom Holland",
-        "Isaiah Thomas",
-        "Donald J. Trump",
-        "The New York Times",
-        "The Washington Post",
-        "Greta Thunberg",
-        "Louis Tomlinson",
-        "Tommy Dreamer",
-        "Taylor Swift"
-      ],
-      selectedAcc: { name: "", twitterHandle: "" }
-    };
+      // allTweeters: [
+      //   "Katy Perry",
+      //   "Lady Gaga",
+      //   "Tom Holland",
+      //   "Isaiah Thomas",
+      //   "Donald J. Trump",
+      //   "The New York Times",
+      //   "The Washington Post",
+      //   "Greta Thunberg",
+      //   "Louis Tomlinson",
+      //   "Tommy Dreamer",
+      //   "Taylor Swift"
+      // ],
+      allTweeters: [],
+      selectedAcc: { name: "", twitterHandle: "" },
+      testword: ""
+    }
   }
 
-  //change this to not be rendered upon sign in;
-  // this function can be used for rendering favorites as well
   generateAllTweets = () => {
-    fetch("http://localhost:3000/allcelebs", {
+    console.log('hit generae tweets on frot end')
+    fetch("http://localhost:3000/celebs", {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
         Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(resp => resp.json())
-      .then(data => console.log(data));
+      // .then(data => this.setState({ allTweeters: data }))
+      .then(data => console.log(data))
     //.then map to put correct proper format (on front or back end?)
     // .then(data => this.setState({ top10: [...data] }));
-    // .then(data => this.setState({ top10: data }));
 
-    console.log();
   };
   addToFavorites = favorite => {
-    //***************
     let favoriteTweeters = this.state.favorites;
 
     if (!favoriteTweeters.includes(favorite)) {
@@ -81,17 +85,16 @@ class App extends React.Component {
       );
       this.setState({ favorites: [...filteredTweeters] });
     }
-  }; //NEED TO RENDER TO FAVORITES PAGE
+    this.addFav(favorite)
+  };
 
   showModal = () => {
     this.setState({
-      show: !this.state.show,
-      logged_in: true
+      show: !this.state.show
     });
   };
 
-  getLoggedIn = json => {
-    console.log("initiated sign in fetch");
+  getLoggedIn = () => {
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
@@ -102,13 +105,35 @@ class App extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(data => {
-        this.setState(prevState => {
-          return { logged_in: true, user: data.user };
-        });
-      })
-      .then(() => this.showModal())
+      // .then(data => console.log(data))
+      .then(data => this.setUser(data))
+    // .then(this.setUser())
+    // .then(data => this.setState({ username: data.user.username }))
+    // .then(data => this.setState({ name: data.user.name }))
+
+    // .then(this.setState({ logged_in: true }))
+    // .then(() => this.showModal())
   };
+
+  setUser = (data) => {
+
+    let person = data.user.id
+    // console.log(person.user.id)
+    // person.map(
+    //   user => console.log(user.id, user.name))
+    this.setState({ user: person })
+    console.log(person)
+
+    // this.setState(state => (state.user = person, state))
+    // this.setState(({ user }) => ({
+    //   user: {
+    //     ...user
+    //   }
+    // }))
+
+
+    // this.showModal()
+  }
 
   logOut = () => {
     localStorage.removeItem("token");
@@ -157,10 +182,11 @@ class App extends React.Component {
     // })
   };
 
-  addFav = e => {
+  addFav = fav => {
+    console.log(fav.id)
     // const user_id = this.state.user.id
     // const twitter_account_id = e.target.id
-    ////////double check on the e.target.id to match twitteracc id.
+    // //////double check on the e.target.id to match twitteracc id.
     // fetch(Url, {
     //     method: 'POST',
     //     headers: {
@@ -244,7 +270,7 @@ class App extends React.Component {
           tweets={this.state.tweets}
           name={this.state.selectedAcc.name}
         />
-        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
+        <DropDown allTweeters={this.state.allTweeters} searchTwitter={this.searchTwitter} />
       </React.Fragment>
     );
   };
@@ -252,7 +278,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        {/* <Sidebar.Pushable>
+        <Sidebar.Pushable>
           <Sidebar
             as={Menu}
             animation="overlay"
@@ -266,43 +292,44 @@ class App extends React.Component {
             {this.state.logged_in ? (
               this.signed()
             ) : (
-              <Menu.Item
-                onClick={this.showModal}
+                <Menu.Item
+                  onClick={this.showModal}
                 // {() => this.onSignIn()}
-              >
-                <Icon name="sign in" />
-                Sign-in
+                >
+                  <Icon name="sign in" />
+                  Sign-in
               </Menu.Item>
-            )}
-          </Sidebar> */}
+              )}
+          </Sidebar>
 
-        {this.state.show ? (
-          <ModalContainer
-            logged_in={this.state.logged_in}
-            user={this.state.user}
-            getLoggedIn={this.getLoggedIn}
-            showModal={this.showModal}
-            generateAllTweets={this.generateAllTweets}
-            searchTwitter={this.searchTwitter}
-          />
-        ) : null}
+          {this.state.show ? (
+            <ModalContainer
+              logged_in={this.state.logged_in}
+              user={this.state.user}
+              getLoggedIn={this.getLoggedIn}
+              showModal={this.showModal}
+              generateAllTweets={this.generateAllTweets}
+              searchTwitter={this.searchTwitter}
+            />
+          ) : null}
 
-        {/* <Sidebar.Pusher dimmed={this.state.navBarShow}>
+          <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                exact path="/">
-                <Entered
-                  state={this.state}
-                  enter={this.toggleEnter}
-                  toggle={this.toggleNav}
-                  searchTwitter={this.searchTwitter}
-                  updateSelectedAcc={this.updateSelectedAcc}
-                />
-                <SearchHome
-                  tweets={this.state.tweets}
-                  name={this.state.selectedAcc.name}
-                /> */}
-        {/* <Route exact path="/favorites">
+                <Route exact path="/">
+                  <Entered
+                    state={this.state}
+                    enter={this.toggleEnter}
+                    toggle={this.toggleNav}
+                    searchTwitter={this.searchTwitter}
+                    updateSelectedAcc={this.updateSelectedAcc}
+                  />
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
+                </Route>
+                <Route exact path="/favorites">
                   {this.state.logged_in ? (
                     <Favorites
                       favs={this.state.favs}
@@ -314,10 +341,10 @@ class App extends React.Component {
                       deleteFav={this.deleteFav}
                     />
                   ) : (
-                    <Redirect to="/" />
-                  )}
-                </Route> */}
-        {/* <Route exact path="/profile">
+                      <Redirect to="/" />
+                    )}
+                </Route>
+                <Route exact path="/profile">
                   <Profile
                     loggedin={this.state.logged_in}
                     user={this.state.user}
@@ -328,7 +355,7 @@ class App extends React.Component {
               </div>
             </React.Fragment>
           </Sidebar.Pusher>
-        </Sidebar.Pushable> */}
+        </Sidebar.Pushable>
       </Router>
     );
   }
