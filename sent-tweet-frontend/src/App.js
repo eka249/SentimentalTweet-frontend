@@ -28,7 +28,7 @@ class App extends React.Component {
     this.state = {
       entered: false,
       tweets: [],
-      show: false,
+      show: true,
       logged_in: false,
       user: null,
       navBarShow: false,
@@ -97,8 +97,8 @@ class App extends React.Component {
       headers: {
         "Content-Type": "application/json",
         Accepts: "application/json"
-        // ,
-        // Authorization: `Bearer ${localStorage.token}`
+        ,
+        Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => response.json())
@@ -106,7 +106,8 @@ class App extends React.Component {
         this.setState(prevState => {
           return { logged_in: true, user: data.user };
         });
-      });
+      })
+      .then(() => this.showModal())
   };
 
   logOut = () => {
@@ -251,7 +252,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Sidebar.Pushable>
+        {/* <Sidebar.Pushable>
           <Sidebar
             as={Menu}
             animation="overlay"
@@ -273,20 +274,20 @@ class App extends React.Component {
                 Sign-in
               </Menu.Item>
             )}
-          </Sidebar>
+          </Sidebar> */}
 
-          {this.state.show ? (
-            <ModalContainer
-              logged_in={this.state.logged_in}
-              user={this.state.user}
-              getLoggedIn={this.getLoggedIn}
-              showModal={this.showModal}
-              generateAllTweets={this.generateAllTweets}
-              searchTwitter={this.searchTwitter}
-            />
-          ) : null}
+        {this.state.show ? (
+          <ModalContainer
+            logged_in={this.state.logged_in}
+            user={this.state.user}
+            getLoggedIn={this.getLoggedIn}
+            showModal={this.showModal}
+            generateAllTweets={this.generateAllTweets}
+            searchTwitter={this.searchTwitter}
+          />
+        ) : null}
 
-          <Sidebar.Pusher dimmed={this.state.navBarShow}>
+        {/* <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
                 exact path="/">
@@ -300,9 +301,8 @@ class App extends React.Component {
                 <SearchHome
                   tweets={this.state.tweets}
                   name={this.state.selectedAcc.name}
-                />
-                {/* </Route> */}
-                <Route exact path="/favorites">
+                /> */}
+        {/* <Route exact path="/favorites">
                   {this.state.logged_in ? (
                     <Favorites
                       favs={this.state.favs}
@@ -316,8 +316,8 @@ class App extends React.Component {
                   ) : (
                     <Redirect to="/" />
                   )}
-                </Route>
-                <Route exact path="/profile">
+                </Route> */}
+        {/* <Route exact path="/profile">
                   <Profile
                     loggedin={this.state.logged_in}
                     user={this.state.user}
@@ -328,7 +328,7 @@ class App extends React.Component {
               </div>
             </React.Fragment>
           </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        </Sidebar.Pushable> */}
       </Router>
     );
   }

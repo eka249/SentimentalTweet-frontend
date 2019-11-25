@@ -42,12 +42,10 @@ class ModalContainer extends Component {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        console.log("after sign up form", data);
-        // this.setState(prevState => {
-        //   return { signedUp: true };
-        // });
-      });
+      .then(data => this.props.getLoggedIn(data.user))
+    // .then(data =>
+    //   console.log("after sign up form", data))
+
   };
 
   onSignIn = () => {
