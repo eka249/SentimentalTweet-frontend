@@ -23,7 +23,7 @@ class Dropdown2 extends React.Component {
   };
 
   render() {
-    let favoriteOptions = this.props.top10;
+    let favoriteOptions = this.props.allTweeters;
 
     return (
       <div className="drpdwn">

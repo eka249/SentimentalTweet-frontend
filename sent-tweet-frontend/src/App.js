@@ -30,9 +30,8 @@ class App extends React.Component {
       tweets: [],
       show: true,
       logged_in: false,
-      // username: null,
-      // name: "",
-      user: 2,
+      favorites: [],
+      user: null,
       navBarShow: false,
       favorites: [], //user's list of fav
       tweets: [],
@@ -68,15 +67,27 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      // .then(data => this.setState({ allTweeters: data }))
-      .then(data => console.log(data))
-    //.then map to put correct proper format (on front or back end?)
-    // .then(data => this.setState({ top10: [...data] }));
+      .then(data => this.setState({ allTweeters: data }));
 
   };
-  addToFavorites = favorite => {
-    let favoriteTweeters = this.state.favorites;
 
+  generateAllFavorites = () => {
+    fetch(`http://localhost:3000/favorite_celebs/${this.user.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => console.log(data))
+    // .then(data => this.setState({ favorites: data }))
+  }
+
+  addToFavorites = (favorite) => {
+    let favoriteTweeters = this.state.favorites;
     if (!favoriteTweeters.includes(favorite)) {
       this.setState({ favorites: [...this.state.favorites, favorite] });
     } else {
@@ -105,18 +116,50 @@ class App extends React.Component {
       }
     })
       .then(response => response.json())
-      // .then(data => console.log(data))
-      // .then(data => this.setUser(data))
-      // .then(this.setUser())
       .then(data => this.setState({ user: data.user }))
       .then(this.setState({ logged_in: true }))
-      // .then(data => this.setState({ name: data.user.name }))
-
-      // .then(this.setState({ logged_in: true }))
       .then(() => this.showModal())
+      .then(this.generateAllTweets())
   };
 
   logOut = () => {
+    let dataToPost = []
+    //remove old favorites
+    fetch("http://localhost:3000/del_favorites", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    });
+    //get new favorites in correct format
+    this.state.favorites.map(fav => {
+      dataToPost.push(
+        `user_id: ${this.state.user.id}, celeb_id: ${fav.id}`)
+    })
+    console.log("data to post", dataToPost)
+    //save new favorites
+    fetch("http://localhost:3000/favorite_celebs", {
+
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(
+        { dataToPost }
+      )
+    })
+      // , () =>
+      .then(this.tokenRemoval())
+
+  };
+
+  tokenRemoval = () => {
     localStorage.removeItem("token");
     this.setState(prevState => {
       return {
@@ -124,43 +167,17 @@ class App extends React.Component {
         user: null
       };
     });
-  };
+  }
 
-  ////////////////////hard code test login///////////////////////
-  // logIn = () => {
-  //   this.setState(prevState => {
-  //     return {
-  //       logged_in: true
-  //       // user: {
-  //       //   name: "test",
-  //       //   userName: "test user",
-  //       //   password: "1"
-  //       // }
-  //     };
+  // updateSelectedAcc = (name, account) => {
+  //   this.setState({
+  //     selectedAcc: { name: name, twitterHandle: account }
   //   });
   // };
 
-  updateSelectedAcc = (name, account) => {
-    this.setState({
-      selectedAcc: { name: name, twitterHandle: account }
-    });
-  };
-
   deleteFav = e => {
-    //********* RECEIVE ALL FAVS of USER as RETURNED DATA
-    // fetch(Url + e.id {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Accept: 'application/json'
-    //   }
-    // })
-    // .then(resp => resp.json())
-    // .then(data => {
-    //   this.setData({
-    //     favorites: data
-    //   })
-    // })
+
+
   };
 
   addFav = fav => {
@@ -213,9 +230,6 @@ class App extends React.Component {
   };
 
   searchTwitter = celeb => {
-    // // console.log("signed in as:", this.state.user);
-    // // console.log("local storage token", localStorage.token);
-    // // console.log("began fetchtwitter on front end-should go to /celebs");
     // return fetch("http://localhost:3000/celebs", {
     //   method: "POST",
     //   headers: {
@@ -250,6 +264,7 @@ class App extends React.Component {
         <SearchHome
           tweets={this.state.tweets}
           name={this.state.selectedAcc.name}
+          user={this.state.user}
         />
         <DropDown allTweeters={this.state.allTweeters} searchTwitter={this.searchTwitter} />
       </React.Fragment>
