@@ -82,8 +82,8 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      .then(data => console.log(data))
-    // .then(data => this.setState({ favorites: data }))
+      // .then(data => console.log(data))
+      .then(data => this.setState({ favorites: data }))
   }
 
   addToFavorites = (favorite) => {
@@ -126,13 +126,17 @@ class App extends React.Component {
     let dataToPost = []
     //remove old favorites
     fetch("http://localhost:3000/del_favorites", {
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accepts: "application/json"
         ,
         Authorization: `Bearer ${localStorage.token}`
-      }
+
+      },
+      body: JSON.stringify(
+        { user_id: this.state.user.id }
+      )
     });
     //get new favorites in correct format
     this.state.favorites.map(fav => {
