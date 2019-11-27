@@ -29,8 +29,12 @@ class Dropdown2 extends React.Component {
   };
 
   render() {
+<<<<<<< HEAD
     let favoriteOptions = twitteraccounts;
     console.log(favoriteOptions);
+=======
+    let favoriteOptions = this.props.allTweeters;
+>>>>>>> 8d6a130f058d21324ceae9be706c5eac758c0323
 
     return (
       <div className="drpdwn">

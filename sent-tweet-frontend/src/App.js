@@ -28,51 +28,66 @@ class App extends React.Component {
     this.state = {
       entered: false,
       tweets: [],
-      show: false,
+      show: true,
       logged_in: false,
+      favorites: [],
       user: null,
       navBarShow: false,
-      // favorites: [], //user's list of fav
+      favorites: [], //user's list of fav
       tweets: [],
       //tweets of selectedAcc
-      top10: [
-        "Katy Perry",
-        "Lady Gaga",
-        "Tom Holland",
-        "Isaiah Thomas",
-        "Donald J. Trump",
-        "The New York Times",
-        "The Washington Post",
-        "Greta Thunberg",
-        "Louis Tomlinson",
-        "Tommy Dreamer",
-        "Taylor Swift"
-      ],
-      selectedAcc: { name: "", twitterHandle: "" }
-    };
+      // allTweeters: [
+      //   "Katy Perry",
+      //   "Lady Gaga",
+      //   "Tom Holland",
+      //   "Isaiah Thomas",
+      //   "Donald J. Trump",
+      //   "The New York Times",
+      //   "The Washington Post",
+      //   "Greta Thunberg",
+      //   "Louis Tomlinson",
+      //   "Tommy Dreamer",
+      //   "Taylor Swift"
+      // ],
+      allTweeters: [],
+      selectedAcc: { name: "", twitterHandle: "" },
+      testword: ""
+    }
   }
 
-  //change this to not be rendered upon sign in;
-  // this function can be used for rendering favorites as well
   generateAllTweets = () => {
-    fetch("http://localhost:3000/allcelebs", {
+    console.log('hit generae tweets on frot end')
+    fetch("http://localhost:3000/celebs", {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
         Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(resp => resp.json())
-      .then(data => console.log(data));
-    //.then map to put correct proper format (on front or back end?)
-    // .then(data => this.setState({ top10: [...data] }));
-    // .then(data => this.setState({ top10: data }));
+      .then(data => this.setState({ allTweeters: data }));
 
-    console.log();
   };
-  addToFavorites = favorite => {
-    //***************
-    let favoriteTweeters = this.state.favorites;
 
+  generateAllFavorites = () => {
+    fetch(`http://localhost:3000/favorite_celebs/${this.user.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => console.log(data))
+    // .then(data => this.setState({ favorites: data }))
+  }
+
+  addToFavorites = (favorite) => {
+    let favoriteTweeters = this.state.favorites;
     if (!favoriteTweeters.includes(favorite)) {
       this.setState({ favorites: [...this.state.favorites, favorite] });
     } else {
@@ -81,7 +96,8 @@ class App extends React.Component {
       );
       this.setState({ favorites: [...filteredTweeters] });
     }
-  }; //NEED TO RENDER TO FAVORITES PAGE
+    this.addFav(favorite)
+  };
 
   //change this to not be rendered upon sign in;
   // this function can be used for rendering favorites as well
@@ -99,31 +115,65 @@ class App extends React.Component {
 
   showModal = () => {
     this.setState({
-      show: !this.state.show,
-      logged_in: true
+      show: !this.state.show
     });
   };
 
-  getLoggedIn = json => {
-    console.log("initiated sign in fetch");
+  getLoggedIn = () => {
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accepts: "application/json"
-        // ,
-        // Authorization: `Bearer ${localStorage.token}`
+        ,
+        Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => response.json())
-      .then(data => {
-        this.setState(prevState => {
-          return { logged_in: true, user: data.user };
-        });
-      });
+      .then(data => this.setState({ user: data.user }))
+      .then(this.setState({ logged_in: true }))
+      .then(() => this.showModal())
+      .then(this.generateAllTweets())
   };
 
   logOut = () => {
+    let dataToPost = []
+    //remove old favorites
+    fetch("http://localhost:3000/del_favorites", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    });
+    //get new favorites in correct format
+    this.state.favorites.map(fav => {
+      dataToPost.push(
+        `user_id: ${this.state.user.id}, celeb_id: ${fav.id}`)
+    })
+    console.log("data to post", dataToPost)
+    //save new favorites
+    fetch("http://localhost:3000/favorite_celebs", {
+
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Accepts: "application/json"
+        ,
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(
+        { dataToPost }
+      )
+    })
+      // , () =>
+      .then(this.tokenRemoval())
+
+  };
+
+  tokenRemoval = () => {
     localStorage.removeItem("token");
     this.setState(prevState => {
       return {
@@ -131,49 +181,24 @@ class App extends React.Component {
         user: null
       };
     });
-  };
+  }
 
-  ////////////////////hard code test login///////////////////////
-  logIn = () => {
-    this.setState(prevState => {
-      return {
-        logged_in: true
-        // user: {
-        //   name: "test",
-        //   userName: "test user",
-        //   password: "1"
-        // }
-      };
-    });
-  };
-
-  updateSelectedAcc = (name, account) => {
-    this.setState({
-      selectedAcc: { name: name, twitterHandle: account }
-    });
-  };
+  // updateSelectedAcc = (name, account) => {
+  //   this.setState({
+  //     selectedAcc: { name: name, twitterHandle: account }
+  //   });
+  // };
 
   deleteFav = e => {
-    //********* RECEIVE ALL FAVS of USER as RETURNED DATA
-    // fetch(Url + e.id {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Accept: 'application/json'
-    //   }
-    // })
-    // .then(resp => resp.json())
-    // .then(data => {
-    //   this.setData({
-    //     favorites: data
-    //   })
-    // })
+
+
   };
 
-  addFav = e => {
+  addFav = fav => {
+    console.log(fav.id)
     // const user_id = this.state.user.id
     // const twitter_account_id = e.target.id
-    ////////double check on the e.target.id to match twitteracc id.
+    // //////double check on the e.target.id to match twitteracc id.
     // fetch(Url, {
     //     method: 'POST',
     //     headers: {
@@ -223,9 +248,6 @@ class App extends React.Component {
   };
 
   searchTwitter = celeb => {
-    // // console.log("signed in as:", this.state.user);
-    // // console.log("local storage token", localStorage.token);
-    // // console.log("began fetchtwitter on front end-should go to /celebs");
     // return fetch("http://localhost:3000/celebs", {
     //   method: "POST",
     //   headers: {
@@ -241,9 +263,9 @@ class App extends React.Component {
     // //     tweets: data
     // //   });
     // // });
-    this.setState = {
-      tweets: searchTweets
-    };
+    // this.setState {
+    //   tweets: searchTweets
+    // });
   };
 
   toggleEnter = () => {
@@ -260,8 +282,9 @@ class App extends React.Component {
         <SearchHome
           tweets={this.state.tweets}
           name={this.state.selectedAcc.name}
+          user={this.state.user}
         />
-        <DropDown top10={this.state.top10} searchTwitter={this.searchTwitter} />
+        <DropDown allTweeters={this.state.allTweeters} searchTwitter={this.searchTwitter} />
       </React.Fragment>
     );
   };
@@ -283,14 +306,14 @@ class App extends React.Component {
             {this.state.logged_in ? (
               this.signed()
             ) : (
-              <Menu.Item
-                onClick={this.showModal}
+                <Menu.Item
+                  onClick={this.showModal}
                 // {() => this.onSignIn()}
-              >
-                <Icon name="sign in" />
-                Sign-in
+                >
+                  <Icon name="sign in" />
+                  Sign-in
               </Menu.Item>
-            )}
+              )}
           </Sidebar>
 
           {this.state.show ? (
@@ -307,19 +330,19 @@ class App extends React.Component {
           <Sidebar.Pusher dimmed={this.state.navBarShow}>
             <React.Fragment>
               <div className="App">
-                exact path="/">
-                <Entered
-                  state={this.state}
-                  enter={this.toggleEnter}
-                  toggle={this.toggleNav}
-                  searchTwitter={this.searchTwitter}
-                  updateSelectedAcc={this.updateSelectedAcc}
-                />
-                <SearchHome
-                  tweets={this.state.tweets}
-                  name={this.state.selectedAcc.name}
-                />
-                {/* </Route> */}
+                <Route exact path="/">
+                  <Entered
+                    state={this.state}
+                    enter={this.toggleEnter}
+                    toggle={this.toggleNav}
+                    searchTwitter={this.searchTwitter}
+                    updateSelectedAcc={this.updateSelectedAcc}
+                  />
+                  <SearchHome
+                    tweets={this.state.tweets}
+                    name={this.state.selectedAcc.name}
+                  />
+                </Route>
                 <Route exact path="/favorites">
                   {this.state.logged_in ? (
                     <Favorites
@@ -332,8 +355,8 @@ class App extends React.Component {
                       deleteFav={this.deleteFav}
                     />
                   ) : (
-                    <Redirect to="/" />
-                  )}
+                      <Redirect to="/" />
+                    )}
                 </Route>
                 <Route exact path="/profile">
                   <Profile

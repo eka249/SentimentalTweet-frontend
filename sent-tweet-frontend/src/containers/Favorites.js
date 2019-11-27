@@ -85,6 +85,7 @@ import { CardGroup } from "semantic-ui-react";
 
 class Favorites extends React.Component {
   render() {
+
     return (
       <div>
         <UserFavoriteTweeters
@@ -93,9 +94,8 @@ class Favorites extends React.Component {
         />
 
         <AllCelebs
-          favorites={this.props.favorites}
           allTweeters={this.props.allTweeters}
-          addToFavorites={this.addToFavorites}
+          addToFavorites={this.props.addToFavorites}
         />
       </div>
     );

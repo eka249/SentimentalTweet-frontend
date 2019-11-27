@@ -42,15 +42,15 @@ class ModalContainer extends Component {
       })
     })
       .then(response => response.json())
-      .then(data => {
-        console.log("after sign up form", data);
-        // this.setState(prevState => {
-        //   return { signedUp: true };
-        // });
-      });
+      .then(data => this.props.getLoggedIn(data.user))
+      // .then(data =>
+      //   console.log("after sign up form", data))
+      .then(this.props.generateAllTweets())
+
   };
 
   onSignIn = () => {
+    console.log("hit onSignIn on front end")
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
@@ -118,12 +118,12 @@ class ModalContainer extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button
-            color="green"
             content="Sign In"
             // onClick={console.log("sign in hit")}
-            onClick={
-              // this.onSignIn
-              this.props.showModal
+            onClick={() =>
+              this.onSignIn()
+
+              // this.props.showModal
             }
           />
         </Modal.Actions>
