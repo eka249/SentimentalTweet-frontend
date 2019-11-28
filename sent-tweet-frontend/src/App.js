@@ -30,10 +30,8 @@ class App extends React.Component {
       tweets: [],
       show: true,
       logged_in: false,
-      favorites: [],
       user: null,
       navBarShow: false,
-      favorites: [], //user's list of fav
       tweets: [],
       //tweets of selectedAcc
       // allTweeters: [
@@ -56,8 +54,8 @@ class App extends React.Component {
   }
 
   generateAllTweets = () => {
-    console.log('hit generae tweets on frot end')
-    fetch("http://localhost:3000/celebs", {
+    console.log("hitgenerate all tweets")
+    fetch("http://localhost:3000/get_celebs", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,43 +65,28 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      .then(data => this.setState({ allTweeters: data }));
+      //renders tweets for all celebs, then adds to database
+      .then(data => console.log)
+    // .then(data => this.setState({ allTweeters: data }));
+
+    // console.log('hit generae tweets on frot end')
+    // fetch("http://localhost:3000/celebs", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accepts: "application/json"
+    //     ,
+    //     Authorization: `Bearer ${localStorage.token}`
+    //   }
+    // })
+    //   .then(resp => resp.json())
+    //   .then(data => this.setState({ allTweeters: data }));
 
   };
 
-  generateAllFavorites = () => {
-    fetch(`http://localhost:3000/favorite_celebs/${this.user.id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accepts: "application/json"
-        ,
-        Authorization: `Bearer ${localStorage.token}`
-      }
-    })
-      .then(resp => resp.json())
-      // .then(data => console.log(data))
-      .then(data => this.setState({ favorites: data }))
-  }
 
-  addToFavorites = (favorite) => {
-    let favoriteTweeters = this.state.favorites;
-    if (!favoriteTweeters.includes(favorite)) {
-      this.setState({ favorites: [...this.state.favorites, favorite] });
-    } else {
-      let filteredTweeters = favoriteTweeters.filter(
-        unFavorite => unFavorite.id !== favorite.id
-      );
-      this.setState({ favorites: [...filteredTweeters] });
-    }
-    this.addFav(favorite)
-  };
 
-  showModal = () => {
-    this.setState({
-      show: !this.state.show
-    });
-  };
+
 
   getLoggedIn = () => {
     fetch("http://localhost:3000/profile", {
@@ -123,47 +106,6 @@ class App extends React.Component {
   };
 
   logOut = () => {
-    let dataToPost = []
-    //remove old favorites
-    fetch("http://localhost:3000/del_favorites", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accepts: "application/json"
-        ,
-        Authorization: `Bearer ${localStorage.token}`
-
-      },
-      body: JSON.stringify(
-        { user_id: this.state.user.id }
-      )
-    });
-    //get new favorites in correct format
-    this.state.favorites.map(fav => {
-      dataToPost.push(
-        `user_id: ${this.state.user.id}, celeb_id: ${fav.id}`)
-    })
-    console.log("data to post", dataToPost)
-    //save new favorites
-    fetch("http://localhost:3000/favorite_celebs", {
-
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Accepts: "application/json"
-        ,
-        Authorization: `Bearer ${localStorage.token}`
-      },
-      body: JSON.stringify(
-        { dataToPost }
-      )
-    })
-      // , () =>
-      .then(this.tokenRemoval())
-
-  };
-
-  tokenRemoval = () => {
     localStorage.removeItem("token");
     this.setState(prevState => {
       return {
@@ -171,7 +113,8 @@ class App extends React.Component {
         user: null
       };
     });
-  }
+
+  };
 
   // updateSelectedAcc = (name, account) => {
   //   this.setState({
@@ -179,30 +122,6 @@ class App extends React.Component {
   //   });
   // };
 
-  deleteFav = e => {
-
-
-  };
-
-  addFav = fav => {
-    console.log(fav.id)
-    // const user_id = this.state.user.id
-    // const twitter_account_id = e.target.id
-    // //////double check on the e.target.id to match twitteracc id.
-    // fetch(Url, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Accept: 'application/json'
-    //     },
-    //     body: JSON.stringify({ user_id, twitter_account_id })
-    // })
-    // .then(resp => resp.json())
-    // .then(data => {
-    //   this.setState({
-    //    favorites: [...this.state.favorites, data]
-    // })})
-  };
 
   toggleNav = () => {
     this.setState({
@@ -259,6 +178,12 @@ class App extends React.Component {
       entered: true
     });
   };
+  showModal = () => {
+    this.setState({
+      show: !this.state.show
+    });
+  };
+
 
   entered = () => {
     return (
@@ -274,8 +199,8 @@ class App extends React.Component {
       </React.Fragment>
     );
   };
-
   render() {
+
     return (
       <Router>
         <Sidebar.Pushable>
@@ -332,13 +257,9 @@ class App extends React.Component {
                 <Route exact path="/favorites">
                   {this.state.logged_in ? (
                     <Favorites
-                      favs={this.state.favs}
                       toggleNav={this.toggleNav}
                       allTweeters={this.state.allTweeters}
-                      favorites={this.state.favorites}
-                      addToFavorites={this.addToFavorites}
                       user={this.state.user}
-                      deleteFav={this.deleteFav}
                     />
                   ) : (
                       <Redirect to="/" />
