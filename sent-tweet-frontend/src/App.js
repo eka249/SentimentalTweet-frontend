@@ -53,8 +53,8 @@ class App extends React.Component {
     }
   }
 
-  generateAllTweets = () => {
-    console.log("hitgenerate all tweets")
+  generateAllCelebs = () => {
+    console.log("hitgenerate all celebs")
     fetch("http://localhost:3000/get_celebs", {
       method: "GET",
       headers: {
@@ -102,7 +102,7 @@ class App extends React.Component {
       .then(data => this.setState({ user: data.user }))
       .then(this.setState({ logged_in: true }))
       .then(() => this.showModal())
-      .then(this.generateAllTweets())
+      .then(this.generateAllCelebs())
   };
 
   logOut = () => {
@@ -233,7 +233,7 @@ class App extends React.Component {
               user={this.state.user}
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
-              generateAllTweets={this.generateAllTweets}
+              generateAllCelebs={this.generateAllCelebs}
               searchTwitter={this.searchTwitter}
             />
           ) : null}

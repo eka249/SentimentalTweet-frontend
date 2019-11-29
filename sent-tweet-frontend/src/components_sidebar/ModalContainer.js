@@ -45,7 +45,7 @@ class ModalContainer extends Component {
       .then(data => this.props.getLoggedIn(data.user))
     // .then(data =>
     //   console.log("after sign up form", data))
-    // .then(this.props.generateAllTweets())
+    // .then(this.props.generateAllCelebs())
 
   };
 
@@ -72,7 +72,7 @@ class ModalContainer extends Component {
         }
       })
       .then(() => {
-        this.props.generateAllTweets();
+        this.props.generateAllCelebs();
       })
       .then(() => {
         this.props.searchTwitter();
