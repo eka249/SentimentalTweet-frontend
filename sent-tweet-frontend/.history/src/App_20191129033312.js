@@ -277,7 +277,7 @@ class App extends React.Component {
                     toggleNav={this.toggleNav}
                   />
                 </Route>
-                {/* <Route exact path="/statistics">
+                <Route exact path="/statistics">
                   <Statistics
                     top10={this.state.top10}
                     loggedin={this.state.logged_in}
@@ -288,7 +288,7 @@ class App extends React.Component {
                     searchTwitter={this.searchTwitter}
                     updateSelectedAcc={this.updateSelectedAcc}
                   />
-                </Route> */}
+                </Route>
               </div>
             </React.Fragment>
           </Sidebar.Pusher>
