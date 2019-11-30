@@ -14,7 +14,7 @@ class Entered extends React.Component {
                 <FavBar favs={favorites} loggedin={logged_in} />
                 <NavBarOpener toggle={this.props.toggle} />
                 <SearchHome tweets={tweets} name={selectedAcc.name} />
-                <DropDown allTweeters={allTweeters} searchTwitter={this.props.searchTwitter} updateSelectedAcc={this.props.updateSelectedAcc} />
+                <DropDown allTweeters={allTweeters} updateSelectedAcc={this.props.updateSelectedAcc} />
             </React.Fragment>
         )
     }

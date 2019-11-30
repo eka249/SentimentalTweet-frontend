@@ -8,19 +8,19 @@ class Dropdown2 extends React.Component {
     name: ""
   };
 
-  handleSearchTwitter = async (e, data) => {
-    e.persist();
+  // handleSearchTwitter = async (e, data) => {
+  //   e.persist();
 
-    const eaccount = data.value.slice(1);
-    const ename = e.target.textContent;
+  //   const eaccount = data.value.slice(1);
+  //   const ename = e.target.textContent;
 
-    await this.setState({
-      name: ename,
-      account: eaccount
-    });
-    this.props.searchTwitter(this.state.account);
-    this.props.updateSelectedAcc(this.state.name, this.state.account);
-  };
+  //   await this.setState({
+  //     name: ename,
+  //     account: eaccount
+  //   });
+  //   this.props.searchTwitter(this.state.account);
+  //   this.props.updateSelectedAcc(this.state.name, this.state.account);
+  // };
 
   render() {
     let favoriteOptions = this.props.allTweeters;
@@ -34,7 +34,7 @@ class Dropdown2 extends React.Component {
           search
           selection
           options={favoriteOptions}
-          onChange={e => this.handleSearchTwitter(e)}
+          // onChange={e => this.handleSearchTwitter(e)}
           className="searchDown"
         />
       </div>

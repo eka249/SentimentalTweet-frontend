@@ -33,20 +33,6 @@ class App extends React.Component {
       user: null,
       navBarShow: false,
       tweets: [],
-      //tweets of selectedAcc
-      // allTweeters: [
-      //   "Katy Perry",
-      //   "Lady Gaga",
-      //   "Tom Holland",
-      //   "Isaiah Thomas",
-      //   "Donald J. Trump",
-      //   "The New York Times",
-      //   "The Washington Post",
-      //   "Greta Thunberg",
-      //   "Louis Tomlinson",
-      //   "Tommy Dreamer",
-      //   "Taylor Swift"
-      // ],
       allTweeters: [],
       selectedAcc: { name: "", twitterHandle: "" },
       testword: ""
@@ -54,7 +40,7 @@ class App extends React.Component {
   }
 
   generateAllCelebs = () => {
-    console.log("hitgenerate all celebs")
+    //renders tweets for all celebs
     fetch("http://localhost:3000/get_celebs", {
       method: "GET",
       headers: {
@@ -65,28 +51,9 @@ class App extends React.Component {
       }
     })
       .then(resp => resp.json())
-      //renders tweets for all celebs, then adds to database
       .then(data => console.log)
     // .then(data => this.setState({ allTweeters: data }));
-
-    // console.log('hit generae tweets on frot end')
-    // fetch("http://localhost:3000/celebs", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accepts: "application/json"
-    //     ,
-    //     Authorization: `Bearer ${localStorage.token}`
-    //   }
-    // })
-    //   .then(resp => resp.json())
-    //   .then(data => this.setState({ allTweeters: data }));
-
   };
-
-
-
-
 
   getLoggedIn = () => {
     fetch("http://localhost:3000/profile", {
@@ -102,7 +69,8 @@ class App extends React.Component {
       .then(data => this.setState({ user: data.user }))
       .then(this.setState({ logged_in: true }))
       .then(() => this.showModal())
-      .then(this.generateAllCelebs())
+    //comment below back in when testing twitter- too many requests used
+    // .then(this.generateAllCelebs())
   };
 
   logOut = () => {
@@ -152,27 +120,6 @@ class App extends React.Component {
     );
   };
 
-  searchTwitter = celeb => {
-    // return fetch("http://localhost:3000/celebs", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //     Authorization: `Bearer ${localStorage.token}`
-    //   },
-    //   body: JSON.stringify({ celebrity: celeb })
-    // }).then(response => response.json());
-    // // .then(data => console.log(data))
-    // // .then(data => {
-    // //   this.setState({
-    // //     tweets: data
-    // //   });
-    // // });
-    // this.setState {
-    //   tweets: searchTweets
-    // });
-  };
-
   toggleEnter = () => {
     this.setState({
       entered: true
@@ -195,7 +142,7 @@ class App extends React.Component {
           name={this.state.selectedAcc.name}
           user={this.state.user}
         />
-        <DropDown allTweeters={this.state.allTweeters} searchTwitter={this.searchTwitter} />
+        <DropDown allTweeters={this.state.allTweeters} />
       </React.Fragment>
     );
   };
@@ -234,7 +181,7 @@ class App extends React.Component {
               getLoggedIn={this.getLoggedIn}
               showModal={this.showModal}
               generateAllCelebs={this.generateAllCelebs}
-              searchTwitter={this.searchTwitter}
+
             />
           ) : null}
 
@@ -246,7 +193,7 @@ class App extends React.Component {
                     state={this.state}
                     enter={this.toggleEnter}
                     toggle={this.toggleNav}
-                    searchTwitter={this.searchTwitter}
+
                     updateSelectedAcc={this.updateSelectedAcc}
                   />
                   <SearchHome

@@ -2,14 +2,15 @@ import React from "react";
 import AllCelebs from "../components_favorites/AllCelebs";
 import UserFavoriteTweeters from "../components_favorites/UsersFavoriteTweeters";
 import { CardGroup } from "semantic-ui-react";
+import NavBarOpener from "../components_sidebar/NavBarOpener";
 
 class Favorites extends React.Component {
   constructor(props) {
     super(props)
     this.generateAllFavorites()
-    this.setState({
+    this.state = {
       favorites: []
-    })
+    }
 
   }
 
@@ -25,8 +26,7 @@ class Favorites extends React.Component {
       }
     })
       .then(resp => resp.json())
-      .then(data => console.log("favorites", data))
-    // .then(data => this.setState({ favorites: data }))
+      .then(data => this.setState({ favorites: data }))
   }
   addToFavorites = (favorite) => {
     let favoriteTweeters = this.state.favorites;
@@ -82,6 +82,8 @@ class Favorites extends React.Component {
 
     return (
       <div>
+        <NavBarOpener toggle={this.props.toggleNav} />
+
         <UserFavoriteTweeters
           favorites={this.state.favorites}
           addToFavorites={this.addToFavorites}
