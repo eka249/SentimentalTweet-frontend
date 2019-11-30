@@ -43,9 +43,9 @@ class ModalContainer extends Component {
     })
       .then(response => response.json())
       .then(data => this.props.getLoggedIn(data.user))
-      // .then(data =>
-      //   console.log("after sign up form", data))
-      .then(this.props.generateAllTweets())
+    // .then(data =>
+    //   console.log("after sign up form", data))
+    // .then(this.props.generateAllCelebs())
 
   };
 
@@ -72,11 +72,11 @@ class ModalContainer extends Component {
         }
       })
       .then(() => {
-        this.props.generateAllTweets();
+        this.props.generateAllCelebs();
       })
-      .then(() => {
-        this.props.searchTwitter();
-      });
+    // .then(() => {
+    //   this.props.searchTwitter();
+    // });
   };
 
   render() {
@@ -90,14 +90,6 @@ class ModalContainer extends Component {
         className="c-modal"
       >
         <Header content="Sign In" as="h2"></Header>
-        <Modal.Actions>
-          <Button
-            onClick={this.props.showModal}
-            color="black"
-            icon="x"
-            size="tiny"
-          />
-        </Modal.Actions>
         <Modal.Content>
           <Form.Input
             label="Username "
