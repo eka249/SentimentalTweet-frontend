@@ -1,5 +1,5 @@
-// import React from "react";
-// import FavoriteCard from "./FavoriteCard";
+import React from "react";
+import FavoriteCard from "./FavoriteCard";
 
 class UserFavoriteTweeters extends React.Component {
   render() {
@@ -8,19 +8,19 @@ class UserFavoriteTweeters extends React.Component {
         {this.props.favorites.length == 0 ? (
           <div>No Favorites!</div>
         ) : (
-          this.props.favorites.map(tweeter => {
-            return (
-              <FavoriteCard
-                key={tweeter.id}
-                tweeter={tweeter}
-                addToFavorites={this.props.addToFavorites}
-              />
-            );
-          })
-        )}
+            this.props.favorites.map(tweeter => {
+              return (
+                <FavoriteCard
+                  key={tweeter.id}
+                  tweeter={tweeter}
+                  addToFavorites={this.props.addToFavorites}
+                />
+              );
+            })
+          )}
       </div>
     );
   }
 }
 
-// export default UserFavoriteTweeters;
+export default UserFavoriteTweeters;
