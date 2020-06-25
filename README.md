@@ -14,7 +14,7 @@ Plese see backend details and how to set up here: https://github.com/eka249/Sent
 
 Guest Access
 
-![](name-of-giphy.gif)
+![](GuestAccess.gif)
 
 
 User Access
