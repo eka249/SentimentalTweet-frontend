@@ -11,12 +11,6 @@ The purpose of this app is to watch the people who you are interested in and ana
 Plese see backend details and how to set up here: https://github.com/eka249/SentimentalTweet-backend
 
 
-
-Guest Access
-
-![](GuestAccess.gif)
-
-
-User Access
+User Access and Sign In
 
 ![](UserAccessST.gif)
